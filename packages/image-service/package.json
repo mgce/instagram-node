@@ -18,10 +18,13 @@
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "tsc":"tsc",
+    "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/mgce/instagram-node/issues"
+  },
+  "dependencies": {
+    "@instagram-node/common": "^0.0.0"
   }
 }

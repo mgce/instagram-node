@@ -1,11 +1,11 @@
 {
-  "name": "@instagram-node/user-service",
+  "name": "@instagram-node/common",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Mateusz Gajda <matgajda@outlook.com>",
   "homepage": "https://github.com/mgce/instagram-node#readme",
   "license": "ISC",
-  "main": "src/index.ts",
+  "main": "lib/common.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -13,18 +13,17 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/mgce/instagram-node/issues"
-  },
-  "dependencies": {
-    "@instagram-node/common": "^0.0.0"
   }
 }

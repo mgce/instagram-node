@@ -40,6 +40,7 @@ jspm_packages/
 packages/image-service/lib/
 packages/post-service/lib/
 packages/user-service/lib/
+packages/common/lib/
 
 # TypeScript v1 declaration files
 typings/
