@@ -18,8 +18,11 @@
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "tsc": "tsc",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "tsc",
+    "dev": "nodemon",
+    "start": "node --inspect=5858 -r ts-node/register ./lib/server.ts",
+    "prod": "npm run build && npm run start",
+    "test": "mocha --require ts-node/register tests/**/*.ts --timeout 10000"
   },
   "bugs": {
     "url": "https://github.com/mgce/instagram-node/issues"
