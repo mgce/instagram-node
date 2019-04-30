@@ -1,4 +1,4 @@
-import { BaseEntity } from '@instagram-node/common';
+import  {BaseEntity}  from '@instagram-node/common';
 
 export class User extends BaseEntity{
     public username: string;
