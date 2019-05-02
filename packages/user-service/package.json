@@ -28,6 +28,9 @@
     "url": "https://github.com/mgce/instagram-node/issues"
   },
   "dependencies": {
-    "@instagram-node/common": "^0.0.0"
+    "@instagram-node/common": "^0.0.0",
+    "@types/bcryptjs": "^2.4.2",
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3"
   }
 }

@@ -1,12 +1,11 @@
 {
-  "name": "@instagram-node/common",
+  "name": "@instagram-node/account-service",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Mateusz Gajda <matgajda@outlook.com>",
   "homepage": "https://github.com/mgce/instagram-node#readme",
   "license": "ISC",
   "main": "lib/src/index.js",
-  "types": "lib/src/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -14,26 +13,18 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "test": "mocha --require ts-node/register tests/**/*.ts --timeout 10000"
+    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/mgce/instagram-node/issues"
   },
   "dependencies": {
-    "@types/glob": "^7.1.1",
-    "awilix": "^4.2.2",
-    "awilix-express": "^2.1.1",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "mongoose": "^5.5.4",
-    "uuid": "^3.3.2"
+    "@instagram-node/common": "^0.0.0",
+    "passport": "^0.4.0"
   }
 }

@@ -4,6 +4,11 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose'
 import { logger } from './utils/logger';
 import { Server } from 'http';
+import {createContainer} from 'awilix';
+import {scopePerRequest} from 'awilix-express';
+import pg from 'pg';
+import { createConnection } from 'net';
+import { pgConfig } from './config/pgconfig';
 
 export class App {
     private port: number;
@@ -37,9 +42,32 @@ export class App {
         return this;
     }
 
+    /**
+     * Adding mongoDb support
+     * @param url Url to your mongo database
+     */
     public addMongo(url: string): App {
         mongoose.Promise = global.Promise;
         mongoose.connect(url);
+        return this;
+    }
+
+    /**
+     * Adding Dependency Injection Container
+     * @param objectsToRegister 
+     */
+    public addDi(objectsToRegister:any):App{
+        const container = createContainer();
+        container.register(objectsToRegister);
+        this.app.use(scopePerRequest(container));
+        return this;
+    }
+
+    /**
+     * Adding PostgresDb connection
+     */
+    public addPostgresDb(): App{
+        createConnection(pgConfig)
         return this;
     }
 }
