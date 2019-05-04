@@ -9,8 +9,10 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition)
 
 // we'll implement the handlers here
 
+const createUser = () => {}
+
 const server = new grpc.Server()
-server.addService(protoDescriptor.UserService.service, {})
+server.addService(protoDescriptor.UserService.service, {createUser})
 server.bind(SERVER_URI, grpc.ServerCredentials.createInsecure())
 
 server.start()

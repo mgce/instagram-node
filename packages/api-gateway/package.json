@@ -1,11 +1,11 @@
 {
-  "name": "@instagram-node/account-service",
+  "name": "@instagram-node/api-gateway",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Mateusz Gajda <matgajda@outlook.com>",
   "homepage": "https://github.com/mgce/instagram-node#readme",
   "license": "ISC",
-  "main": "lib/src/index.js",
+  "main": "src/server.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -22,9 +22,5 @@
   },
   "bugs": {
     "url": "https://github.com/mgce/instagram-node/issues"
-  },
-  "dependencies": {
-    "@instagram-node/common": "^0.0.0",
-    "passport": "^0.4.0"
   }
 }
