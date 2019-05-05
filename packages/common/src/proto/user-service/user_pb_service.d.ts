@@ -1,7 +1,7 @@
 // package: 
-// file: user.proto
+// file: user-service/model/user.proto
 
-import * as user_pb from "./user_pb";
+import * as user_service_model_user_pb from "./user_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
 type UserServicecreateUser = {
@@ -9,8 +9,8 @@ type UserServicecreateUser = {
   readonly service: typeof UserService;
   readonly requestStream: false;
   readonly responseStream: false;
-  readonly requestType: typeof user_pb.CreateUserRequest;
-  readonly responseType: typeof user_pb.EmptyResponse;
+  readonly requestType: typeof user_service_model_user_pb.CreateUserRequest;
+  readonly responseType: typeof user_service_model_user_pb.EmptyResponse;
 };
 
 export class UserService {
@@ -51,13 +51,13 @@ export class UserServiceClient {
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
   createUser(
-    requestMessage: user_pb.CreateUserRequest,
+    requestMessage: user_service_model_user_pb.CreateUserRequest,
     metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: user_pb.EmptyResponse|null) => void
+    callback: (error: ServiceError|null, responseMessage: user_service_model_user_pb.EmptyResponse|null) => void
   ): UnaryResponse;
   createUser(
-    requestMessage: user_pb.CreateUserRequest,
-    callback: (error: ServiceError|null, responseMessage: user_pb.EmptyResponse|null) => void
+    requestMessage: user_service_model_user_pb.CreateUserRequest,
+    callback: (error: ServiceError|null, responseMessage: user_service_model_user_pb.EmptyResponse|null) => void
   ): UnaryResponse;
 }
 

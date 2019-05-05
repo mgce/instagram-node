@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose'
@@ -68,6 +68,16 @@ export class App {
      */
     public addPostgresDb(): App{
         createConnection(pgConfig)
+        return this;
+    }
+
+    /**
+     * Add route to express
+     * @param name name of the route
+     * @param route route object
+     */
+    public addRoute(name:string, route:Router):App{
+        this.app.use(name, route);
         return this;
     }
 }

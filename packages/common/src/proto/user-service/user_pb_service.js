@@ -1,7 +1,7 @@
 // package: 
-// file: user.proto
+// file: user-service/model/user.proto
 
-var user_pb = require("./user_pb");
+var user_service_model_user_pb = require("./user_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var UserService = (function () {
@@ -15,8 +15,8 @@ UserService.createUser = {
   service: UserService,
   requestStream: false,
   responseStream: false,
-  requestType: user_pb.CreateUserRequest,
-  responseType: user_pb.EmptyResponse
+  requestType: user_service_model_user_pb.CreateUserRequest,
+  responseType: user_service_model_user_pb.EmptyResponse
 };
 
 exports.UserService = UserService;

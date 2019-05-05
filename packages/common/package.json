@@ -22,12 +22,14 @@
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
+    "start":"",
     "test": "mocha --require ts-node/register tests/**/*.ts --timeout 10000"
   },
   "bugs": {
     "url": "https://github.com/mgce/instagram-node/issues"
   },
   "dependencies": {
+    "@improbable-eng/grpc-web": "^0.9.2",
     "@types/glob": "^7.1.1",
     "awilix": "^4.2.2",
     "awilix-express": "^2.1.1",
