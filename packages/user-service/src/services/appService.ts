@@ -2,7 +2,7 @@ import { UserModel } from '../models/user.model';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from '../domain/user';
-import {CreateUserRequest} from '@instagram-node/common/src/proto/user-service/user_pb'
+import {CreateUserRequest} from '@instagram-node/common'
 
 export class UserService{
 

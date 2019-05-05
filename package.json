@@ -1,6 +1,12 @@
 {
-  "name": "root",
+  "name": "instagram-node",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna exec tsc"
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/google-protobuf": "^3.2.7",
@@ -18,7 +24,7 @@
     "@types/node": "^11.13.7",
     "@types/sinon": "^7.0.11",
     "chai": "^4.2.0",
-    "lerna": "^3.13.1",
+    "lerna": "^3.13.4",
     "mocha": "^6.1.4",
     "typescript": "^3.4.5",
     "nodemon": "^1.18.11",
@@ -39,6 +45,10 @@
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0",
     "typeorm": "^0.2.16",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "mongoose": "^5.5.4",
+    "uuid": "^3.3.2"
   }
 }

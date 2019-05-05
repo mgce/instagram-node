@@ -6,7 +6,6 @@ import { logger } from './utils/logger';
 import { Server } from 'http';
 import {createContainer} from 'awilix';
 import {scopePerRequest} from 'awilix-express';
-import pg from 'pg';
 import { createConnection } from 'net';
 import { pgConfig } from './config/pgconfig';
 

@@ -1,12 +1,11 @@
 {
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": { "*": ["types/*"] },
-      "outDir": "./lib"
-    },
-    "include": [
-      "./src", 
-      "../common/proto"
-    ]
-   }
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true
+  },
+  "include": [
+    "./src"
+  ]
+ }
