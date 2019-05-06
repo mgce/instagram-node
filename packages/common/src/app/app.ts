@@ -7,7 +7,7 @@ import { Server } from 'http';
 import { createContainer } from 'awilix';
 import { scopePerRequest } from 'awilix-express';
 import { createConnection } from 'net';
-import { pgConfig } from '../config/pgconfig';
+import { postgresConfig } from '../config/postgresConfig';
 import { AppConfig } from './appConfig';
 import { RouterConfig } from './routerConfig';
 
@@ -19,7 +19,9 @@ export class App {
         this.app = express();
         this.addCors();
         this.addBodyParser();
-        this.addRoute(config.routes)
+        this.addRoute(config.routes);
+
+        this.app.use('/', () => "test");
     }
 
     /**
@@ -80,7 +82,7 @@ export class App {
      * Adding PostgresDb connection
      */
     private addPostgresDb(): App {
-        createConnection(pgConfig)
+        createConnection(postgresConfig)
         return this;
     }
 

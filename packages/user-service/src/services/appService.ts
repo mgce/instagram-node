@@ -1,4 +1,4 @@
-import { UserModel } from '../models/user.model';
+import { UserModel } from '../models/userModel';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from '../domain/user';

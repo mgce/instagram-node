@@ -1,12 +1,17 @@
-import { App, AppConfig } from '@instagram-node/common';
-// import { userRouter } from './routes/user';
+import { App, AppConfig, commonConfig } from '@instagram-node/common';
+import { userRouter } from './routes/user';
 
-const appConfig : AppConfig = {
-    port: 5000,
+const appConfig: AppConfig = {
+    port: commonConfig.ports.apiGateway,
     postgres: false,
     mongo: false,
     di: false,
-    routes: []
+    routes: [
+        {
+            name: '/user',
+            router: userRouter
+        }
+    ]
 }
 
 const app = new App(appConfig);

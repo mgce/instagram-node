@@ -1,7 +1,8 @@
+export { postgresConfig } from './config/postgresConfig';
 export { App } from './app/app';
 export { AppConfig } from './app/appConfig';
 export { RouterConfig } from './app/routerConfig';
-export { serviceConfig } from './config/servicesConfig';
+export { commonConfig } from './config/commonConfig';
 export { BaseEntity } from './domain/baseEntity';
 export { logger } from './utils/logger';
 export { generateGuid } from './utils/generateGuid';

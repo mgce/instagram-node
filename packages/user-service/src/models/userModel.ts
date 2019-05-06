@@ -1,7 +1,10 @@
 import  {BaseEntity}  from '@instagram-node/common';
-import { Column } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
 
-export class UserModel extends BaseEntity{
+@Entity()
+export class UserModel{
+    @PrimaryGeneratedColumn()
+    public id!: string
     @Column()
     public username: string;
     @Column()
@@ -10,9 +13,9 @@ export class UserModel extends BaseEntity{
     public password: string;
 
     constructor(username: string, emailAddress:string, password:string){
-        super();
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
     }
 }
+ 
