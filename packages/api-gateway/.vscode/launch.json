@@ -8,10 +8,10 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/packages/api-gateway/src/server.ts",
+            "program": "${workspaceFolder}/src/server.ts",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
-                "${workspaceFolder}/packages/api-gateway/dist/**/*.js"
+                "${workspaceFolder}/dist/**/*.js"
             ]
         },
         {

@@ -3,9 +3,9 @@ import * as winston from 'winston';
 const { combine, timestamp, printf } = winston.format;
 const myFormat = printf(info => {
   if (info instanceof Error) {
-    return `${info.timestamp}  ${info.level}: ${info.message} ${info.stack}`;
+    return `${info.timestamp}  ${info.level}: ${info.message} | stack: ${info.stack}`;
   }
-  return `${info.timestamp}  ${info.level}: ${info.message} ${info.stack}`;
+  return `${info.timestamp}  ${info.level}: ${info.message} | stack: ${info.stack}`;
 });
 
 export const logger : winston.Logger = winston.createLogger({

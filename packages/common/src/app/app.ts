@@ -2,25 +2,30 @@ import express, { Router } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose'
-import { logger } from './utils/logger';
+import { logger } from '../utils/logger';
 import { Server } from 'http';
-import {createContainer} from 'awilix';
-import {scopePerRequest} from 'awilix-express';
+import { createContainer } from 'awilix';
+import { scopePerRequest } from 'awilix-express';
 import { createConnection } from 'net';
-import { pgConfig } from './config/pgconfig';
+import { pgConfig } from '../config/pgconfig';
+import { AppConfig } from './appConfig';
+import { RouterConfig } from './routerConfig';
 
 export class App {
     private port: number;
     private app: express.Application;
-    constructor(port: number) {
-        this.port = port;
-        this.app = express.application;
+    constructor(config: AppConfig) {
+        this.port = config.port;
+        this.app = express();
+        this.addCors();
+        this.addBodyParser();
+        this.addRoute(config.routes)
     }
 
     /**
      * Start listening on specified port
      */
-    public listen() : Server {
+    public listen(): Server {
         return this.app.listen(this.port, () => {
             logger.info('Server listening on port ' + this.port)
         })
@@ -28,24 +33,33 @@ export class App {
     /**
      * Enable Cross Origin Resource Sharing to all origins by default
      */
-    public addCors(): App {
+    private addCors(): App {
         this.app.use(cors());
         return this;
     }
     /**
      * Middleware that transforms the raw string of req.body into json 
      */
-    public addBodyParser(): App {
-        this.app.use(bodyParser.json())
-        this.app.use(bodyParser.urlencoded({ extended: false }))
+    private addBodyParser(): App {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
         return this;
+    }
+
+    /**
+     * Add route to express
+     * @param name name of the route
+     * @param route route object
+     */
+    private addRoute(routes: RouterConfig[]): void {
+        routes.map(config => this.app.use(config.name, config.router))
     }
 
     /**
      * Adding mongoDb support
      * @param url Url to your mongo database
      */
-    public addMongo(url: string): App {
+    private addMongo(url: string): App {
         mongoose.Promise = global.Promise;
         mongoose.connect(url);
         return this;
@@ -55,7 +69,7 @@ export class App {
      * Adding Dependency Injection Container
      * @param objectsToRegister 
      */
-    public addDi(objectsToRegister:any):App{
+    private addDi(objectsToRegister: any): App {
         const container = createContainer();
         container.register(objectsToRegister);
         this.app.use(scopePerRequest(container));
@@ -65,18 +79,10 @@ export class App {
     /**
      * Adding PostgresDb connection
      */
-    public addPostgresDb(): App{
+    private addPostgresDb(): App {
         createConnection(pgConfig)
         return this;
     }
 
-    /**
-     * Add route to express
-     * @param name name of the route
-     * @param route route object
-     */
-    public addRoute(name:string, route:Router):App{
-        this.app.use(name, route);
-        return this;
-    }
 }
+

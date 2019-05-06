@@ -1,9 +1,14 @@
-import { App } from '@instagram-node/common';
-import { userRouter } from './routes/user';
+import { App, AppConfig } from '@instagram-node/common';
+// import { userRouter } from './routes/user';
 
-const port = 5000;
-const app = new App(port).addBodyParser().addCors().addRoute('/users', userRouter);
+const appConfig : AppConfig = {
+    port: 5000,
+    postgres: false,
+    mongo: false,
+    di: false,
+    routes: []
+}
 
-
+const app = new App(appConfig);
 
 app.listen();

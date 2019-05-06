@@ -1,4 +1,6 @@
-export { App } from './app';
+export { App } from './app/app';
+export { AppConfig } from './app/appConfig';
+export { RouterConfig } from './app/routerConfig';
 export { serviceConfig } from './config/servicesConfig';
 export { BaseEntity } from './domain/baseEntity';
 export { logger } from './utils/logger';
