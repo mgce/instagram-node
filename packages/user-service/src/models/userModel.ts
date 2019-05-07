@@ -1,4 +1,4 @@
-import  {BaseEntity}  from '@instagram-node/common';
+import "reflect-metadata";
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
 
 @Entity()
