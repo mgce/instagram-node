@@ -29,7 +29,7 @@ function deserialize_grpc_user_v1_EmptyResponse(buffer_arg) {
 
 var UserService = exports.UserService = {
   createUser: {
-    path: '/grpc.user.v1.User/createUser',
+    path: '/grpc.user.v1.User/CreateUser',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.CreateUserRequest,

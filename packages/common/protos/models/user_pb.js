@@ -283,7 +283,7 @@ proto.grpc.user.v1.EmptyResponse.prototype.toObject = function(opt_includeInstan
  */
 proto.grpc.user.v1.EmptyResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    message: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -320,6 +320,10 @@ proto.grpc.user.v1.EmptyResponse.deserializeBinaryFromReader = function(msg, rea
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -349,6 +353,28 @@ proto.grpc.user.v1.EmptyResponse.prototype.serializeBinary = function() {
  */
 proto.grpc.user.v1.EmptyResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getMessage();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string message = 1;
+ * @return {string}
+ */
+proto.grpc.user.v1.EmptyResponse.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.grpc.user.v1.EmptyResponse.prototype.setMessage = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 

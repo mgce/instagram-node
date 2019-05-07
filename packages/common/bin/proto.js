@@ -5,8 +5,8 @@ const rimraf = require('rimraf');
 // https://github.com/shelljs/shelljs/issues/469
 process.env.PATH += (path.delimiter + path.join(process.cwd(), 'node_modules', '.bin'));
 
-const PROTO_DIR = path.join(__dirname, '../src/protos');
-const MODEL_DIR = path.join(__dirname, '../src/protos/models');
+const PROTO_DIR = path.join(__dirname, '../protos');
+const MODEL_DIR = path.join(__dirname, '../protos/models');
 const PROTOC_GEN_TS_PATH = path.join(__dirname, '../node_modules/.bin/protoc-gen-ts.cmd');
 
 rimraf.sync(`${MODEL_DIR}/*`);

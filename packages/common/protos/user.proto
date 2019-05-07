@@ -9,8 +9,10 @@ message CreateUserRequest {
     string confirmPassword = 4;
 }
 
-message EmptyResponse {}
+message EmptyResponse {
+    string message = 1;
+}
 
 service User{
-    rpc createUser(CreateUserRequest) returns (EmptyResponse){}
+    rpc CreateUser(CreateUserRequest) returns (EmptyResponse){}
 }

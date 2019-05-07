@@ -7,11 +7,11 @@ import * as grpc from "grpc";
 import * as user_pb from "./user_pb";
 
 interface IUserService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    createUser: IUserService_IcreateUser;
+    createUser: IUserService_ICreateUser;
 }
 
-interface IUserService_IcreateUser extends grpc.MethodDefinition<user_pb.CreateUserRequest, user_pb.EmptyResponse> {
-    path: string; // "/grpc.user.v1.User/createUser"
+interface IUserService_ICreateUser extends grpc.MethodDefinition<user_pb.CreateUserRequest, user_pb.EmptyResponse> {
+    path: string; // "/grpc.user.v1.User/CreateUser"
     requestStream: boolean; // false
     responseStream: boolean; // false
     requestSerialize: grpc.serialize<user_pb.CreateUserRequest>;

@@ -39,6 +39,9 @@ export namespace CreateUserRequest {
 }
 
 export class EmptyResponse extends jspb.Message { 
+    getMessage(): string;
+    setMessage(value: string): void;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): EmptyResponse.AsObject;
@@ -52,5 +55,6 @@ export class EmptyResponse extends jspb.Message {
 
 export namespace EmptyResponse {
     export type AsObject = {
+        message: string,
     }
 }

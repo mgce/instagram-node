@@ -2,8 +2,7 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { UserModel } from './models/userModel';
 import { UserAppService } from './services/appService';
-const grpc = require('grpc');
-import { Server } from "grpc";
+import { Server, ServerCredentials } from "grpc";
 import { UserService } from '@instagram-node/common';
 
 const SERVER_URI = '0.0.0.0:5001'
@@ -12,11 +11,10 @@ const SERVER_URI = '0.0.0.0:5001'
 createConnection().then(connection => {
 
     const userRepository = connection.getRepository(UserModel);
-    const userService = new UserAppService(userRepository);
 
-    const server = new Server()
-    server.addService(UserService, userService)
-    server.bind(SERVER_URI, grpc.ServerCredentials.createInsecure())
+    const server: Server = new Server()
+    server.addService(UserService, new UserAppService(userRepository))
+    server.bind(SERVER_URI, ServerCredentials.createInsecure())
     server.start()
     console.log('Server is running!')
 
