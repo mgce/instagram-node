@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { User } from '../domain/user';
 import {CreateUserRequest} from '@instagram-node/common'
 
-export class UserService{
+export class UserAppService{
 
     private userRepository: Repository<UserModel>
 

@@ -7,5 +7,7 @@ export { BaseEntity } from './domain/baseEntity';
 export { logger } from './utils/logger';
 export { generateGuid } from './utils/generateGuid';
 export { BaseRepository } from './dataAccess/interfaces/baseRepository';
-export { UserServiceClient, UserService } from './proto/user-service/user_pb_service'
-export { CreateUserRequest } from "./proto/user-service/user_pb";
+
+//proto
+export { UserService } from './protos/models/user_grpc_pb.d';
+export { CreateUserRequest } from "./protos/models/user_pb.d";

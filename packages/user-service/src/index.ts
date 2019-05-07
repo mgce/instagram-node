@@ -1,28 +1,22 @@
 import "reflect-metadata";
-import { getRepository, createConnection } from "typeorm";
+import { createConnection } from "typeorm";
 import { UserModel } from './models/userModel';
-import { UserService } from './services/appService';
+import { UserAppService } from './services/appService';
 const grpc = require( 'grpc');
-const protoLoader = require( '@grpc/proto-loader');
+import {Server} from "grpc";
+import {UserService} from '@instagram-node/common';
 
-const PROTO_PATH = './src/proto/user.proto'
 const SERVER_URI = '0.0.0.0:5001'
-
-const packageDefinition = protoLoader.loadSync(PROTO_PATH)
-const protoDescriptor = grpc.loadPackageDefinition(packageDefinition)
 
 //Run postgres connection
 createConnection().then(connection => {
-    // here you can start to work with your entities
 
-// we'll implement the handlers here
 const userRepository = connection.getRepository(UserModel);
-const userService = new UserService(userRepository);
+const userService = new UserAppService(userRepository);
 
-const server = new grpc.Server()
-server.addService(protoDescriptor.UserService.service, {createUser:userService.CreateUser})
+const server = new Server()
+server.addService(UserService, userService)
 server.bind(SERVER_URI, grpc.ServerCredentials.createInsecure())
-
 server.start()
 console.log('Server is running!')
 

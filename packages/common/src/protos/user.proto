@@ -1,5 +1,7 @@
 syntax="proto3";
 
+package grpc.user.v1;
+
 message CreateUserRequest {
     string username = 1;
     string emailAddress = 2;
@@ -9,6 +11,6 @@ message CreateUserRequest {
 
 message EmptyResponse {}
 
-service UserService{
+service User{
     rpc createUser(CreateUserRequest) returns (EmptyResponse){}
 }
