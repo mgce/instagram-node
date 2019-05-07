@@ -9,5 +9,5 @@ export { generateGuid } from './utils/generateGuid';
 export { BaseRepository } from './dataAccess/interfaces/baseRepository';
 
 //proto
-export { UserService } from './protos/models/user_grpc_pb.d';
-export { CreateUserRequest } from "./protos/models/user_pb.d";
+export { UserService, UserClient } from '../protos/models/user_grpc_pb';
+export { CreateUserRequest } from "../protos/models/user_pb";

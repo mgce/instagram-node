@@ -22,7 +22,7 @@
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "start": "",
+    "build": "rimraf dist && tsc",
     "test": "mocha --require ts-node/register tests/**/*.ts --timeout 10000",
     "build:proto": "node bin/proto"
   },
