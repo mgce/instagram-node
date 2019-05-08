@@ -6,3 +6,8 @@ export const createUserValidator = [
     body('password').exists(),
     body('confirmPassword').exists(),
 ]
+
+export const loginValidator = [
+    body('emailAddress').exists().isEmail(),
+    body('password').exists()
+]

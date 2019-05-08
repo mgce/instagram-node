@@ -29,7 +29,10 @@
   },
   "dependencies": {
     "@instagram-node/common": "^0.0.0",
+    "@types/jsonwebtoken": "^8.3.2",
+    "dotenv": "^8.0.0",
     "express": "^4.16.4",
-    "express-validator": "^5.3.1"
+    "express-validator": "^5.3.1",
+    "jsonwebtoken": "^8.5.1"
   }
 }

@@ -3,7 +3,7 @@ import { createConnection } from "typeorm";
 import { UserModel } from './models/userModel';
 import { UserAppService } from './services/appService';
 import { ServerCredentials, Server } from "grpc";
-import { UserService, grpcErrorHandler } from '@instagram-node/common';
+import { UserService } from '@instagram-node/common';
 
 
 const SERVER_URI = '0.0.0.0:5001'

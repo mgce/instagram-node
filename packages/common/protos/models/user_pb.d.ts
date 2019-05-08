@@ -58,3 +58,49 @@ export namespace EmptyResponse {
         message: string,
     }
 }
+
+export class AuthenticateRequest extends jspb.Message { 
+    getEmailaddress(): string;
+    setEmailaddress(value: string): void;
+
+    getPassword(): string;
+    setPassword(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AuthenticateRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: AuthenticateRequest): AuthenticateRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AuthenticateRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AuthenticateRequest;
+    static deserializeBinaryFromReader(message: AuthenticateRequest, reader: jspb.BinaryReader): AuthenticateRequest;
+}
+
+export namespace AuthenticateRequest {
+    export type AsObject = {
+        emailaddress: string,
+        password: string,
+    }
+}
+
+export class AuthenticateResponse extends jspb.Message { 
+    getUserid(): number;
+    setUserid(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AuthenticateResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: AuthenticateResponse): AuthenticateResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AuthenticateResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AuthenticateResponse;
+    static deserializeBinaryFromReader(message: AuthenticateResponse, reader: jspb.BinaryReader): AuthenticateResponse;
+}
+
+export namespace AuthenticateResponse {
+    export type AsObject = {
+        userid: number,
+    }
+}

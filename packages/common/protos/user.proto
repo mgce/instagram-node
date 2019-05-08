@@ -13,6 +13,16 @@ message EmptyResponse {
     string message = 1;
 }
 
+message AuthenticateRequest {
+    string emailAddress = 1;
+    string password = 2;
+}
+
+message AuthenticateResponse {
+    int32 userId = 1;
+}
+
 service User{
     rpc CreateUser(CreateUserRequest) returns (EmptyResponse){}
+    rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse){}
 }

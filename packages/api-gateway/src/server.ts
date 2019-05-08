@@ -1,5 +1,6 @@
 import { App, AppConfig, commonConfig } from '@instagram-node/common';
 import { userRouter } from './users/user.routes';
+require('dotenv').config()
 
 const appConfig: AppConfig = {
     port: commonConfig.ports.apiGateway,
