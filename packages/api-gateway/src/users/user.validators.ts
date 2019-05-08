@@ -1,4 +1,4 @@
-import { body, validationResult } from 'express-validator/check';
+import { body } from 'express-validator/check';
 
 export const createUserValidator = [
     body('username').exists(),
