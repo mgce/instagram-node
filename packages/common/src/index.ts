@@ -12,6 +12,6 @@ export { BaseRepository } from './dataAccess/interfaces/baseRepository';
 //proto
 export { UserService, UserClient, IUserServer } from '../protos/models/user_grpc_pb';
 export { CreateUserRequest, EmptyResponse, AuthenticateRequest, AuthenticateResponse } from "../protos/models/user_pb";
-export * from './grpc/grpcMiddleware';
+// export * from './grpc/grpcMiddleware';
 export { grpcErrorHandler } from './grpc/grpcErrorHandler';
 export { GrpcError } from './grpc/grpcError';

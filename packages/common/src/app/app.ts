@@ -6,8 +6,7 @@ import { logger } from '../utils/logger';
 import { Server } from 'http';
 import { createContainer } from 'awilix';
 import { scopePerRequest } from 'awilix-express';
-import { createConnection } from 'net';
-import { postgresConfig } from '../config/postgresConfig';
+import { createConnection } from 'typeorm';
 import { AppConfig } from './appConfig';
 import { RouterConfig } from './routerConfig';
 
@@ -20,6 +19,9 @@ export class App {
         this.addCors();
         this.addBodyParser();
         this.addRoute(config.routes);
+
+        if(config.postgres)
+            this.addPostgresDb();
 
         this.app.use('/', () => "test");
     }
@@ -82,7 +84,7 @@ export class App {
      * Adding PostgresDb connection
      */
     private addPostgresDb(): App {
-        createConnection(postgresConfig)
+        createConnection().catch(error=>console.log(error))
         return this;
     }
 
