@@ -20,7 +20,7 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "dev": "nodemon",
-    "start": "node --inspect=5859 -r ts-node/register ./src/index.ts",
+    "start": "node --inspect=5840 -r ts-node/register ./src/index.ts",
     "prod": "npm run build && npm run start",
     "test": "mocha --require ts-node/register tests/**/*.ts --timeout 10000"
   },

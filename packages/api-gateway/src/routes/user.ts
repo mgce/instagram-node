@@ -10,7 +10,14 @@ const userServiceClient = new UserClient('0.0.0.0:5001', credentials.createInsec
 userRouter.post('/', (req: express.Request, res: express.Response) => {
   const request: CreateUserRequest = new CreateUserRequest();
   request.setUsername('adam');
-  userServiceClient.createUser(request, (err, result) => res.send(result.getMessage()));
+  request.setPassword('password');
+  request.setConfirmpassword('');
+  request.setEmailaddress('email@test.pl')
+  userServiceClient.createUser(request, (err, result) => {
+    if (err)
+      return res.send(err);
+    return res.send(result.getMessage())
+  });
 })
 
 export { userRouter };    
