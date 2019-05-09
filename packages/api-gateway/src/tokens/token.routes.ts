@@ -1,18 +1,17 @@
 import express = require("express");
 import { AuthenticateRequest, AuthenticateResponse } from '@instagram-node/common'
 import { requestValidator } from "../middlewares/requestValidator";
-import jwt from 'jsonwebtoken'
 import { UserClient } from "../users/user.client";
 import { authenticateValidator } from "./token.validators";
 import { RefreshTokenModel } from "./refreshToken.model";
-import { RefreshToken } from "./refreshToken.dto";
-import { getRepository, MoreThan } from 'typeorm';
-var randtoken = require('rand-token');
+import { getRepository } from 'typeorm';
+import { getTokens, getJwtToken } from "./refreshToken.service";
 
 const tokenRouter = express.Router();
 
 tokenRouter.post('/', authenticateValidator, requestValidator, async (req: express.Request, res: express.Response) => {
     const { emailAddress, password } = req.body;
+
     const request = new AuthenticateRequest();
     request.setEmailaddress(emailAddress);
     request.setPassword(password);
@@ -21,42 +20,25 @@ tokenRouter.post('/', authenticateValidator, requestValidator, async (req: expre
         if (err)
             return res.send(err);
 
-        const secret = process.env.JWT_SECRET;
-        if (secret !== undefined){
-            var claims = result.toObject();
-            const refreshTokenRepository = getRepository(RefreshTokenModel);
-
-            const token = jwt.sign(claims, secret, { expiresIn: 36000 })
-            //first, check if refreshToken exist
-            let refreshToken = await refreshTokenRepository
-            .createQueryBuilder()
-            .where({
-                expirationDate: MoreThan(new Date()),
-                userId: claims.userid
-            })
-            .getOne();
-
-            if(!refreshToken)
-            {
-                const expirationDate = new Date();
-                expirationDate.setDate(expirationDate.getDate() + 30);
-                refreshToken = refreshTokenRepository.create({
-                    refreshToken: randtoken.uid(256),
-                    expirationDate: expirationDate,
-                    userId: claims.userid
-                });
-                await refreshTokenRepository.save(refreshToken);
-            }
-
-            res.json({
-                success: true,
-                token: `Bearer ${token}`,
-                refreshToken: refreshToken.refreshToken
-            })
-        }
-        else
+        var tokens = await getTokens(result.toObject(), getRepository(RefreshTokenModel));
+        if (tokens === undefined)
             res.status(400).json("Something goes wrong");
+
+        res.json(tokens)
     })
 })
 
-export {tokenRouter};
+tokenRouter.get('/regenerate', async (req: express.Request, res: express.Response) => {
+    const { refreshToken } = req.query;
+
+    var tokens = await getJwtToken(refreshToken, getRepository(RefreshTokenModel));
+    //in future we have to get claims from user-service
+
+    if (tokens === undefined)
+        res.status(400).json("Something goes wrong");
+
+    res.json(tokens)
+
+})
+
+export { tokenRouter };

@@ -1,5 +1,5 @@
 export interface RefreshToken{
-    refreshToken: string;
+    token: string;
     expirationDate: Date;
     userId: number;
 }
