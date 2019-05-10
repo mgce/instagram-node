@@ -1,9 +1,10 @@
-import { RouterConfig } from "./routerConfig";
+import { AwilixContainer } from 'awilix';
 
 export interface AppConfig{
     port: number;
     postgres: boolean;
     mongo: boolean;
     di: boolean;
-    routes: RouterConfig[]
+    container: AwilixContainer,
+    callerDir: string
 }

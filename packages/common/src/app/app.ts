@@ -4,8 +4,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose'
 import { logger } from '../utils/logger';
 import { Server } from 'http';
-import { createContainer } from 'awilix';
-import { scopePerRequest } from 'awilix-express';
+import { createContainer, AwilixContainer } from 'awilix';
+import { scopePerRequest, loadControllers } from 'awilix-express';
 import { createConnection } from 'typeorm';
 import { AppConfig } from './appConfig';
 import { RouterConfig } from './routerConfig';
@@ -18,10 +18,12 @@ export class App {
         this.app = express();
         this.addCors();
         this.addBodyParser();
-        this.addRoute(config.routes);
 
         if(config.postgres)
             this.addPostgresDb();
+
+        if(config.di)
+            this.addDi(config.container, config.callerDir);
 
         this.app.use('/', () => "test");
     }
@@ -73,11 +75,14 @@ export class App {
      * Adding Dependency Injection Container
      * @param objectsToRegister 
      */
-    private addDi(objectsToRegister: any): App {
-        const container = createContainer();
-        container.register(objectsToRegister);
+    private addDi(container: AwilixContainer, callerDir: string): App {
         this.app.use(scopePerRequest(container));
+        this.loadAwilixControllers(callerDir);
         return this;
+    }
+
+    private loadAwilixControllers(callerDir: string){
+        this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }))
     }
 
     /**
