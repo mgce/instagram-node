@@ -5,6 +5,7 @@ import { POST, route, before } from "awilix-router-core";
 import { createUserValidator } from "./user.validators";
 import { requestValidator } from "../middlewares/requestValidator";
 
+@route('/user')
 export class UserController {
     @POST()
     @route('/')
