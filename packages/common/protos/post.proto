@@ -1,0 +1,27 @@
+syntax="proto3";
+
+package grpc.post.v1;
+
+import "common.proto";
+
+message CreatePostRequest {
+    int64 userId = 1;
+    string imageUrl = 2;
+    string description = 3;
+}
+
+message PostCreatedResponse {
+    string message = 1;
+    int64 postId = 2;
+}
+
+message DeletePostRequest {
+    int64 userId = 1;
+    int64 postId = 2;
+}
+
+
+service Post{
+    rpc Add(CreatePostRequest) returns (PostCreatedResponse){}
+    rpc Delete(DeletePostRequest) returns (common.EmptyResponse){}
+}

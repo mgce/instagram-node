@@ -28,6 +28,8 @@
     "url": "https://github.com/mgce/instagram-node/issues"
   },
   "dependencies": {
-    "@instagram-node/common": "^0.0.0"
+    "@instagram-node/common": "^0.0.0",
+    "typeorm": "^0.2.16",
+    "grpc": "^1.20.2"
   }
 }

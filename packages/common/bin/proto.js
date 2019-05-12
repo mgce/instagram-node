@@ -18,7 +18,10 @@ shell.exec('grpc_tools_node_protoc '
   + `--grpc_out="${MODEL_DIR}" `
   + `--js_out="import_style=commonjs,binary:${MODEL_DIR}" `
   + `--ts_out="${MODEL_DIR}" `
-  + `-I ${PROTO_DIR} ${PROTO_DIR}/user.proto`);
+  + `-I ${PROTO_DIR}`
+  + ` ${PROTO_DIR}/user.proto`
+  + ` ${PROTO_DIR}/common.proto`
+  +`  ${PROTO_DIR}/post.proto`);
 
 /*
   shell.exec('grpc_tools_node_protoc '

@@ -1,10 +1,11 @@
-import { UserModel } from '../models/userModel';
+import { UserModel } from '../models/user.model';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcryptjs';
-import { User } from '../domain/user';
-import { CreateUserRequest, EmptyResponse, GrpcError, AuthenticateResponse, AuthenticateRequest} from '@instagram-node/common'
-import { IUserServer } from '@instagram-node/common/protos/models/user_grpc_pb';
+import { User } from '../domain/user.entity';
+import { CreateUserRequest,  GrpcError, AuthenticateResponse, AuthenticateRequest} from '@instagram-node/common'
+import { IUserServer } from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
+import { EmptyResponse } from '@instagram-node/common/protos/models/common_pb';
 
 export class UserAppService implements IUserServer {
     private userRepository: Repository<UserModel>
