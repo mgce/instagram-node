@@ -28,6 +28,7 @@
     "url": "https://github.com/mgce/instagram-node/issues"
   },
   "dependencies": {
-    "@instagram-node/common": "^0.0.0"
+    "@instagram-node/common": "^0.0.0",
+    "multer": "^1.4.1"
   }
 }

@@ -43,6 +43,7 @@ packages/user-service/lib/
 packages/common/lib/
 packages/api-gateway/lib/
 dist/
+packages/common/protos/models/
 
 # TypeScript v1 declaration files
 typings/
