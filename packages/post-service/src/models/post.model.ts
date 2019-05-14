@@ -10,14 +10,11 @@ export class PostModel extends BaseEntity{
     public imageUrl: string;
     @Column()
     public description: string;
-    @Column()
-    public tags: string[];
 
-    constructor(userId: number, imageUrl:string, description:string, tags:string[]){
+    constructor(userId: number, imageUrl:string, description:string){
         super();
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.description = description;
-        this.tags = tags;
     }
 }

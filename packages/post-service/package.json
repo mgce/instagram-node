@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
-    "start": "node --inspect=5858 -r ts-node/register ./lib/server.ts",
+    "start": "node --inspect=5258 -r ts-node/register ./src/index.ts",
     "prod": "npm run build && npm run start",
     "test": "mocha --require ts-node/register tests/**/*.ts --timeout 10000"
   },
