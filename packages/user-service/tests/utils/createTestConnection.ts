@@ -7,6 +7,7 @@ import { createConnection, Connection } from "typeorm";
         "host":"localhost",
         "port":5432,
         "username":"postgres",
+        "password":"",
         "database":"instagram-test",
         "synchronize":true,
         "logging":false,

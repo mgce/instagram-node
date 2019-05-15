@@ -1,4 +1,3 @@
-import { describe } from "mocha";
 import { UserAppService } from './../src/services/user.service';
 import { getRepository, Repository, Connection } from "typeorm";
 import { UserModel } from './../src/models/user.model';
@@ -6,12 +5,17 @@ import { ServerUnaryCall } from "grpc";
 import { CreateUserRequest } from "@instagram-node/common";
 import { createTestConnection } from "./utils/createTestConnection";
 import { expect } from 'chai';
+import { resources } from '../src/resources';
+
+const username = "Test";
+const password = "Password"
+const emailAddress = "test@test.pl"
 
 describe('User App service', () => {
     let userRepository: Repository<UserModel>;
     let userService: UserAppService;
     let connection: Connection;
-
+ 
     before(async () => {
         connection = await createTestConnection();
         userRepository = getRepository(UserModel);
@@ -20,33 +24,24 @@ describe('User App service', () => {
     afterEach(() => {
         connection.synchronize(true);
     })
-    it('should create new user', (done) => {
-        const request = new CreateUserRequest();
+    it('should create new user', async () => {
+        const request = createCreateUserRequest();
 
-        const username = "Test";
-        const password = "Password"
-        const emailAddress = "test@test.pl"
+        userService.createUser(createServerUnaryCall<CreateUserRequest>(request), callback);
 
-        request.setUsername(username);
-        request.setPassword(password);
-        request.setConfirmpassword(password);
-        request.setEmailaddress(emailAddress);
+        const user = await userRepository.findOne({ username });
+        expect(user).to.not.be.undefined;
+        expect(user.password).to.not.equal("Password");
+        expect(user.username).to.equal("Test");
+        expect(user.emailAddress).to.equal("test@test.pl");
+    })
 
-        userService.createUser(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
-            expect(err).to.be.null;
-            expect(res).to.not.be.null;
+    it('should throw error when password not exist', async ()=>{
+        const request = createCreateUserRequest()
+        request.setPassword(null);
 
-            userRepository.findOne({ username: "Test" }).then((user) => {
-                expect(user).to.not.be.null;
-
-                if (!user)
-                    return done("User not exist")
-
-                expect(user.password).to.not.equal(password);
-                expect(user.username).to.equal(username);
-                expect(user.emailAddress).to.equal(emailAddress);
-                done();
-            }).catch(err => done(err));
+        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
+            expect(err.message).to.equal(resources.errors.PasswordsAreNoEqual)
         })
     })
 })
@@ -58,10 +53,21 @@ describe('User App service', () => {
 function createServerUnaryCall<T>(request: T) {
     const call = {
         cancelled: false,
-        metadata: null,
+        metadata: {},
         request: request
     }
 
     return call as any as ServerUnaryCall<T>;
+}
+
+function createCreateUserRequest() {
+    const request = new CreateUserRequest();
+
+    request.setUsername(username);
+    request.setPassword(password);
+    request.setConfirmpassword(password);
+    request.setEmailaddress(emailAddress);
+
+    return request;
 }
 

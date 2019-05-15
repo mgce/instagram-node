@@ -2,10 +2,11 @@ import { UserModel } from '../models/user.model';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from '../domain/user.entity';
-import { CreateUserRequest,  GrpcError, AuthenticateResponse, AuthenticateRequest} from '@instagram-node/common'
+import { CreateUserRequest, GrpcError, AuthenticateResponse, AuthenticateRequest } from '@instagram-node/common'
 import { IUserServer } from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { EmptyResponse } from '@instagram-node/common/protos/models/common_pb';
+import { resources } from '../resources';
 
 export class UserAppService implements IUserServer {
     private userRepository: Repository<UserModel>
@@ -17,12 +18,9 @@ export class UserAppService implements IUserServer {
     public async createUser(call: ServerUnaryCall<CreateUserRequest>, callback: sendUnaryData<EmptyResponse>): Promise<void> {
         const request = call.request.toObject();
 
-        if (request.password !== request.confirmpassword)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, "Passwords are not equal"), null)
-
-        const existingUser = await this.userRepository.findOne({ emailAddress: request.emailaddress })
-        if (existingUser)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, "User with this email is exist"), null)
+        const validation = this.validateCreateUser(request, callback);
+        if(validation !== null)
+            return validation;
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(request.password, salt);
@@ -31,10 +29,27 @@ export class UserAppService implements IUserServer {
 
         var entity = this.userRepository.create(user);
         await this.userRepository.save(entity);
-
+        console.log(entity);
         const response = new EmptyResponse();
         response.setMessage("User has been created")
         callback(null, response)
+    }
+
+    private async validateCreateUser(request: CreateUserRequest.AsObject, callback: sendUnaryData<EmptyResponse>) {
+        if(request.password === null || request.password === undefined)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordMustHaveValue), null)
+
+        if (request.password !== request.confirmpassword)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordsAreNoEqual), null)
+
+        const existingUser = await this.userRepository.findOne({ emailAddress: request.emailaddress })
+        if (existingUser)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserWithThisEmailExist), null)
+
+        if (request.username === null || request.username === undefined)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UsernameCannotBeEmpty), null)
+
+        return null;
     }
 
     public async authenticate(call: ServerUnaryCall<AuthenticateRequest>, callback: sendUnaryData<AuthenticateResponse>): Promise<void> {
