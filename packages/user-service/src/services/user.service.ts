@@ -29,7 +29,6 @@ export class UserAppService implements IUserServer {
 
         var entity = this.userRepository.create(user);
         await this.userRepository.save(entity);
-        console.log(entity);
         const response = new EmptyResponse();
         response.setMessage("User has been created")
         callback(null, response)
@@ -54,12 +53,14 @@ export class UserAppService implements IUserServer {
 
     public async authenticate(call: ServerUnaryCall<AuthenticateRequest>, callback: sendUnaryData<AuthenticateResponse>): Promise<void> {
         const request = call.request.toObject();
+
         const user = await this.userRepository.findOne({ emailAddress: request.emailaddress });
         if (!user)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, "User with this email does not exist"), null)
-        const isPasswordMatching = bcrypt.compare(request.password, user.password);
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserWithThisEmailNotExist), null)
+
+        const isPasswordMatching = await bcrypt.compare(request.password, user.password);
         if (!isPasswordMatching)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, "Password is invalid"), null)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordIsInvalid), null)
 
         const response = new AuthenticateResponse();
         response.setUserid(user.id);

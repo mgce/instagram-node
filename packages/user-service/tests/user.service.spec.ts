@@ -2,10 +2,11 @@ import { UserAppService } from './../src/services/user.service';
 import { getRepository, Repository, Connection } from "typeorm";
 import { UserModel } from './../src/models/user.model';
 import { ServerUnaryCall } from "grpc";
-import { CreateUserRequest } from "@instagram-node/common";
+import { CreateUserRequest, AuthenticateRequest } from "@instagram-node/common";
 import { createTestConnection } from "./utils/createTestConnection";
 import { expect } from 'chai';
 import { resources } from '../src/resources';
+import { User } from '../src/domain/user.entity';
 
 const username = "Test";
 const password = "Password"
@@ -24,7 +25,6 @@ describe('User App service', () => {
     afterEach(() => {
         userRepository.createQueryBuilder()
         .delete()
-        .where("id = :id", { id: 1 })
         .execute();
     })
     it('should create new user', async () => {
@@ -52,10 +52,53 @@ describe('User App service', () => {
             expect(err.message).to.equal(resources.errors.PasswordsAreNoEqual)
         })
     })
-})
 
-// 2. Check if error is password exist
-// 3. Check if error is thrown when passwords are not equal
+    it('should throw error when user with this email is exist', async ()=>{
+
+        const user = new User(username, emailAddress, '', password);
+        var entity = userRepository.create(user);
+        await userRepository.save(entity);
+        const request = createCreateUserRequest()
+
+        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
+            expect(err.message).to.equal(resources.errors.UserWithThisEmailExist)
+        })
+    })
+
+    it('should authenticate user when user exist', async ()=>{
+        const request = createCreateUserRequest()
+        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), ()=>{});
+        const authenticateRequest = createAuthenticateRequest();
+
+        await userService.authenticate(createServerUnaryCall<AuthenticateRequest>(authenticateRequest), (err, res) => {
+            expect(res.getUserid()).is.not.null;
+        });
+    })
+
+    it('should not authenticate user when password is invalid', async ()=>{
+        const request = createCreateUserRequest();
+        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), ()=>{});
+        const authenticateRequest = createAuthenticateRequest();
+        authenticateRequest.setPassword('invalidPassword')
+
+        await userService.authenticate(createServerUnaryCall<AuthenticateRequest>(authenticateRequest), (err, res) => {
+            expect(res).is.null;
+            expect(err).is.not.null;
+            expect(err.message).is.equal(resources.errors.PasswordIsInvalid)
+        });
+    })
+
+    it('should not authenticate user when user not exist', async ()=>{
+        const authenticateRequest = createAuthenticateRequest();
+
+        await userService.authenticate(createServerUnaryCall<AuthenticateRequest>(authenticateRequest), (err, res) => {
+            expect(res).is.null;
+            expect(err).is.not.null;
+            expect(err.message).is.equal(resources.errors.UserWithThisEmailNotExist)
+        });
+    })
+
+})
 
 
 function createServerUnaryCall<T>(request: T) {
@@ -79,3 +122,11 @@ function createCreateUserRequest() {
     return request;
 }
 
+function createAuthenticateRequest() {
+    const request = new AuthenticateRequest();
+
+    request.setPassword(password);
+    request.setEmailaddress(emailAddress);
+
+    return request;
+}
