@@ -1,4 +1,5 @@
 import { createConnection, Connection } from "typeorm";
+import { UserModel } from './../../src/models/user.model';
 
  export const createTestConnection = () : Promise<Connection> => {
     return createConnection({
@@ -12,6 +13,6 @@ import { createConnection, Connection } from "typeorm";
         "synchronize":true,
         "logging":false,
         "dropSchema": true,
-        "entities":["src/models/*.ts"]
+        "entities":["src/models/*.ts", UserModel]
     })
 }

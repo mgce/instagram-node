@@ -18,9 +18,9 @@ export class UserAppService implements IUserServer {
     public async createUser(call: ServerUnaryCall<CreateUserRequest>, callback: sendUnaryData<EmptyResponse>): Promise<void> {
         const request = call.request.toObject();
 
-        const validation = this.validateCreateUser(request, callback);
+        const validation = await this.validateCreateUser(request, callback);
         if(validation !== null)
-            return validation;
+            return callback(validation, null);
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(request.password, salt);
@@ -37,17 +37,17 @@ export class UserAppService implements IUserServer {
 
     private async validateCreateUser(request: CreateUserRequest.AsObject, callback: sendUnaryData<EmptyResponse>) {
         if(request.password === null || request.password === undefined)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordMustHaveValue), null)
+            return new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordMustHaveValue);
 
         if (request.password !== request.confirmpassword)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordsAreNoEqual), null)
+            return new GrpcError(status.INVALID_ARGUMENT, resources.errors.PasswordsAreNoEqual)
 
         const existingUser = await this.userRepository.findOne({ emailAddress: request.emailaddress })
         if (existingUser)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserWithThisEmailExist), null)
+            return new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserWithThisEmailExist)
 
         if (request.username === null || request.username === undefined)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UsernameCannotBeEmpty), null)
+            return new GrpcError(status.INVALID_ARGUMENT, resources.errors.UsernameCannotBeEmpty)
 
         return null;
     }

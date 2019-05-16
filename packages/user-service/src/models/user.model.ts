@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from "@instagram-node/common";
 
 @Entity()

@@ -22,12 +22,20 @@ describe('User App service', () => {
         userService = new UserAppService(userRepository)
     })
     afterEach(() => {
-        connection.synchronize(true);
+        userRepository.createQueryBuilder()
+        .delete()
+        .where("id = :id", { id: 1 })
+        .execute();
     })
     it('should create new user', async () => {
         const request = createCreateUserRequest();
 
-        userService.createUser(createServerUnaryCall<CreateUserRequest>(request), callback);
+        const callback = (err:any, res:any) => {
+            expect(err).to.be.null;
+            expect(res).to.not.be.null;
+        }
+
+        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), callback);
 
         const user = await userRepository.findOne({ username });
         expect(user).to.not.be.undefined;
