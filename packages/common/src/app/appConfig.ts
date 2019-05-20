@@ -5,6 +5,7 @@ export interface AppConfig{
     postgres: boolean;
     mongo: boolean;
     di: boolean;
+    pgModels: any[],
     container: AwilixContainer,
     callerDir: string
 }

@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      - POSTGRES_DATABSE:instagram
+      - POSTGRES_DB:instagram
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:example
+    volumes:
+    - db-data:/var/lib/postgresql/data
+    - ./scripts/db-init-scripts:/docker-entrypoint-initdb.d
+    ports:
+    - "54320:5432"
+    network_mode: bridge
+
+  instagram-node:
+    build: ./
+    image: api-gateway
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - "5000:5000"
+    network_mode: bridge
+    links:
+      - postgres
+
+volumes:
+  db-data:
+    driver: local

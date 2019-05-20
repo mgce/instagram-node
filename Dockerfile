@@ -1,0 +1,23 @@
+FROM node:10.13-alpine AS api-gateway
+ENV NODE_ENV production
+
+WORKDIR /app
+
+RUN yarn global add lerna
+
+COPY package.json lerna.json yarn.lock ./
+COPY packages/api-gateway/package.json ./packages/api-gateway/package.json
+COPY packages/api-gateway/.env ./packages/api-gateway/.env
+COPY packages/common/package.json ./packages/common/package.json
+
+RUN yarn install --production=true
+
+COPY packages/common/dist ./packages/common/dist 
+COPY packages/common/protos ./packages/common/protos
+COPY packages/api-gateway/dist ./packages/api-gateway/dist 
+
+RUN lerna bootstrap
+
+EXPOSE 5000
+
+CMD [ "node", "./packages/api-gateway/dist/server.js"]

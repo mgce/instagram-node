@@ -1,5 +1,6 @@
 import { App, AppConfig, commonConfig } from '@instagram-node/common';
 import { container } from './container';
+import { RefreshTokenModel } from './tokens/refreshToken.model';
 require('dotenv').config()
 
 const appConfig: AppConfig = {
@@ -8,7 +9,8 @@ const appConfig: AppConfig = {
     mongo: false,
     di: true,
     container,
-    callerDir: __dirname
+    callerDir: __dirname,
+    pgModels: [RefreshTokenModel]
 }
 
 const app = new App(appConfig);

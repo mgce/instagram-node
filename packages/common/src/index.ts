@@ -1,5 +1,4 @@
-
-export { postgresConfig } from './config/postgresConfig';
+export { createPostgresConnection } from './dataAccess/postgresConnection';
 export { App } from './app/app';
 export { AppConfig } from './app/appConfig';
 export { RouterConfig } from './app/routerConfig';
@@ -8,7 +7,6 @@ export { BaseEntity } from './domain/baseEntity';
 export { logger } from './utils/logger';
 export { generateGuid } from './utils/generateGuid';
 export { BaseRepository } from './dataAccess/interfaces/baseRepository';
-
 //proto
 export * from '../protos/models/user_grpc_pb';
 export * from "../protos/models/user_pb";

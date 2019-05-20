@@ -1,14 +1,15 @@
-import express, { Router } from 'express';
+import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose'
 import { logger } from '../utils/logger';
 import { Server } from 'http';
-import { createContainer, AwilixContainer } from 'awilix';
+import { AwilixContainer } from 'awilix';
 import { scopePerRequest, loadControllers } from 'awilix-express';
-import { createConnection } from 'typeorm';
 import { AppConfig } from './appConfig';
 import { RouterConfig } from './routerConfig';
+import { createPostgresConnection } from '../dataAccess/postgresConnection';
+import { Connection } from 'typeorm';
 
 export class App {
     private port: number;
@@ -19,13 +20,13 @@ export class App {
         this.addCors();
         this.addBodyParser();
 
-        if(config.postgres)
-            this.addPostgresDb();
+        if (config.postgres)
+            this.addPostgresDb(config.pgModels);
 
-        if(config.di)
+        if (config.di)
             this.addDi(config.container, config.callerDir);
 
-        this.app.use('/', () => "test");
+        this.app.use('/', (req, res) => res.send("service works"));
     }
 
     /**
@@ -52,24 +53,7 @@ export class App {
         return this;
     }
 
-    /**
-     * Add route to express
-     * @param name name of the route
-     * @param route route object
-     */
-    private addRoute(routes: RouterConfig[]): void {
-        routes.map(config => this.app.use(config.name, config.router))
-    }
 
-    /**
-     * Adding mongoDb support
-     * @param url Url to your mongo database
-     */
-    private addMongo(url: string): App {
-        mongoose.Promise = global.Promise;
-        mongoose.connect(url);
-        return this;
-    }
 
     /**
      * Adding Dependency Injection Container
@@ -81,15 +65,20 @@ export class App {
         return this;
     }
 
-    private loadAwilixControllers(callerDir: string){
+    private loadAwilixControllers(callerDir: string) {
         this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }))
     }
 
     /**
      * Adding PostgresDb connection
      */
-    private addPostgresDb(): App {
-        createConnection().catch(error=>console.log(error))
+    private addPostgresDb(pgModels: any[]): App {
+        (async () => {
+            const conn: Connection = await createPostgresConnection(pgModels);
+            // await conn.createQueryRunner().createDatabase('instagram', true);
+            console.log("Postgres connected");
+        })();
+
         return this;
     }
 
