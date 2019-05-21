@@ -20,13 +20,12 @@ export class App {
         this.addCors();
         this.addBodyParser();
 
-        if (config.postgres)
-            this.addPostgresDb(config.pgModels);
+        console.log(config);
 
         if (config.di)
             this.addDi(config.container, config.callerDir);
 
-        this.app.use('/', (req, res) => res.send("service works"));
+        // this.app.use('/', (req, res) => res.send("service works"));
     }
 
     /**
@@ -60,13 +59,16 @@ export class App {
      * @param objectsToRegister 
      */
     private addDi(container: AwilixContainer, callerDir: string): App {
+        console.log("env:" + process.env.NODE_ENV)
         this.app.use(scopePerRequest(container));
         this.loadAwilixControllers(callerDir);
         return this;
     }
 
     private loadAwilixControllers(callerDir: string) {
-        this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }))
+        if(process.env.NODE_ENV === "production")
+        this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }));
+        this.app.use(loadControllers('./**/*.controller.js', { cwd: callerDir }));
     }
 
     /**
@@ -74,7 +76,8 @@ export class App {
      */
     private addPostgresDb(pgModels: any[]): App {
         (async () => {
-            const conn: Connection = await createPostgresConnection(pgModels);
+            console.log(pgModels);
+            const conn: Connection = await createPostgresConnection(pgModels.map(model=>model));
             // await conn.createQueryRunner().createDatabase('instagram', true);
             console.log("Postgres connected");
         })();

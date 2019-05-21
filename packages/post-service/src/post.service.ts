@@ -1,8 +1,8 @@
 import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest,  GrpcError } from '@instagram-node/common';
 import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
-import { PostModel } from './../models/post.model';
+import { PostModel } from './post.model';
 import { Repository } from 'typeorm';
-import { Post } from './../domain/post.entity';
+import { Post } from './post.entity';
 import { EmptyResponse } from '@instagram-node/common/protos/models/common_pb';
 
 export class PostAppService implements IPostServer {

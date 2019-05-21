@@ -6,28 +6,72 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      - POSTGRES_DATABSE:instagram
-      - POSTGRES_DB:instagram
-      - POSTGRES_USER:postgres
-      - POSTGRES_PASSWORD:example
+      - POSTGRES_DATABSE=instagram
+      - POSTGRES_DB=instagram
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=example
     volumes:
     - db-data:/var/lib/postgresql/data
-    - ./scripts/db-init-scripts:/docker-entrypoint-initdb.d
     ports:
     - "54320:5432"
     network_mode: bridge
 
-  instagram-node:
-    build: ./
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.apigateway
     image: api-gateway
-    build: .
     environment:
-      NODE_ENV: production
+      - PG_HOST=192.168.0.103
+      - PG_PORT=54320
     ports:
       - "5000:5000"
     network_mode: bridge
     links:
       - postgres
+
+  user-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.userservice
+    image: user-service
+    environment:
+      - PG_HOST=192.168.0.103
+      - PG_PORT=54320
+    ports:
+      - "5001:5001"
+    network_mode: bridge
+    links:
+      - postgres    
+  
+  image-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.imageservice
+    image: image-service
+    environment:
+      - PG_HOST=192.168.0.103
+      - PG_PORT=54320
+    ports:
+      - "5002:5002"
+    network_mode: bridge
+    links:
+      - postgres          
+
+  post-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.postservice
+    image: post-service
+    environment:
+      - PG_HOST=192.168.0.103
+      - PG_PORT=54320
+    ports:
+      - "5003:5003"
+    network_mode: bridge
+    links:
+      - postgres  
+
 
 volumes:
   db-data:

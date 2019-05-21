@@ -1,18 +1,22 @@
-import { App, AppConfig, commonConfig } from '@instagram-node/common';
+import { App, AppConfig, commonConfig, createPostgresConnection } from '@instagram-node/common';
 import { container } from './container';
 import { RefreshTokenModel } from './tokens/refreshToken.model';
 require('dotenv').config()
 
+const models = [RefreshTokenModel]
+
 const appConfig: AppConfig = {
     port: commonConfig.ports.apiGateway,
-    postgres: true,
+    postgres: false,
+    pgModels: models,
     mongo: false,
     di: true,
     container,
     callerDir: __dirname,
-    pgModels: [RefreshTokenModel]
 }
 
-const app = new App(appConfig);
-
-app.listen();
+createPostgresConnection([RefreshTokenModel]).then(connection => {
+    const app = new App(appConfig);
+    
+    app.listen();
+})

@@ -1,16 +1,13 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
-import { UserModel } from './models/user.model';
-import { UserAppService } from './services/user.service';
+import { UserModel } from './user.model';
+import { UserAppService } from './user.service';
 import { ServerCredentials, Server } from "grpc";
-import { UserService, commonConfig } from '@instagram-node/common';
-
+import { UserService, commonConfig, createPostgresConnection } from '@instagram-node/common';
 
 const SERVER_URI = '0.0.0.0:' + commonConfig.ports.userService
 
 //Run postgres connection
-createConnection().then(connection => {
-
+createPostgresConnection([UserModel]).then(connection => {
     const userRepository = connection.getRepository(UserModel);
 
     const server: Server = new Server()

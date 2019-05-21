@@ -1,0 +1,28 @@
+FROM node:10.13-alpine AS image-service
+ENV NODE_ENV production
+
+RUN apk --no-cache add --virtual native-deps \
+  g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
+  npm install --quiet node-gyp -g
+
+WORKDIR /app
+
+RUN yarn global add lerna
+RUN yarn global add node-gyp
+
+COPY package.json lerna.json yarn.lock ./
+COPY packages/image-service/package.json ./packages/image-service/package.json
+COPY packages/image-service/.env ./packages/image-service/.env
+COPY packages/common/package.json ./packages/common/package.json
+
+RUN yarn install --production=true
+
+COPY packages/common/dist ./packages/common/dist 
+COPY packages/common/protos ./packages/common/protos
+COPY packages/image-service/dist ./packages/image-service/dist 
+
+RUN lerna bootstrap
+
+EXPOSE 5000
+
+CMD [ "node", "./packages/image-service/dist/index.js"]

@@ -1,14 +1,13 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
 import { ServerCredentials, Server } from "grpc";
-import { PostService, commonConfig } from '@instagram-node/common';
-import { PostAppService } from './service/post.service';
-import { PostModel } from './models/post.model';
+import { PostService, commonConfig, createPostgresConnection } from '@instagram-node/common';
+import { PostAppService } from './post.service';
+import { PostModel } from './post.model';
 
 const SERVER_URI = '0.0.0.0:' + commonConfig.ports.postService
 
 //Run postgres connection
-createConnection().then(connection => {
+createPostgresConnection([PostModel]).then(connection => {
 
     const postRepository = connection.getRepository(PostModel);
 
