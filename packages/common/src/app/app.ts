@@ -67,8 +67,9 @@ export class App {
 
     private loadAwilixControllers(callerDir: string) {
         if(process.env.NODE_ENV === "production")
-        this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }));
-        this.app.use(loadControllers('./**/*.controller.js', { cwd: callerDir }));
+            this.app.use(loadControllers('./**/*.controller.js', { cwd: callerDir }));
+        else
+            this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }));
     }
 
     /**
