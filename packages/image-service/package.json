@@ -18,7 +18,7 @@
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "dev": "nodemon",
     "start": "node --inspect=5858 -r ts-node/register ./lib/server.ts",
     "prod": "npm run build && npm run start",
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@instagram-node/common": "^0.0.0",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "rimraf": "^2.6.3"
   }
 }

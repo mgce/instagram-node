@@ -18,7 +18,7 @@
     "url": "git+https://github.com/mgce/instagram-node.git"
   },
   "scripts": {
-    "build": "rimraf dist && yarn install && tsc",
+    "build": "rimraf dist && tsc",
     "dev": "nodemon",
     "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
     "prod": "node ./dist/index.js",

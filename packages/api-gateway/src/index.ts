@@ -16,7 +16,8 @@ const appConfig: AppConfig = {
 }
 
 createPostgresConnection([RefreshTokenModel]).then(connection => {
-    const app = new App(appConfig);
-    
-    app.listen();
-})
+}).catch(error => {
+    console.log(error)
+});
+const app = new App(appConfig);
+app.listen();

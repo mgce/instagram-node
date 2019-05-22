@@ -1,4 +1,6 @@
 import { UserClient as UserGrpcClient, commonConfig } from "@instagram-node/common";
 import { credentials } from 'grpc';
 
-export const UserClient = new UserGrpcClient('0.0.0.0:' + commonConfig.ports.userService, credentials.createInsecure())
+const host = process.env.HOST_ADDRESS || commonConfig.host
+
+export const UserClient = new UserGrpcClient(host + ':' + commonConfig.ports.userService, credentials.createInsecure())

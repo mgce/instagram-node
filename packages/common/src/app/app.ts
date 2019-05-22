@@ -20,8 +20,6 @@ export class App {
         this.addCors();
         this.addBodyParser();
 
-        console.log(config);
-
         if (config.di)
             this.addDi(config.container, config.callerDir);
 
@@ -59,17 +57,13 @@ export class App {
      * @param objectsToRegister 
      */
     private addDi(container: AwilixContainer, callerDir: string): App {
-        console.log("env:" + process.env.NODE_ENV)
         this.app.use(scopePerRequest(container));
         this.loadAwilixControllers(callerDir);
         return this;
     }
 
     private loadAwilixControllers(callerDir: string) {
-        if(process.env.NODE_ENV === "production")
-            this.app.use(loadControllers('./**/*.controller.js', { cwd: callerDir }));
-        else
-            this.app.use(loadControllers('./**/*.controller.ts', { cwd: callerDir }));
+        this.app.use(loadControllers('./**/*.controller{.ts,.js}', { cwd: callerDir }));
     }
 
     /**

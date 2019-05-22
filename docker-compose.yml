@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile.apigateway
     image: api-gateway
     environment:
-      - PG_HOST=192.168.0.103
+      - HOST_ADDRESS=192.168.0.103
       - PG_PORT=54320
     ports:
       - "5000:5000"
@@ -36,7 +36,7 @@ services:
       dockerfile: Dockerfile.userservice
     image: user-service
     environment:
-      - PG_HOST=192.168.0.103
+      - HOST_ADDRESS=192.168.0.103
       - PG_PORT=54320
     ports:
       - "5001:5001"
@@ -50,7 +50,7 @@ services:
       dockerfile: Dockerfile.imageservice
     image: image-service
     environment:
-      - PG_HOST=192.168.0.103
+      - HOST_ADDRESS=192.168.0.103
       - PG_PORT=54320
     ports:
       - "5002:5002"
@@ -64,7 +64,7 @@ services:
       dockerfile: Dockerfile.postservice
     image: post-service
     environment:
-      - PG_HOST=192.168.0.103
+      - HOST_ADDRESS=192.168.0.103
       - PG_PORT=54320
     ports:
       - "5003:5003"
