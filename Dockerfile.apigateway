@@ -20,4 +20,4 @@ RUN lerna bootstrap
 
 EXPOSE 5000
 
-CMD [ "node", "./packages/api-gateway/dist/server.js"]
+CMD [ "node", "./packages/api-gateway/dist/index.js"]

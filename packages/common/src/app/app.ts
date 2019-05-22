@@ -7,7 +7,6 @@ import { Server } from 'http';
 import { AwilixContainer } from 'awilix';
 import { scopePerRequest, loadControllers } from 'awilix-express';
 import { AppConfig } from './appConfig';
-import { RouterConfig } from './routerConfig';
 import { createPostgresConnection } from '../dataAccess/postgresConnection';
 import { Connection } from 'typeorm';
 
@@ -19,7 +18,6 @@ export class App {
         this.app = express();
         this.addCors();
         this.addBodyParser();
-
         if (config.di)
             this.addDi(config.container, config.callerDir);
 
@@ -50,8 +48,6 @@ export class App {
         return this;
     }
 
-
-
     /**
      * Adding Dependency Injection Container
      * @param objectsToRegister 
@@ -79,6 +75,11 @@ export class App {
 
         return this;
     }
+
+    // public addLogger(){
+    //     this.app.use(expressWinston.logger(logger));
+    //     return this.app;
+    // }
 
 }
 

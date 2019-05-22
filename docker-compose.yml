@@ -21,6 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile.apigateway
     image: api-gateway
+    env_file: ./packages/api-gateway/.env
     environment:
       - HOST_ADDRESS=192.168.0.103
       - PG_PORT=54320

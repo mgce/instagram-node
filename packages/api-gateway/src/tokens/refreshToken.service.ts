@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { AuthenticateResponse } from "@instagram-node/common";
+import { AuthenticateResponse, logger } from "@instagram-node/common";
 import { RefreshTokenRepository } from "./refreshToken.repo";
 var randtoken = require('rand-token');
 
@@ -20,8 +20,10 @@ export class RefreshTokenService {
         }
 
         const secret = process.env.JWT_SECRET;
-        if (secret === undefined)
+        if (secret === undefined){
+            logger.info("Secret key doesn't exist")
             return undefined
+        }
 
         const token = jwt.sign(claims, secret, { expiresIn: 36000 })
 
@@ -35,12 +37,16 @@ export class RefreshTokenService {
     public async getJwtToken(refreshToken: string) : Promise<object | undefined> {
         var activeRefreshToken = this._refreshTokenRepository.exist(refreshToken);
     
-        if (!activeRefreshToken)
+        if (!activeRefreshToken){
+            logger.info("There is no active refresh token.")
             return undefined;
+        }
     
         const secret = process.env.JWT_SECRET;
-        if (secret === undefined)
+        if (secret === undefined){
+            logger.info("Secret key doesn't exist")
             return undefined
+        }
     
         const token = jwt.sign({ userId: activeRefreshToken }, secret, { expiresIn: 36000 })
     
