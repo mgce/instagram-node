@@ -4,7 +4,7 @@ export const resources = {
         PasswordsAreNoEqual:"Passwords are not equal",
         UserWithThisEmailExist:"User with this email is exist",
         UserWithThisEmailNotExist:"User with this email does not exist",
-        UsernameCannotBeEmpty:"Username cannot be empty",
+        UsernameToShort:"Username must have at least $constraint1 characters.",
         PasswordIsInvalid:"Password is invalid",
     }
 }

@@ -1,9 +1,9 @@
 import { BaseEntity } from '@instagram-node/common';
 import { Column, Entity } from 'typeorm';
-import { Image } from './image.interface';
+import { Image } from './image.entity';
 
 @Entity()
-export class ImageModel extends BaseEntity implements Image{
+export class ImageModel extends BaseEntity{
     @Column("bytea")
     public data: any;
     @Column()

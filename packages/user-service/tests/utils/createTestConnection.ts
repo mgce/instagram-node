@@ -1,5 +1,5 @@
 import { createConnection, Connection } from "typeorm";
-import { UserModel } from './../../src/models/user.model';
+import { UserModel } from './../../src/user.model';
 
  export const createTestConnection = () : Promise<Connection> => {
     return createConnection({
@@ -8,7 +8,7 @@ import { UserModel } from './../../src/models/user.model';
         "host":"localhost",
         "port":5432,
         "username":"postgres",
-        "password":"",
+        "password":"Mateusz11",
         "database":"instagram-test",
         "synchronize":true,
         "logging":false,

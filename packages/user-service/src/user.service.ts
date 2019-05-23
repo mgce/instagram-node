@@ -2,11 +2,12 @@ import { UserModel } from './user.model';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from './user.entity';
-import { CreateUserRequest, GrpcError, AuthenticateResponse, AuthenticateRequest } from '@instagram-node/common'
+import { CreateUserRequest, GrpcError, AuthenticateResponse, AuthenticateRequest, handleError } from '@instagram-node/common'
 import { IUserServer } from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { EmptyResponse } from '@instagram-node/common/protos/models/common_pb';
 import { resources } from './resources';
+import { validate } from 'class-validator';
 
 export class UserAppService implements IUserServer {
     private userRepository: Repository<UserModel>
@@ -27,6 +28,10 @@ export class UserAppService implements IUserServer {
 
         const user = new User(request.username, request.emailaddress, salt, hashedPassword);
 
+        const errors = await validate(user);
+        if(errors.length > 0)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, handleError(errors)), null)
+
         var entity = this.userRepository.create(user);
         await this.userRepository.save(entity);
         const response = new EmptyResponse();
@@ -44,9 +49,6 @@ export class UserAppService implements IUserServer {
         const existingUser = await this.userRepository.findOne({ emailAddress: request.emailaddress })
         if (existingUser)
             return new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserWithThisEmailExist)
-
-        if (request.username === null || request.username === undefined)
-            return new GrpcError(status.INVALID_ARGUMENT, resources.errors.UsernameCannotBeEmpty)
 
         return null;
     }

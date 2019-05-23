@@ -72,7 +72,7 @@ export class Server extends grpc.Server {
                     else {
                         // middleware is a MiddlewareHandlerMap
                         // Use implementation key to identify the correct function to call
-                        this.handler(call, callback, implementation[key], middleware[key]);
+                        // this.handler(call, callback, implementation[key], middleware[key]);
                     }    
                 }
                 else {

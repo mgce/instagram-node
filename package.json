@@ -22,16 +22,14 @@
     "@types/pg": "^7.4.14",
     "@types/sinon": "^7.0.11",
     "@types/sinon-chai": "^3.2.2",
-    "@types/winston": "^2.4.4",
     "chai": "^4.2.0",
+    "grpc-tools": "^1.7.3",
+    "grpc_tools_node_protoc_ts": "^2.4.2",
     "lerna": "^3.13.4",
     "mocha": "^6.1.4",
     "nodemon": "^1.18.11",
     "ts-node": "^8.1.0",
     "ts-protoc-gen": "^0.9.0",
-    "@types/protobufjs": "^6.0.0",
-    "grpc_tools_node_protoc_ts": "^2.4.2",
-    "grpc-tools": "^1.7.3",
     "typescript": "^3.4.5"
   },
   "dependencies": {

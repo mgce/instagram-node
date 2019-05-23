@@ -1,12 +1,12 @@
-import { UserAppService } from './../src/services/user.service';
+import { UserAppService } from './../src/user.service';
 import { getRepository, Repository, Connection } from "typeorm";
-import { UserModel } from './../src/models/user.model';
+import { UserModel } from './../src/user.model';
 import { ServerUnaryCall } from "grpc";
 import { CreateUserRequest, AuthenticateRequest } from "@instagram-node/common";
 import { createTestConnection } from "./utils/createTestConnection";
 import { expect } from 'chai';
 import { resources } from '../src/resources';
-import { User } from '../src/domain/user.entity';
+import { User } from '../src/user.entity';
 
 const username = "Test";
 const password = "Password"
@@ -35,7 +35,7 @@ describe('User App service', () => {
             expect(res).to.not.be.null;
         }
 
-        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), callback);
+        await userService.create(createServerUnaryCall<CreateUserRequest>(request), callback);
 
         const user = await userRepository.findOne({ username });
         expect(user).to.not.be.undefined;
@@ -48,7 +48,7 @@ describe('User App service', () => {
         const request = createCreateUserRequest()
         request.setPassword(null);
 
-        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
+        await userService.create(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
             expect(err.message).to.equal(resources.errors.PasswordsAreNoEqual)
         })
     })
@@ -60,14 +60,24 @@ describe('User App service', () => {
         await userRepository.save(entity);
         const request = createCreateUserRequest()
 
-        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
+        await userService.create(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
             expect(err.message).to.equal(resources.errors.UserWithThisEmailExist)
+        })
+    })
+
+    it('should throw error when username is empty', async ()=>{
+
+        const request = createCreateUserRequest()
+        request.setUsername("");
+
+        await userService.create(createServerUnaryCall<CreateUserRequest>(request), (err, res) => {
+            expect(err.message).to.equal("Username must have at least 3 characters.")
         })
     })
 
     it('should authenticate user when user exist', async ()=>{
         const request = createCreateUserRequest()
-        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), ()=>{});
+        await userService.create(createServerUnaryCall<CreateUserRequest>(request), ()=>{});
         const authenticateRequest = createAuthenticateRequest();
 
         await userService.authenticate(createServerUnaryCall<AuthenticateRequest>(authenticateRequest), (err, res) => {
@@ -77,7 +87,7 @@ describe('User App service', () => {
 
     it('should not authenticate user when password is invalid', async ()=>{
         const request = createCreateUserRequest();
-        await userService.createUser(createServerUnaryCall<CreateUserRequest>(request), ()=>{});
+        await userService.create(createServerUnaryCall<CreateUserRequest>(request), ()=>{});
         const authenticateRequest = createAuthenticateRequest();
         authenticateRequest.setPassword('invalidPassword')
 

@@ -1,3 +1,4 @@
+
 export { createPostgresConnection } from './dataAccess/postgresConnection';
 export { App } from './app/app';
 export { AppConfig } from './app/appConfig';
@@ -7,6 +8,7 @@ export { BaseEntity } from './domain/baseEntity';
 export { logger } from './utils/logger';
 export { generateGuid } from './utils/generateGuid';
 export { BaseRepository } from './dataAccess/interfaces/baseRepository';
+export { handleError } from './validation/errorHandler';
 //proto
 export * from '../protos/models/user_grpc_pb';
 export * from "../protos/models/user_pb";
