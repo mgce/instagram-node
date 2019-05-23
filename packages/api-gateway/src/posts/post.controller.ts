@@ -20,7 +20,7 @@ export class PostController {
         request.setDescription(description);
         request.setImageurl(imageUrl);
 
-        PostClient.add(request, (err, result) => {
+        PostClient.create(request, (err, result) => {
             if (err)
                 return res.send(err);
             return res.send(result.getMessage())

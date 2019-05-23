@@ -75,11 +75,5 @@ export class App {
 
         return this;
     }
-
-    // public addLogger(){
-    //     this.app.use(expressWinston.logger(logger));
-    //     return this.app;
-    // }
-
 }
 

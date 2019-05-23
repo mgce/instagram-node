@@ -15,7 +15,7 @@ export class UserAppService implements IUserServer {
         this.userRepository = userRepository;
     }
 
-    public async createUser(call: ServerUnaryCall<CreateUserRequest>, callback: sendUnaryData<EmptyResponse>): Promise<void> {
+    public async create(call: ServerUnaryCall<CreateUserRequest>, callback: sendUnaryData<EmptyResponse>): Promise<void> {
         const request = call.request.toObject();
 
         const validation = await this.validateCreateUser(request, callback);

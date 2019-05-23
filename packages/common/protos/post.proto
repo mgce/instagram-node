@@ -22,6 +22,6 @@ message DeletePostRequest {
 
 
 service Post{
-    rpc Add(CreatePostRequest) returns (PostCreatedResponse){}
+    rpc Create(CreatePostRequest) returns (PostCreatedResponse){}
     rpc Delete(DeletePostRequest) returns (common.EmptyResponse){}
 }

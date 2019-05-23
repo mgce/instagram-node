@@ -13,7 +13,7 @@ export class PostAppService implements IPostServer {
         this.postRepository = postRepository;
     }
 
-    public async add(call: ServerUnaryCall<CreatePostRequest>, callback: sendUnaryData<PostCreatedResponse>): Promise<void> {
+    public async create(call: ServerUnaryCall<CreatePostRequest>, callback: sendUnaryData<PostCreatedResponse>): Promise<void> {
         var postData = call.request.toObject();
 
         const post = new Post(postData.userid, postData.imageurl, postData.description, []);

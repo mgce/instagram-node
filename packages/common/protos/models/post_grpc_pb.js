@@ -51,8 +51,8 @@ function deserialize_grpc_post_v1_PostCreatedResponse(buffer_arg) {
 
 
 var PostService = exports.PostService = {
-  add: {
-    path: '/grpc.post.v1.Post/Add',
+  create: {
+    path: '/grpc.post.v1.Post/Create',
     requestStream: false,
     responseStream: false,
     requestType: post_pb.CreatePostRequest,

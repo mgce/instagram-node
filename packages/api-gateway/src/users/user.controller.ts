@@ -20,7 +20,7 @@ export class UserController {
         request.setConfirmpassword(confirmPassword);
         request.setEmailaddress(emailAddress);
 
-        UserClient.createUser(request, (err, result) => {
+        UserClient.create(request, (err, result) => {
             if (err)
                 return res.send(err);
             return res.send(result.getMessage())

@@ -21,6 +21,6 @@ message AuthenticateResponse {
 }
 
 service User{
-    rpc CreateUser(CreateUserRequest) returns (common.EmptyResponse){}
+    rpc Create(CreateUserRequest) returns (common.EmptyResponse){}
     rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse){}
 }

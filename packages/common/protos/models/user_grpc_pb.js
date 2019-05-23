@@ -51,8 +51,8 @@ function deserialize_grpc_user_v1_CreateUserRequest(buffer_arg) {
 
 
 var UserService = exports.UserService = {
-  createUser: {
-    path: '/grpc.user.v1.User/CreateUser',
+  create: {
+    path: '/grpc.user.v1.User/Create',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.CreateUserRequest,

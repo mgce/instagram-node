@@ -36,5 +36,11 @@ shell.exec('grpc_tools_node_protoc '
   + `--ts_out="${MODEL_DIR}" `
   + `--proto_path ${PROTO_DIR} ${PROTO_DIR}\\user.proto`);
 */
+
+// shell.exec(`protoc --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH} `
+// + `--ts_out="${MODEL_DIR}" `
+// + `${PROTO_DIR}/post.proto`)
+
+
 // https://github.com/dcodeIO/protobuf.js#command-line
 // https://github.com/dcodeIO/protobuf.js#command-line-api
