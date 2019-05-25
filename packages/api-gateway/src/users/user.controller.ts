@@ -9,8 +9,7 @@ import { requestValidator } from "../middlewares/requestValidator";
 export class UserController {
     @POST()
     @route('/')
-    @before(createUserValidator)
-    @before(requestValidator)
+    @before([createUserValidator, requestValidator])
     async create(req: express.Request, res: express.Response) {
         const request: CreateUserRequest = new CreateUserRequest();
         const { username, password, confirmPassword, emailAddress } = req.body;

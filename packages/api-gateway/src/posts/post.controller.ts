@@ -10,8 +10,7 @@ import { createPostValidator, deletePostValidator } from "./post.validators";
 export class PostController {
     @POST()
     @route('/')
-    @before(createPostValidator)
-    @before(requestValidator)
+    @before([createPostValidator, requestValidator])
     async create(req: RequestWithClaims, res: express.Response) {
         const request: CreatePostRequest = new CreatePostRequest();
         const { description, imageUrl } = req.body;
@@ -29,8 +28,7 @@ export class PostController {
 
     @DELETE()
     @route('/')
-    @before(deletePostValidator)
-    @before(requestValidator)
+    @before([deletePostValidator, requestValidator])
     async delete(req: RequestWithClaims, res: express.Response){
         const request = new DeletePostRequest();
         const { postId } = req.body;
