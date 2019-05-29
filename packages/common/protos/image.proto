@@ -3,22 +3,25 @@ syntax="proto3";
 package grpc.image.v1;
 
 message UploadImageRequest {
-    enum FileType {
-        JPG = 0;
-        JPEG = 1;
-        PNG = 2;
-    }
-
     string name = 1;
-    FileType image_format = 2;
+    string fileFormat = 2;
     bytes data = 3;
 }
 
 message UploadImageResponse {
     string message = 1;
-    int64 imageId = 2;
+    string imageId = 2;
+}
+
+message DownloadImageRequest {
+    string imageId = 1;
+}
+
+message DownloadImageResponse {
+    bytes data = 1;
 }
 
 service Image{
-    rpc Upload(UploadImageRequest) returns (UploadImageResponse){}
+    rpc Upload(stream UploadImageRequest) returns (UploadImageResponse){}
+    rpc Download(DownloadImageRequest) returns (stream DownloadImageResponse){}
 }

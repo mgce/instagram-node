@@ -1,8 +1,8 @@
 import { RefreshTokenService } from "./tokens/refreshToken.service";
-import { asClass, createContainer } from "awilix";
+import { asClass, createContainer, AwilixContainer } from "awilix";
 import { RefreshTokenRepository } from "./tokens/refreshToken.repo";
 
-const container = createContainer({
+const container : AwilixContainer = createContainer({
     injectionMode: "CLASSIC"
 });
 
