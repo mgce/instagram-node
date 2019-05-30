@@ -3,9 +3,11 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "preserveSymlinks": true
   },
   "include": [
-    "./src"
+    "./src",
+    "./node_modules/@instagram-node/common/protos/models"
   ]
  }

@@ -1,14 +1,11 @@
 import { ImageClient } from "./image.client";
 import express = require("express");
-import { POST, route, before } from "awilix-router-core";
+import { POST, route, before, GET } from "awilix-router-core";
 import { UploadImageRequest, UploadImageResponse, DownloadImageRequest, DownloadImageResponse } from '@instagram-node/common';
 import { ServiceError } from "grpc";
-import multer from 'multer';
+import multiparty from 'multiparty';
 import { Stream } from "stream";
-// var multer  = require('multer');
-var upload = multer({
-    
-});
+
 
 @route('/image')
 export class PostController {
@@ -20,9 +17,18 @@ export class PostController {
         console.log("");
         const callback = (err : ServiceError, result: UploadImageResponse)=>{
             if(err)
-            return res.send(err);
-            return res.send('test')
+                return res.send(err);
+            return res.send(result)
         }
+
+        // const form = new multiparty.Form()
+
+        // form.on('part', (part)=>{
+        //     const request = new UploadImageRequest;
+        //     request.setData(part as any);
+        //     request.setFileformat(".png")
+        //     writable.write(request);
+        // })
 
         const writable = ImageClient.upload(callback)
         
@@ -30,7 +36,6 @@ export class PostController {
             const request = new UploadImageRequest;
             request.setData(data);
             request.setFileformat(".png")
-            // request.setName(originalname);
             writable.write(request);
         })
 
@@ -38,15 +43,21 @@ export class PostController {
             writable.end();
         })
     }
-    @POST()
-    @route('/download')
+    @GET()
+    @route('/download/:imageId')
     async download(req: express.Request, res: express.Response){
         const request = new DownloadImageRequest();
-        request.setImageid(req.body.imageId);
+        request.setImageid(req.params.imageId);
         const img = ImageClient.download(request);
 
         img.on('data', (data : DownloadImageResponse)=>{
-            res.write(data.getData());
+            const response = data.toObject();
+            res.setHeader('Content-Type', 'image/jpeg')
+            res.write(response.data);
+        })
+
+        img.on('end', ()=>{
+            res.end();
         })
     }
 }

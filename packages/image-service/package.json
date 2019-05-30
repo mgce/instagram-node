@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "@instagram-node/common": "^0.0.0",
+    "@types/multiparty": "^0.0.32",
     "azure-storage": "^2.10.3",
+    "multiparty": "^4.2.1",
     "rimraf": "^2.6.3"
   }
 }

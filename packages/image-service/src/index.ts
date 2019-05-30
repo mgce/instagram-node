@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { ServerCredentials, Server } from "grpc";
-import { commonConfig, ImageService, createPostgresConnection } from '@instagram-node/common';
+import { commonConfig, ImageService } from '@instagram-node/common';
 import { ImageAppService } from "./image.service";
 
 const SERVER_URI = '0.0.0.0:' + commonConfig.ports.imageService
