@@ -1,4 +1,4 @@
-import { IImageServer, UploadImageRequest, UploadImageResponse, generateGuid, DownloadImageRequest, DownloadImageResponse  } from '@instagram-node/common';
+import { IImageServer, UploadImageRequest, UploadImageResponse, generateGuid, DownloadImageRequest, DownloadImageResponse } from '@instagram-node/common';
 import { ServerReadableStream, sendUnaryData, ServerWriteableStream } from 'grpc';
 import azure from 'azure-storage';
 import multiparty from 'multiparty';
@@ -11,34 +11,35 @@ export class ImageAppService implements IImageServer {
         const fileName = generateGuid()
         const response = new UploadImageResponse();
         response.setImageid(fileName);
-        const writable = blobService.createWriteStreamToBlockBlob('test', fileName, {contentSettings:{contentType:"image/jpeg"}}, (err, res)=>{
-            if(err)
+        const writable = blobService.createWriteStreamToBlockBlob('test', fileName, { contentSettings: { contentType: "image/jpeg" } }, (err, res) => {
+            if (err)
                 return callback(err, null);
             response.setMessage("Image upload failed.");
             return callback(err, response);
         });
         // call.pipe(writable)
-
-        call.on('data', (data:UploadImageRequest)=>{
+        let body = '';
+        call.on('data', (data) => {
             const bytes = data.toObject().data;
-            writable.write(bytes)
+            console.log('bytes: ' + bytes);
+            writable.write(bytes, 'utf-8', (err) => {
+                return callback(err, response);
+            })
         })
 
         response.setMessage("Image has been created");
         response.setImageid(fileName);
-        
-        writable.on('error', (err)=>{
+
+        call.on('error', (err) => {
             response.setMessage("Image upload failed.");
             return callback(err, response);
         })
-        
-        call.on('error', (err)=> {
-            response.setMessage("Image upload failed.");
-            return callback(err, response);
-        })
-        call.on('end', ()=>{
+        call.on('end', () => {
+            writable.write(body, 'utf-8', (err) => {
+                return callback(err, response);
+            })
             writable.end();
-            
+
             response.setMessage("Image has been created.");
             return callback(null, response);
         })
@@ -46,18 +47,18 @@ export class ImageAppService implements IImageServer {
 
     public async download(call: ServerWriteableStream<DownloadImageRequest>): Promise<void> {
         const request = call.request.toObject();
-        const readStream = blobService.createReadStream('test', request.imageid.toString(), (err, result)=> {
-            if(err)
+        const readStream = blobService.createReadStream('test', request.imageid.toString(), (err, result) => {
+            if (err)
                 console.log(err);
-             console.log(result);
+            console.log(result);
         });
-        readStream.on('data', (data)=> {
+        readStream.on('data', (data) => {
             const response = new DownloadImageResponse();
             response.setData(data);
             call.write(response)
         });
 
-        readStream.on('end', ()=>{
+        readStream.on('end', () => {
             call.end();
         })
     }

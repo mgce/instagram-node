@@ -1,47 +1,68 @@
 import { ImageClient } from "./image.client";
 import express = require("express");
 import { POST, route, before, GET } from "awilix-router-core";
-import { UploadImageRequest, UploadImageResponse, DownloadImageRequest, DownloadImageResponse } from '@instagram-node/common';
+import { UploadImageRequest, UploadImageResponse, DownloadImageRequest, DownloadImageResponse, logger } from '@instagram-node/common';
 import { ServiceError } from "grpc";
-import multiparty from 'multiparty';
-import { Stream } from "stream";
-
-
+import multer from 'multer';
+const upload = multer({storage: multer.memoryStorage()})
+import intoStream from 'into-stream';
 @route('/image')
 export class PostController {
     @POST()
     @route('/upload')
-    // @before([upload])
+    @before([upload.single('file')])
     upload(req: express.Request, res: express.Response) {
         // const {originalname, mimetype} = req.file;
-        console.log("");
+        const {originalname, mimetype} = req.file;
         const callback = (err : ServiceError, result: UploadImageResponse)=>{
-            if(err)
+            if(err){
+                logger.warn(err);
                 return res.send(err);
+            }
             return res.send(result)
         }
+        const readable = intoStream(req.file.buffer);
+        const writable = ImageClient.upload(callback)
+        
+        readable.on('data', (data)=>{
+            const request = new UploadImageRequest;
+            // const dataBuff = data.get('file').toString()
+            request.setData(data);
+            request.setFileformat(mimetype)
+            request.setName(originalname)
+            writable.write(request);
+        })
 
-        // const form = new multiparty.Form()
 
-        // form.on('part', (part)=>{
+        readable.on('end', ()=>{
+            writable.end();
+        })
+        // const form = new multiparty.Form();
+
+        // form.on('part', (part:FormData)=>{
         //     const request = new UploadImageRequest;
-        //     request.setData(part as any);
+        //     request.setData(new Uint8Array(part.));
+        //     request.setFileformat(".png")
+        //     writable.write(request);
+        //     part.resume()
+        // })
+
+        // form.on('close', ()=>{
+        //     res.end();
+        // })
+
+        // form.parse(req);
+        // req.on('data', (data:FormData)=> {
+        //     const request = new UploadImageRequest;
+        //     const dataBuff = data.get('file').toString()
+        //     request.setData(dataBuff);
         //     request.setFileformat(".png")
         //     writable.write(request);
         // })
 
-        const writable = ImageClient.upload(callback)
-        
-        req.on('data', (data)=> {
-            const request = new UploadImageRequest;
-            request.setData(data);
-            request.setFileformat(".png")
-            writable.write(request);
-        })
-
-        req.on('end', ()=>{
-            writable.end();
-        })
+        // req.on('end', ()=>{
+        //     writable.end();
+        // })
     }
     @GET()
     @route('/download/:imageId')

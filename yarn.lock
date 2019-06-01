@@ -895,6 +895,13 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/form-data@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
+  integrity sha512-JAMFhOaHIciYVh8fb5/83nmuO/AHwmto+Hq7a9y8FzLDcC1KCU344XDOMEmahnrTFlHjgh4L0WJFczNIX2GxnQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/glob@^7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
@@ -908,6 +915,13 @@
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/@types/google-protobuf/-/google-protobuf-3.2.7.tgz#9576ed5dd62cdb1c9f952522028a03b7cb2b69b5"
   integrity sha512-Pb9wl5qDEwfnJeeu6Zpn5Y+waLrKETStqLZXHMGCTbkNuBBudPy4qOGN6veamyeoUBwTm2knOVeP/FlHHhhmzA==
+
+"@types/into-stream@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@types/into-stream/-/into-stream-3.1.1.tgz#c1b9b8dc354a2df7ff0bfd9fb3c5773f4cd24f73"
+  integrity sha512-v8SIFC6CQSdMymbM2wOkjz62FhCgb4eoqF99bJ2jQouof+0Q0VtfWISZUVmMWWZWJHeeUCuJq+NwIZxGZDpOKA==
+  dependencies:
+    into-stream "*"
 
 "@types/jsonwebtoken@^8.3.2":
   version "8.3.2"
@@ -3126,7 +3140,7 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data@~2.3.2:
+form-data@^2.3.3, form-data@~2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.3.tgz#dcce52c05f644f298c6a7ab936bd724ceffbf3a6"
   integrity sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==
@@ -3152,7 +3166,7 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-from2@^2.1.0:
+from2@^2.1.0, from2@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/from2/-/from2-2.3.0.tgz#8bfb5502bde4a4d36cfdeea007fcca21d7e382af"
   integrity sha1-i/tVAr3kpNNs/e6gB/zKIdfjgq8=
@@ -3855,6 +3869,14 @@ interpret@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
+
+into-stream@*, into-stream@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/into-stream/-/into-stream-5.1.0.tgz#b05f37d8fed05c06a0b43b556d74e53e5af23878"
+  integrity sha512-cbDhb8qlxKMxPBk/QxTtYg1DQ4CwXmadu7quG3B7nrJsgSncEreF2kwWKZFdnjc/lSNNIkFPsjI7SM0Cx/QXPw==
+  dependencies:
+    from2 "^2.3.0"
+    p-is-promise "^2.0.0"
 
 invert-kv@^1.0.0:
   version "1.0.0"
