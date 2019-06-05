@@ -2,7 +2,7 @@ import { body } from 'express-validator/check';
 
 export const createPostValidator = [
     body('description').exists(),
-    body('imageUrl').exists(),
+    body('imageId').exists(),
 ]
 
 export const deletePostValidator = [

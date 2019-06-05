@@ -7,7 +7,7 @@ import multer from 'multer';
 const upload = multer({storage: multer.memoryStorage()})
 import intoStream from 'into-stream';
 @route('/image')
-export class PostController {
+export class ImageController {
     @POST()
     @route('/upload')
     @before([upload.single('file')])
@@ -19,7 +19,7 @@ export class PostController {
                 logger.warn(err);
                 return res.send(err);
             }
-            return res.send(result)
+            return res.send(result.toObject())
         }
         const readable = intoStream(req.file.buffer);
         const writable = ImageClient.upload(callback)

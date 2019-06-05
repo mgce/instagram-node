@@ -5,6 +5,7 @@ import { UserClient } from '../users/user.client';
 import { RefreshTokenService } from "./refreshToken.service";
 import { requestValidator } from "../middlewares/requestValidator";
 import { authenticateValidator } from "./token.validators";
+import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
 
 @route('/token')
 export class TokenController {
@@ -32,7 +33,8 @@ export class TokenController {
             if (tokens === undefined)
                 res.status(400).json("Something goes wrong");
 
-            res.json(tokens)
+            const response = new ApiResponseMessage("You are logged in", true, tokens)    
+            res.json(response)
         })
     }
 
