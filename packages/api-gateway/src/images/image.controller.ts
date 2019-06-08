@@ -6,11 +6,12 @@ import { ServiceError } from "grpc";
 import multer from 'multer';
 const upload = multer({storage: multer.memoryStorage()})
 import intoStream from 'into-stream';
+import { authOnly } from "../middlewares/jwtValidator";
 @route('/image')
 export class ImageController {
     @POST()
     @route('/upload')
-    @before([upload.single('file')])
+    @before([authOnly, upload.single('file')])
     upload(req: express.Request, res: express.Response) {
         // const {originalname, mimetype} = req.file;
         const {originalname, mimetype} = req.file;

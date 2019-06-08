@@ -29,7 +29,7 @@ export class TokenController {
             if (err)
                 return res.send(err);
 
-            var tokens = await this._refreshTokenService.getTokens(result.toObject())
+            var tokens = await this._refreshTokenService.getTokens(result.getUserid())
             if (tokens === undefined)
                 res.status(400).json("Something goes wrong");
 
@@ -39,9 +39,9 @@ export class TokenController {
     }
 
     @GET()
-    @route('/')
+    @route('/:refreshToken')
     async regenerateToken(req: express.Request, res: express.Response) {
-        const { refreshToken } = req.query;
+        const { refreshToken } = req.params;
 
         var tokens = await this._refreshTokenService.getJwtToken(refreshToken);
         //in future we have to get claims from user-service

@@ -7,17 +7,11 @@ export default class LoginPage extends React.PureComponent {
       emailAddress: "",
       password: ""
     };
-    this.onEmailAddressHandler = this.onEmailAddressHandler.bind(this);
-    this.onPasswordHandler = this.onPasswordHandler.bind(this);
+    this.onFieldChanged = this.onFieldChanged.bind(this);
   }
-  onEmailAddressHandler = event => {
+  onFieldChanged = event => {
     this.setState({
-      emailAddress: event.target.value
-    });
-  };
-  onPasswordHandler = event => {
-    this.setState({
-      password: event.target.value
+      [event.target.name]: event.target.value
     });
   };
   onSubmitForm = event => {
@@ -35,23 +29,25 @@ export default class LoginPage extends React.PureComponent {
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
             type="email"
+            name="emailAddress"
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="Enter email"
             value={this.state.emailAddress}
-            onChange={this.onEmailAddressHandler}
+            onChange={this.onFieldChanged}
           />
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputPassword1">Password</label>
           <input
             type="password"
+            name="password"
             className="form-control"
             id="exampleInputPassword1"
             placeholder="Password"
             value={this.state.password}
-            onChange={this.onPasswordHandler}
+            onChange={this.onFieldChanged}
           />
         </div>
         <button type="submit" className="btn btn-primary">

@@ -10,18 +10,17 @@ export default class AddPostPage extends React.PureComponent {
       description: ""
     };
     this.onFileHandler = this.onFileHandler.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    this.onDescriptionHandler = this.onDescriptionHandler.bind(this);
+    this.onFieldChanged = this.onFieldChanged.bind(this);
   }
   onFileHandler = event => {
     this.setState({
       selectedFile: event.target.files[0]
     });
   };
-  onDescriptionHandler = event => {
+  onFieldChanged = event => {
     if (event !== undefined && event.preventDefault) event.preventDefault();
     this.setState({
-      description: event.target.value
+      [event.target.name]: event.target.value
     });
   };
   onSubmitHandler = event => {
@@ -56,7 +55,8 @@ export default class AddPostPage extends React.PureComponent {
               type="email"
               className="form-control"
               rows="3"
-              onChange={this.onDescriptionHandler}
+              onChange={this.onFieldChanged}
+              name="description"
               value={this.state.description}
             />
           </div>

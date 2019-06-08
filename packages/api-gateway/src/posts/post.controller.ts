@@ -6,12 +6,13 @@ import { requestValidator } from "../middlewares/requestValidator";
 import { RequestWithClaims } from "../interfaces/requestWithClaims";
 import { createPostValidator, deletePostValidator } from "./post.validators";
 import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
+import { authOnly } from "../middlewares/jwtValidator";
 
 @route('/post')
 export class PostController {
     @POST()
     @route('/')
-    @before([createPostValidator, requestValidator])
+    @before([authOnly, createPostValidator, requestValidator])
     async create(req: RequestWithClaims, res: express.Response) {
         console.log(req);
         const request: CreatePostRequest = new CreatePostRequest();

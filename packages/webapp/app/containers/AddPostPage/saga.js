@@ -7,42 +7,40 @@ import { ADD_POST } from "containers/UserProfilePage/constants";
 import { postAdded, addPostError } from "containers/UserProfilePage/actions";
 
 import request from "utils/request";
-import { json } from "body-parser";
 
 /**
  * Github repos request/response handler
  */
 export function* addPost(data) {
-  const requestURL = `http://localhost:5000/`;
-
   try {
     // Call our request helper (see 'utils/request')
-    const imageResponse = yield call(request, requestURL + 'image/upload', {
+    const imageResponse = yield call(request, {
       method: "POST",
-      body: data.image,
+      url: "image/upload",
+      data: data.image,
       headers: {
-        'Accept': 'application/json',
-      },
+        Accept: "application/json"
+      }
     });
 
     const postData = {
-      "imageId": imageResponse.imageid,
-      "description": data.description,
-      "userId": 1
-    }
+      imageId: imageResponse.imageid,
+      description: data.description,
+      userId: 1
+    };
 
     // const postDataAsJson = JSON.stringify(postData);
 
-    const postResponse = yield call(request, requestURL + 'post', {
+    const postResponse = yield call(request, requestURL + "post", {
       method: "POST",
       body: JSON.stringify(postData),
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
 
-    postData["id"]=postResponse.data.postId
+    postData["id"] = postResponse.data.postId;
 
     yield put(postAdded(postData));
   } catch (err) {

@@ -10,13 +10,13 @@ export class RefreshTokenService {
         this._refreshTokenRepository = refreshTokenRepository;
     }
 
-    public async getTokens(claims: AuthenticateResponse.AsObject): Promise<object | undefined> {
-        let refreshToken = await this._refreshTokenRepository.getActiveUserToken(claims.userid);
+    public async getTokens(userId: number): Promise<object | undefined> {
+        let refreshToken = await this._refreshTokenRepository.getActiveUserToken(userId);
 
         if (!refreshToken) {
             const expirationDate = new Date();
             expirationDate.setDate(expirationDate.getDate() + 30);
-            refreshToken = await this._refreshTokenRepository.create(randtoken.uid(256), expirationDate, claims.userid);
+            refreshToken = await this._refreshTokenRepository.create(randtoken.uid(256), expirationDate, userId);
         }
 
         const secret = process.env.JWT_SECRET;
@@ -25,7 +25,7 @@ export class RefreshTokenService {
             return undefined
         }
 
-        const token = jwt.sign(claims, secret, { expiresIn: 36000 })
+        const token = jwt.sign({userId}, secret, { expiresIn: 36000 })
 
         return {
             success: true,

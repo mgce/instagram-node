@@ -1,5 +1,6 @@
-import 'whatwg-fetch';
-
+import "whatwg-fetch";
+import { authenticator } from "./authenticator";
+import { httpClient } from "utils/httpClient";
 /**
  * Parses the JSON returned by a network request
  *
@@ -23,9 +24,11 @@ function parseJSON(response) {
  */
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    return response.data;
   }
-
+  if (response.status === 401) {
+    authenticator.retriveAccessToken();
+  }
   const error = new Error(response.statusText);
   error.response = response;
   throw error;
@@ -39,8 +42,8 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
-  return fetch(url, options)
-    .then(checkStatus)
-    .then(parseJSON);
+export default function request(options) {
+  const accessToken = authenticator.getAccessToken();
+  options.headers["Authorization"] = accessToken;
+  return httpClient(options);
 }

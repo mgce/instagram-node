@@ -2,7 +2,7 @@ import { Response } from 'express';
 import jwt from 'jsonwebtoken'
 import { RequestWithClaims } from '../interfaces/requestWithClaims';
 
-function authOnly(req: RequestWithClaims, res: Response, next: Function) {
+export function authOnly(req: RequestWithClaims, res: Response, next: Function) {
     let token = req.headers['authorization'];
 
     if (!token)
@@ -19,7 +19,7 @@ function authOnly(req: RequestWithClaims, res: Response, next: Function) {
 
     jwt.verify(token, secret, (err: jwt.VerifyErrors, decoded: any) => {
         if (err || decoded.exp <= Date.now()) {
-            return res.json(invalidToken);
+            return res.status(401).json(invalidToken);
         } else {
             req.claims = decoded;
             next();
