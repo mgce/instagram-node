@@ -8,7 +8,7 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   async function(config) {
     const token = authenticator.getAccessToken();
-    if (token !== null) config.headers["Authorization"] = `Bearer ${token}`;
+    if (token !== null) config.headers["Authorization"] = `${token}`;
 
     return Promise.resolve(config);
   },
@@ -17,17 +17,30 @@ httpClient.interceptors.request.use(
   }
 );
 
-httpClient.interceptors.response.use(undefined, async error => {
-  const originalRequest = error.config;
-  const status = error.response.status;
-  if (status !== 401) return Promise.reject(error);
-  var refreshToken = authenticator.getRefreshToken();
+httpClient.interceptors.response.use(
+  async response => Promise.resolve(response.data),
+  async error => {
+    const originalRequest = error.config;
+    const status = error.response.status;
+    if (status !== 401) return Promise.reject(error);
+    var newAccessToken = await getNewAccessToken();
 
-  if (!refreshToken) return Promise.reject(error);
-  originalRequest.headers["Authorization"] = `Bearer ${refreshToken}`;
-  return axios.request(originalRequest.data);
-});
+    if (!newAccessToken) return Promise.reject(error);
+    originalRequest.headers["Authorization"] = `${newAccessToken}`;
+    return axios.request(originalRequest.data);
+  }
+);
 
+function getNewAccessToken() {
+  const refreshToken = authenticator.getRefreshToken();
+  httpClient.get("token/" + refreshToken)
+    .then(result => {
+      authenticator.setTokens(result.token, null);
+      return result.token;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
 
-
-export {httpClient};
+export { httpClient };

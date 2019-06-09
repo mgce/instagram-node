@@ -31,9 +31,10 @@ export function* addPost(data) {
 
     // const postDataAsJson = JSON.stringify(postData);
 
-    const postResponse = yield call(request, requestURL + "post", {
+    const postResponse = yield call(request, {
       method: "POST",
-      body: JSON.stringify(postData),
+      url:"post",
+      data: postData,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"

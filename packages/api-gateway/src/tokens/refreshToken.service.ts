@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
-import { AuthenticateResponse, logger } from "@instagram-node/common";
+import { AuthenticateResponse, logger, GetByIdRequest } from "@instagram-node/common";
 import { RefreshTokenRepository } from "./refreshToken.repo";
 var randtoken = require('rand-token');
+import { UserClient } from "../users/user.client";
 
 export class RefreshTokenService {
 
@@ -10,22 +11,22 @@ export class RefreshTokenService {
         this._refreshTokenRepository = refreshTokenRepository;
     }
 
-    public async getTokens(userId: number): Promise<object | undefined> {
-        let refreshToken = await this._refreshTokenRepository.getActiveUserToken(userId);
+    public async getTokens(claims: AuthenticateResponse.AsObject): Promise<object | undefined> {
+        let refreshToken = await this._refreshTokenRepository.getActiveUserToken(claims.userid);
 
         if (!refreshToken) {
             const expirationDate = new Date();
             expirationDate.setDate(expirationDate.getDate() + 30);
-            refreshToken = await this._refreshTokenRepository.create(randtoken.uid(256), expirationDate, userId);
+            refreshToken = await this._refreshTokenRepository.create(randtoken.uid(256), expirationDate, claims.userid);
         }
 
         const secret = process.env.JWT_SECRET;
-        if (secret === undefined){
+        if (secret === undefined) {
             logger.info("Secret key doesn't exist")
             return undefined
-        }
+        };
 
-        const token = jwt.sign({userId}, secret, { expiresIn: 36000 })
+        const token = jwt.sign(claims, secret, { expiresIn: "10h" })
 
         return {
             success: true,
@@ -34,26 +35,34 @@ export class RefreshTokenService {
         }
     }
 
-    public async getJwtToken(refreshToken: string) : Promise<object | undefined> {
-        var activeRefreshToken = this._refreshTokenRepository.exist(refreshToken);
-    
-        if (!activeRefreshToken){
-            logger.info("There is no active refresh token.")
+    public async getJwtToken(refreshToken: string): Promise<object | undefined> {
+        var activeRefreshToken = await this._refreshTokenRepository.getToken(refreshToken);
+
+        if (!activeRefreshToken) {
+            logger.info("There is no active refresh token.");
             return undefined;
         }
-    
+
         const secret = process.env.JWT_SECRET;
-        if (secret === undefined){
-            logger.info("Secret key doesn't exist")
-            return undefined
+        if (secret === undefined) {
+            logger.info("Secret key doesn't exist");
+            return undefined;
         }
-    
-        const token = jwt.sign({ userId: activeRefreshToken }, secret, { expiresIn: 36000 })
-    
-        return {
-            success: true,
-            token: `Bearer ${token}`,
-            refreshToken: refreshToken
-        }
+
+        const request = new GetByIdRequest();
+        request.setUserid(activeRefreshToken.userId)
+        UserClient.getById(request, (err, result) => {
+            const token = jwt.sign({ 
+                userId: result.getId(),
+                 username: result.getUsername() 
+                }, secret, { expiresIn: 36000 })
+
+            return {
+                success: true,
+                token: `Bearer ${token}`,
+                refreshToken: refreshToken
+            }
+        })
+
     }
 }

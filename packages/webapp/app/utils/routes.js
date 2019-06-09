@@ -14,3 +14,16 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
+
+export const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+        authenticator.isAuthenticated() === false ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/" />
+      )
+    }
+  />
+);

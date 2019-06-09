@@ -10,16 +10,21 @@ export class PostModel extends BaseEntity{
     @IsNotEmpty()
     public userId: number;
     @Column()
+    @IsNumber()
     @IsNotEmpty()
-    public imageUrl: string;
+    public username: string;
+    @Column()
+    @IsNotEmpty()
+    public imageId: string;
     @Column()
     @IsNotEmpty()
     public description: string;
 
-    constructor(userId: number, imageUrl:string, description:string){
+    constructor(userId: number, username:string, imageId:string, description:string){
         super();
         this.userId = userId;
-        this.imageUrl = imageUrl;
+        this.username = username;
+        this.imageId = imageId;
         this.description = description;
     }
 }

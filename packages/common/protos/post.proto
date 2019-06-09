@@ -4,10 +4,19 @@ package grpc.post.v1;
 
 import "common.proto";
 
+message PostDto {
+    int64 id = 1;
+    string author = 2;
+    string imageId = 3;
+    string description = 4;
+    common.DateDto dateCreated = 5;
+}
+
 message CreatePostRequest {
     int64 userId = 1;
-    string imageUrl = 2;
-    string description = 3;
+    string username = 2;
+    string imageUrl = 3;
+    string description = 4;
 }
 
 message PostCreatedResponse {
@@ -20,8 +29,16 @@ message DeletePostRequest {
     int64 postId = 2;
 }
 
+message GetPostsRequest {
+    int64 userId = 1;
+}
+
+message GetPostsResponse {
+    repeated PostDto posts = 1;
+}
 
 service Post{
     rpc Create(CreatePostRequest) returns (PostCreatedResponse){}
     rpc Delete(DeletePostRequest) returns (common.EmptyResponse){}
+    rpc GetPosts(GetPostsRequest) returns (GetPostsResponse){}
 }

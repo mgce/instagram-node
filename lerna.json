@@ -1,8 +1,17 @@
 {
   "packages": [
-    "packages/*"
+    "packages/common",
+    "packages/api-gateway",
+    "packages/post-service",
+    "packages/image-service",
+    "packages/user-service"
   ],
   "version": "independent",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command":{
+    "bootstrap":{
+      "ignore": "@instagram-node/webapp"
+    }
+  }
 }

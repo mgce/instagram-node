@@ -6,5 +6,6 @@ export const resources = {
         UserWithThisEmailNotExist:"User with this email does not exist",
         UsernameToShort:"Username must have at least $constraint1 characters.",
         PasswordIsInvalid:"Password is invalid",
+        UserDoesNotExist:"User does not exist",
     }
 }

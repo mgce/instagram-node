@@ -1,6 +1,6 @@
-import { loginUser } from './actions';
+import { loginUser } from 'containers/App/actions';
 import { injectReducer } from 'utils/injectReducer';
-import reducer from './reducer';
+import reducer from 'containers/App/reducer';
 import { injectSaga } from 'utils/injectSaga';
 import saga from './saga';
 import { createStructuredSelector } from 'reselect';

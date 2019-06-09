@@ -49,6 +49,28 @@ function deserialize_grpc_user_v1_CreateUserRequest(buffer_arg) {
   return user_pb.CreateUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_grpc_user_v1_GetByIdRequest(arg) {
+  if (!(arg instanceof user_pb.GetByIdRequest)) {
+    throw new Error('Expected argument of type grpc.user.v1.GetByIdRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_user_v1_GetByIdRequest(buffer_arg) {
+  return user_pb.GetByIdRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_grpc_user_v1_GetByIdResponse(arg) {
+  if (!(arg instanceof user_pb.GetByIdResponse)) {
+    throw new Error('Expected argument of type grpc.user.v1.GetByIdResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_user_v1_GetByIdResponse(buffer_arg) {
+  return user_pb.GetByIdResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var UserService = exports.UserService = {
   create: {
@@ -72,6 +94,17 @@ var UserService = exports.UserService = {
     requestDeserialize: deserialize_grpc_user_v1_AuthenticateRequest,
     responseSerialize: serialize_grpc_user_v1_AuthenticateResponse,
     responseDeserialize: deserialize_grpc_user_v1_AuthenticateResponse,
+  },
+  getById: {
+    path: '/grpc.user.v1.User/GetById',
+    requestStream: false,
+    responseStream: false,
+    requestType: user_pb.GetByIdRequest,
+    responseType: user_pb.GetByIdResponse,
+    requestSerialize: serialize_grpc_user_v1_GetByIdRequest,
+    requestDeserialize: deserialize_grpc_user_v1_GetByIdRequest,
+    responseSerialize: serialize_grpc_user_v1_GetByIdResponse,
+    responseDeserialize: deserialize_grpc_user_v1_GetByIdResponse,
   },
 };
 

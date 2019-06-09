@@ -27,9 +27,10 @@ export class TokenController {
 
         UserClient.authenticate(request, async (err, result: AuthenticateResponse) => {
             if (err)
-                return res.send(err);
+                return res.send(new ApiResponseMessage(err.message, false, err));
 
-            var tokens = await this._refreshTokenService.getTokens(result.getUserid())
+            const claims = result.toObject();
+            const tokens = await this._refreshTokenService.getTokens(claims)
             if (tokens === undefined)
                 res.status(400).json("Something goes wrong");
 

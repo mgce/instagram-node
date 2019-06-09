@@ -68,6 +68,9 @@ export class AuthenticateResponse extends jspb.Message {
     getUserid(): number;
     setUserid(value: number): void;
 
+    getUsername(): string;
+    setUsername(value: string): void;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AuthenticateResponse.AsObject;
@@ -82,5 +85,56 @@ export class AuthenticateResponse extends jspb.Message {
 export namespace AuthenticateResponse {
     export type AsObject = {
         userid: number,
+        username: string,
+    }
+}
+
+export class GetByIdRequest extends jspb.Message { 
+    getUserid(): number;
+    setUserid(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetByIdRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetByIdRequest): GetByIdRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetByIdRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetByIdRequest;
+    static deserializeBinaryFromReader(message: GetByIdRequest, reader: jspb.BinaryReader): GetByIdRequest;
+}
+
+export namespace GetByIdRequest {
+    export type AsObject = {
+        userid: number,
+    }
+}
+
+export class GetByIdResponse extends jspb.Message { 
+    getId(): number;
+    setId(value: number): void;
+
+    getUsername(): string;
+    setUsername(value: string): void;
+
+    getEmailaddress(): string;
+    setEmailaddress(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetByIdResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: GetByIdResponse): GetByIdResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetByIdResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetByIdResponse;
+    static deserializeBinaryFromReader(message: GetByIdResponse, reader: jspb.BinaryReader): GetByIdResponse;
+}
+
+export namespace GetByIdResponse {
+    export type AsObject = {
+        id: number,
+        username: string,
+        emailaddress: string,
     }
 }

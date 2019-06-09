@@ -10,6 +10,7 @@ import * as common_pb from "./common_pb";
 interface IUserService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     create: IUserService_ICreate;
     authenticate: IUserService_IAuthenticate;
+    getById: IUserService_IGetById;
 }
 
 interface IUserService_ICreate extends grpc.MethodDefinition<user_pb.CreateUserRequest, common_pb.EmptyResponse> {
@@ -30,12 +31,22 @@ interface IUserService_IAuthenticate extends grpc.MethodDefinition<user_pb.Authe
     responseSerialize: grpc.serialize<user_pb.AuthenticateResponse>;
     responseDeserialize: grpc.deserialize<user_pb.AuthenticateResponse>;
 }
+interface IUserService_IGetById extends grpc.MethodDefinition<user_pb.GetByIdRequest, user_pb.GetByIdResponse> {
+    path: string; // "/grpc.user.v1.User/GetById"
+    requestStream: boolean; // false
+    responseStream: boolean; // false
+    requestSerialize: grpc.serialize<user_pb.GetByIdRequest>;
+    requestDeserialize: grpc.deserialize<user_pb.GetByIdRequest>;
+    responseSerialize: grpc.serialize<user_pb.GetByIdResponse>;
+    responseDeserialize: grpc.deserialize<user_pb.GetByIdResponse>;
+}
 
 export const UserService: IUserService;
 
 export interface IUserServer {
     create: grpc.handleUnaryCall<user_pb.CreateUserRequest, common_pb.EmptyResponse>;
     authenticate: grpc.handleUnaryCall<user_pb.AuthenticateRequest, user_pb.AuthenticateResponse>;
+    getById: grpc.handleUnaryCall<user_pb.GetByIdRequest, user_pb.GetByIdResponse>;
 }
 
 export interface IUserClient {
@@ -45,6 +56,9 @@ export interface IUserClient {
     authenticate(request: user_pb.AuthenticateRequest, callback: (error: grpc.ServiceError | null, response: user_pb.AuthenticateResponse) => void): grpc.ClientUnaryCall;
     authenticate(request: user_pb.AuthenticateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.AuthenticateResponse) => void): grpc.ClientUnaryCall;
     authenticate(request: user_pb.AuthenticateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.AuthenticateResponse) => void): grpc.ClientUnaryCall;
+    getById(request: user_pb.GetByIdRequest, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
+    getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
+    getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class UserClient extends grpc.Client implements IUserClient {
@@ -55,4 +69,7 @@ export class UserClient extends grpc.Client implements IUserClient {
     public authenticate(request: user_pb.AuthenticateRequest, callback: (error: grpc.ServiceError | null, response: user_pb.AuthenticateResponse) => void): grpc.ClientUnaryCall;
     public authenticate(request: user_pb.AuthenticateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.AuthenticateResponse) => void): grpc.ClientUnaryCall;
     public authenticate(request: user_pb.AuthenticateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.AuthenticateResponse) => void): grpc.ClientUnaryCall;
+    public getById(request: user_pb.GetByIdRequest, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
+    public getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
+    public getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
 }

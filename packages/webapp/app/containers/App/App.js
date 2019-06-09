@@ -9,7 +9,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Switch, Route } from "react-router-dom";
-import {PrivateRoute} from 'utils/PrivateRoute'
+import {PrivateRoute, PublicRoute} from 'utils/Routes'
 
 import PostFeedPage from "containers/PostFeedPage/Loadable";
 import LoginPage from "containers/LoginPage/Loadable";
@@ -30,7 +30,7 @@ const App = () => (
     <Header />
     <div className="app-wrapper">
       <Switch>
-        <Route exact path="/login" component={LoginPage} />
+        <PublicRoute exact path="/login" component={LoginPage} />
         <PrivateRoute exact path="/" component={PostFeedPage} />
         <PrivateRoute path="/add" component={AddPostPage} />
         <PrivateRoute path="" component={NotFoundPage} />

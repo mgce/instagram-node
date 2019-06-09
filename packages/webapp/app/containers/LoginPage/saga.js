@@ -1,7 +1,8 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import { LOGIN_USER } from "./constants";
-import { userLoggedIn, loginUserError } from "./actions";
+import { LOGIN_USER } from "containers/App/constants";
+import { userLoggedIn, loginUserError } from "containers/App/actions";
 import { authenticator } from "utils/authenticator";
+import { history } from "utils/history";
 
 var jwtDecode = require("jwt-decode");
 import request from "utils/request";
@@ -19,7 +20,10 @@ export function* loginUser(data) {
     });
     authenticator.setTokens(response.data.token, response.data.refreshToken);
     const claims = jwtDecode(response.data.token);
-    yield put(userLoggedIn({ userId: claims.userid }));
+    delete claims.iss;
+    delete claims.exp;
+    yield put(userLoggedIn(claims));
+    history.push('')
   } catch (err) {
     console.log(err);
     yield put(loginUserError(err));

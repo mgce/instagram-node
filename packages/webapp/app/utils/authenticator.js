@@ -1,5 +1,4 @@
 import 'whatwg-fetch';
-import httpClient from 'utils/httpClient'
 
 export const authenticator = {
     isAuthenticated(){
@@ -9,19 +8,15 @@ export const authenticator = {
         return false;
     },
     setTokens(accessToken, refreshToken){
-        localStorage.setItem('token', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
+        if(accessToken)
+            localStorage.setItem('token', accessToken);
+        if(refreshToken)
+            localStorage.setItem('refreshToken', refreshToken);
     },
     getAccessToken(){
         return localStorage.getItem('token');
     },
     getRefreshToken(){
         return localStorage.getItem('refreshToken');
-    },
-    retriveAccessToken(){
-        const refreshToken = localStorage.getItem('refreshToken');
-        httpClient('token/' + refreshToken).then((result)=>{
-            localStorage.setItem('refreshToken', result.refreshToken)
-        }).catch(err=>{console.log(err)})
     }
 };

@@ -1,4 +1,4 @@
-import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest,  GrpcError } from '@instagram-node/common';
+import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest, GrpcError, GetPostsRequest, GetPostsResponse, PostDto } from '@instagram-node/common';
 import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
 import { PostModel } from './post.model';
 import { Repository } from 'typeorm';
@@ -8,7 +8,6 @@ import { validate } from 'class-validator';
 import { resources } from './resources';
 
 export class PostAppService implements IPostServer {
-
     private postRepository: Repository<PostModel>
 
     constructor(postRepository: Repository<PostModel>) {
@@ -20,8 +19,8 @@ export class PostAppService implements IPostServer {
 
         const post = new Post(postData.userid, postData.imageurl, postData.description, []);
 
-        const errors = await validate(post); 
-        if(errors.length>0)
+        const errors = await validate(post);
+        if (errors.length > 0)
             return callback(new GrpcError(status.INVALID_ARGUMENT, errors), null)
 
         let entity = this.postRepository.create(post);
@@ -46,6 +45,22 @@ export class PostAppService implements IPostServer {
         const response = new EmptyResponse();
         response.setMessage(resources.info.PostHasBeenDeleted(post.id))
         return callback(null, response)
+    }
+
+    public async getPosts(call: ServerUnaryCall<GetPostsRequest>, callback: sendUnaryData<GetPostsResponse>): Promise<void> {
+        const posts = await this.postRepository.find();
+
+        const postsList: PostDto[] = posts.map(post => {
+            const dto = new PostDto();
+            dto.setAuthor('')
+            return Object.assign(new PostDto(), { author: post.userId, imageid: post.imageId, description: post.description })
+            return { userId: post.userId, imageid: post.imageId, description: post.description }
+        })
+
+        const response = new GetPostsResponse();
+        response.setPostsList(postsList);
+
+        callback(null, response);
     }
 
 }

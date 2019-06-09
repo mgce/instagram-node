@@ -38,6 +38,28 @@ function deserialize_grpc_post_v1_DeletePostRequest(buffer_arg) {
   return post_pb.DeletePostRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_grpc_post_v1_GetPostsRequest(arg) {
+  if (!(arg instanceof post_pb.GetPostsRequest)) {
+    throw new Error('Expected argument of type grpc.post.v1.GetPostsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_GetPostsRequest(buffer_arg) {
+  return post_pb.GetPostsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_grpc_post_v1_GetPostsResponse(arg) {
+  if (!(arg instanceof post_pb.GetPostsResponse)) {
+    throw new Error('Expected argument of type grpc.post.v1.GetPostsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_GetPostsResponse(buffer_arg) {
+  return post_pb.GetPostsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_grpc_post_v1_PostCreatedResponse(arg) {
   if (!(arg instanceof post_pb.PostCreatedResponse)) {
     throw new Error('Expected argument of type grpc.post.v1.PostCreatedResponse');
@@ -72,6 +94,17 @@ var PostService = exports.PostService = {
     requestDeserialize: deserialize_grpc_post_v1_DeletePostRequest,
     responseSerialize: serialize_common_EmptyResponse,
     responseDeserialize: deserialize_common_EmptyResponse,
+  },
+  getPosts: {
+    path: '/grpc.post.v1.Post/GetPosts',
+    requestStream: false,
+    responseStream: false,
+    requestType: post_pb.GetPostsRequest,
+    responseType: post_pb.GetPostsResponse,
+    requestSerialize: serialize_grpc_post_v1_GetPostsRequest,
+    requestDeserialize: deserialize_grpc_post_v1_GetPostsRequest,
+    responseSerialize: serialize_grpc_post_v1_GetPostsResponse,
+    responseDeserialize: deserialize_grpc_post_v1_GetPostsResponse,
   },
 };
 

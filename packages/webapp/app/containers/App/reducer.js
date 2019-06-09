@@ -12,7 +12,7 @@
 
 import { fromJS } from "immutable";
 
-import { ADD_POST_SUCCESS, ADD_POST, ADD_POST_ERROR } from "./constants";
+import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR } from "./constants";
 
 // The initial state of the App
 const initialState = fromJS({
@@ -26,17 +26,15 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_POST:
+    case LOGIN_USER:
       return state
         .set("loading", true)
         .set("error", false)
-        .setIn(["posts"], []);
-    case ADD_POST_SUCCESS:
+    case LOGIN_USER_SUCCESS:
       return state
-        .updateIn(["posts"], arr => arr.concat([action.post]))
+        .setIn(["user"], action.user)
         .set("loading", false)
-        .set("currentUser", action.username);
-    case ADD_POST_ERROR:
+    case LOGIN_USER_ERROR:
       return state.set("error", action.error).set("loading", false);
     default:
       return state;

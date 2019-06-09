@@ -25,3 +25,32 @@ export namespace EmptyResponse {
         message: string,
     }
 }
+
+export class DateDto extends jspb.Message { 
+    getYear(): number;
+    setYear(value: number): void;
+
+    getMonth(): number;
+    setMonth(value: number): void;
+
+    getDay(): number;
+    setDay(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DateDto.AsObject;
+    static toObject(includeInstance: boolean, msg: DateDto): DateDto.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DateDto, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DateDto;
+    static deserializeBinaryFromReader(message: DateDto, reader: jspb.BinaryReader): DateDto;
+}
+
+export namespace DateDto {
+    export type AsObject = {
+        year: number,
+        month: number,
+        day: number,
+    }
+}

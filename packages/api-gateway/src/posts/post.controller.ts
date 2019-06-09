@@ -1,7 +1,7 @@
-import { CreatePostRequest, DeletePostRequest } from "@instagram-node/common";
+import { CreatePostRequest, DeletePostRequest, GetPostsRequest } from "@instagram-node/common";
 import { PostClient } from "./post.client";
 import express = require("express");
-import { POST, route, before, DELETE } from "awilix-router-core";
+import { POST, route, before, DELETE, GET } from "awilix-router-core";
 import { requestValidator } from "../middlewares/requestValidator";
 import { RequestWithClaims } from "../interfaces/requestWithClaims";
 import { createPostValidator, deletePostValidator } from "./post.validators";
@@ -14,12 +14,12 @@ export class PostController {
     @route('/')
     @before([authOnly, createPostValidator, requestValidator])
     async create(req: RequestWithClaims, res: express.Response) {
-        console.log(req);
         const request: CreatePostRequest = new CreatePostRequest();
         const { description, imageUrl } = req.body;
 
         // request.setUserid(req.body.claims.userId);
-        request.setUserid(req.body.userId);
+        request.setUserid(req.claims.userid);
+        request.setUsername(req.claims.username);
         request.setDescription(description);
         request.setImageurl(imageUrl);
 
@@ -28,6 +28,18 @@ export class PostController {
                 return res.send(err);
             return res.send(new ApiResponseMessage(result.getMessage(), true, { postId: result.getPostid() }))
         });
+    }
+
+    @GET()
+    @route('/')
+    async getPosts(req: RequestWithClaims, res: express.Response){
+        const request = new GetPostsRequest();
+
+        PostClient.getPosts(request, (err, result)=>{
+            if (err)
+                return res.send(err);
+            return res.send(new ApiResponseMessage('', true, { posts: result.getPostsList() }))
+        })
     }
 
     @DELETE()

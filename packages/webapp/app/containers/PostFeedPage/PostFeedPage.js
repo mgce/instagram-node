@@ -16,10 +16,7 @@ export default class PostFeedPage extends React.PureComponent {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    const { username, onSubmitForm } = this.props;
-    if (username && username.trim().length > 0) {
-      onSubmitForm();
-    }
+    this.props.loadPosts();
   }
 
   render() {
@@ -27,7 +24,6 @@ export default class PostFeedPage extends React.PureComponent {
       loading,
       error,
       posts,
-      username,
     } = this.props;
     const reposListProps = {
       loading,
@@ -44,24 +40,25 @@ export default class PostFeedPage extends React.PureComponent {
           />
         </Helmet>
         <div className="home-page">
+          {this.props.posts.map(post => (
+
           <Post
-            username="User"
+            key={post.id}
+            username={post.username}
             likesCount={2}
             commentsCount={3}
-            description="Some quick example text to build on the card title and make up
-                the bulk of the card's content."
+            description={post.description}
           />
+          ))}
         </div>
       </article>
     );
   }
 }
 
-HomePage.propTypes = {
+PostFeedPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func
 };

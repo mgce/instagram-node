@@ -2,7 +2,7 @@ import { UserModel } from './user.model';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from './user.entity';
-import { CreateUserRequest, GrpcError, AuthenticateResponse, AuthenticateRequest, handleError } from '@instagram-node/common'
+import { CreateUserRequest, GrpcError, AuthenticateResponse, AuthenticateRequest, handleError, GetByIdRequest, GetByIdResponse } from '@instagram-node/common'
 import { IUserServer } from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { EmptyResponse } from '@instagram-node/common/protos/models/common_pb';
@@ -66,6 +66,22 @@ export class UserAppService implements IUserServer {
 
         const response = new AuthenticateResponse();
         response.setUserid(user.id);
+        response.setUsername(user.username);
         callback(null, response)
+    }
+
+    public async getById(call: ServerUnaryCall<GetByIdRequest>, callback: sendUnaryData<GetByIdResponse>){
+        const request = call.request.toObject();
+
+        const user = await this.userRepository.findOne({id: request.userid});
+
+        if(!user)
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserDoesNotExist), null)
+
+        const response = new GetByIdResponse();
+        response.setId(user.id)
+        response.setEmailaddress(user.emailAddress);
+        response.setUsername(user.username);
+        callback(null, response);
     }
 }
