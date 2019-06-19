@@ -5,6 +5,6 @@ export interface RequestWithClaims extends Request{
 }
 
 interface Claims {
-    userid:number;
+    userId:number;
     username:string;
 }

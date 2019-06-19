@@ -335,7 +335,7 @@ proto.grpc.post.v1.CreatePostRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userid: jspb.Message.getFieldWithDefault(msg, 1, 0),
     username: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    imageurl: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    imageid: jspb.Message.getFieldWithDefault(msg, 3, ""),
     description: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
@@ -383,7 +383,7 @@ proto.grpc.post.v1.CreatePostRequest.deserializeBinaryFromReader = function(msg,
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setImageurl(value);
+      msg.setImageid(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
@@ -432,7 +432,7 @@ proto.grpc.post.v1.CreatePostRequest.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getImageurl();
+  f = message.getImageid();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -480,16 +480,16 @@ proto.grpc.post.v1.CreatePostRequest.prototype.setUsername = function(value) {
 
 
 /**
- * optional string imageUrl = 3;
+ * optional string imageId = 3;
  * @return {string}
  */
-proto.grpc.post.v1.CreatePostRequest.prototype.getImageurl = function() {
+proto.grpc.post.v1.CreatePostRequest.prototype.getImageid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /** @param {string} value */
-proto.grpc.post.v1.CreatePostRequest.prototype.setImageurl = function(value) {
+proto.grpc.post.v1.CreatePostRequest.prototype.setImageid = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
 };
 

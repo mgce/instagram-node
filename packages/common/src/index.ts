@@ -1,4 +1,4 @@
-
+export { connectWithRetry } from './dataAccess/connectWithRetry';
 export { createPostgresConnection } from './dataAccess/postgresConnection';
 export { App } from './app/app';
 export { AppConfig } from './app/appConfig';

@@ -35,7 +35,7 @@ export class RefreshTokenService {
         }
     }
 
-    public async getJwtToken(refreshToken: string): Promise<object | undefined> {
+    public async getJwtToken(refreshToken: string, callback: Function): Promise<object | undefined> {
         var activeRefreshToken = await this._refreshTokenRepository.getToken(refreshToken);
 
         if (!activeRefreshToken) {
@@ -55,13 +55,15 @@ export class RefreshTokenService {
             const token = jwt.sign({ 
                 userId: result.getId(),
                  username: result.getUsername() 
-                }, secret, { expiresIn: 36000 })
+                }, secret, { expiresIn: "10h" })
 
-            return {
+            const tokens = {
                 success: true,
                 token: `Bearer ${token}`,
                 refreshToken: refreshToken
             }
+
+            callback(tokens);
         })
 
     }

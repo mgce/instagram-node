@@ -3,7 +3,7 @@ import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
 import { PostModel } from './post.model';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
-import { EmptyResponse } from '@instagram-node/common/protos/models/common_pb';
+import { EmptyResponse, DateDto } from '@instagram-node/common/protos/models/common_pb';
 import { validate } from 'class-validator';
 import { resources } from './resources';
 
@@ -17,7 +17,7 @@ export class PostAppService implements IPostServer {
     public async create(call: ServerUnaryCall<CreatePostRequest>, callback: sendUnaryData<PostCreatedResponse>): Promise<void> {
         var postData = call.request.toObject();
 
-        const post = new Post(postData.userid, postData.imageurl, postData.description, []);
+        const post = new Post(postData.userid, postData.username, postData.imageid, postData.description);
 
         const errors = await validate(post);
         if (errors.length > 0)
@@ -52,9 +52,16 @@ export class PostAppService implements IPostServer {
 
         const postsList: PostDto[] = posts.map(post => {
             const dto = new PostDto();
-            dto.setAuthor('')
-            return Object.assign(new PostDto(), { author: post.userId, imageid: post.imageId, description: post.description })
-            return { userId: post.userId, imageid: post.imageId, description: post.description }
+            dto.setAuthor(post.username);
+            dto.setDescription(post.description);
+            dto.setId(post.id);
+            dto.setImageid(post.imageId);
+            const dateCreate = new DateDto();
+            dateCreate.setDay(post.dateCreate.getDay())
+            dateCreate.setMonth(post.dateCreate.getMonth())
+            dateCreate.setYear(post.dateCreate.getFullYear())
+            dto.setDatecreated(dateCreate);
+            return dto;
         })
 
         const response = new GetPostsResponse();

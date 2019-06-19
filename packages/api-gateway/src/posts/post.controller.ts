@@ -15,13 +15,13 @@ export class PostController {
     @before([authOnly, createPostValidator, requestValidator])
     async create(req: RequestWithClaims, res: express.Response) {
         const request: CreatePostRequest = new CreatePostRequest();
-        const { description, imageUrl } = req.body;
+        const { description, imageId } = req.body;
 
         // request.setUserid(req.body.claims.userId);
-        request.setUserid(req.claims.userid);
+        request.setUserid(req.claims.userId);
         request.setUsername(req.claims.username);
         request.setDescription(description);
-        request.setImageurl(imageUrl);
+        request.setImageid(imageId);
 
         PostClient.create(request, (err, result) => {
             if (err)
@@ -38,7 +38,7 @@ export class PostController {
         PostClient.getPosts(request, (err, result)=>{
             if (err)
                 return res.send(err);
-            return res.send(new ApiResponseMessage('', true, { posts: result.getPostsList() }))
+            return res.send(new ApiResponseMessage('', true, { posts: result.toObject().postsList }))
         })
     }
 

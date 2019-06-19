@@ -27,7 +27,7 @@ httpClient.interceptors.response.use(
 
     if (!newAccessToken) return Promise.reject(error);
     originalRequest.headers["Authorization"] = `${newAccessToken}`;
-    return axios.request(originalRequest.data);
+    return axios.request(originalRequest);
   }
 );
 

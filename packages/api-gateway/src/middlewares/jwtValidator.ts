@@ -19,7 +19,7 @@ export function authOnly(req: RequestWithClaims, res: Response, next: Function) 
 
     jwt.verify(token, secret, (err: jwt.VerifyErrors, decoded: any) => {
         if (err) {
-            return res.status(401).json(invalidToken);
+            return res.status(401).json(err.message);
         } else {
             req.claims = decoded;
             next();

@@ -53,8 +53,8 @@ export class CreatePostRequest extends jspb.Message {
     getUsername(): string;
     setUsername(value: string): void;
 
-    getImageurl(): string;
-    setImageurl(value: string): void;
+    getImageid(): string;
+    setImageid(value: string): void;
 
     getDescription(): string;
     setDescription(value: string): void;
@@ -74,7 +74,7 @@ export namespace CreatePostRequest {
     export type AsObject = {
         userid: number,
         username: string,
-        imageurl: string,
+        imageid: string,
         description: string,
     }
 }

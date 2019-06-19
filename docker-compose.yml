@@ -15,18 +15,7 @@ services:
     ports:
     - "54320:5432"
     network_mode: bridge
-
-  azure-storage:
-    image: arafato/azurite
-    container_name: azurite
-    network_mode: bridge
-    environment:
-      - executable=blob
-    ports:
-      - 10000-10000
-      - 10001-10001
-      - 10002-10002
-      
+   
   api-gateway:
     build:
       context: .
@@ -34,8 +23,8 @@ services:
     image: api-gateway
     env_file: ./packages/api-gateway/.env
     environment:
-      - HOST_ADDRESS=192.168.0.103
-      - PG_PORT=54320
+      - HOST_ADDRESS=postgres_db
+      - PG_PORT=5432
     ports:
       - "5000:5000"
     network_mode: bridge
@@ -48,8 +37,8 @@ services:
       dockerfile: Dockerfile.userservice
     image: user-service
     environment:
-      - HOST_ADDRESS=192.168.0.103
-      - PG_PORT=54320
+      - HOST_ADDRESS=postgres_db
+      - PG_PORT=5432
     ports:
       - "5001:5001"
     network_mode: bridge
@@ -62,8 +51,8 @@ services:
       dockerfile: Dockerfile.imageservice
     image: image-service
     environment:
-      - HOST_ADDRESS=192.168.0.103
-      - PG_PORT=54320
+      - HOST_ADDRESS=postgres_db
+      - PG_PORT=5432
     ports:
       - "5002:5002"
     network_mode: bridge
@@ -76,8 +65,8 @@ services:
       dockerfile: Dockerfile.postservice
     image: post-service
     environment:
-      - HOST_ADDRESS=192.168.0.103
-      - PG_PORT=54320
+      - HOST_ADDRESS=postgres_db
+      - PG_PORT=5432
     ports:
       - "5003:5003"
     network_mode: bridge
