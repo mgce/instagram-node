@@ -23,8 +23,11 @@ services:
     image: api-gateway
     env_file: ./packages/api-gateway/.env
     environment:
-      - HOST_ADDRESS=postgres_db
+      - PG_ADDRESS=postgres_db
       - PG_PORT=5432
+      - USER_SERVICE=user-service
+      - POST_SERVICE=post-service
+      - IMAGE_SERVICE=image-service
     ports:
       - "5000:5000"
     network_mode: bridge
@@ -32,12 +35,13 @@ services:
       - postgres
 
   user-service:
+    name: user-service
     build:
       context: .
       dockerfile: Dockerfile.userservice
     image: user-service
     environment:
-      - HOST_ADDRESS=postgres_db
+      - PG_ADDRESS=postgres_db
       - PG_PORT=5432
     ports:
       - "5001:5001"
@@ -46,12 +50,13 @@ services:
       - postgres    
   
   image-service:
+    name: image-service
     build:
       context: .
       dockerfile: Dockerfile.imageservice
     image: image-service
     environment:
-      - HOST_ADDRESS=postgres_db
+      - PG_ADDRESS=postgres_db
       - PG_PORT=5432
     ports:
       - "5002:5002"
@@ -60,12 +65,13 @@ services:
       - postgres          
 
   post-service:
+    name: post-service
     build:
       context: .
       dockerfile: Dockerfile.postservice
     image: post-service
     environment:
-      - HOST_ADDRESS=postgres_db
+      - PG_ADDRESS=postgres_db
       - PG_PORT=5432
     ports:
       - "5003:5003"

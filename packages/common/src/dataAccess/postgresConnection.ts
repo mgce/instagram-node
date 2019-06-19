@@ -9,7 +9,7 @@ export const createPostgresConnection = (models: any): Promise<Connection> => {
     return createConnection({
         "name": "default",
         "type": "postgres",
-        "host": process.env.HOST_ADDRESS || "127.0.0.1",
+        "host": process.env.PG_ADDRESS || "127.0.0.1",
         "port": postgresPort,
         "username": "postgres",
         "password": "example",

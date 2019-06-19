@@ -10,5 +10,5 @@ export const commonConfig = {
     //         return "192.168.1.0"
     //     return "0.0.0.0"
     // }
-    host: "192.168.0.103"
+    host: "192.168.0.106"
 }
