@@ -6,10 +6,10 @@ import { ServiceError } from "grpc";
 import intoStream from 'into-stream';
 import { authOnly } from "../middlewares/jwtValidator";
 import azure from 'azure-storage';
+import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
 
 
 import multer from 'multer';
-import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
 const upload = multer({storage: multer.memoryStorage()}).single('file')
 
 const blobService = azure.createBlobService(

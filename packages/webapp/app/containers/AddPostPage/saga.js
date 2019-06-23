@@ -5,6 +5,7 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import { ADD_POST } from "containers/UserProfilePage/constants";
 import { postAdded, addPostError } from "containers/UserProfilePage/actions";
+import { history } from "utils/history";
 
 import request from "utils/request";
 
@@ -44,6 +45,7 @@ export function* addPost(data) {
     postData["id"] = postResponse.data.postId;
 
     yield put(postAdded(postData));
+    history.push('')
   } catch (err) {
     console.log(err);
     yield put(addPostError(err));
