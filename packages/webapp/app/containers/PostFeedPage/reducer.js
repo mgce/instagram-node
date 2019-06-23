@@ -37,13 +37,9 @@ function postFeedReducer(state = initialState, action) {
     case ADD_POST_ERROR:
       return state.set("error", action.error).set("loading", false);
     case LOAD_POSTS:
-      return state
-        .set("loading", true)
-        .set("error", false)
-        case LOAD_POSTS_SUCCESS:
-          return state
-         .set(["posts"], action.posts)
-        .set("loading", false);
+      return state.set("loading", true).set("error", false);
+    case LOAD_POSTS_SUCCESS:
+      return state.set("posts", action.posts).set("loading", false);
     case LOAD_POSTS_ERROR:
       return state.set("error", action.error).set("loading", false);
     default:

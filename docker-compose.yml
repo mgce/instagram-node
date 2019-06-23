@@ -16,6 +16,17 @@ services:
     - "54320:5432"
     network_mode: bridge
    
+  azure-storage:
+    image: arafato/azurite
+    container_name: azurite
+    network_mode: bridge
+    environment:
+      - executable=blob
+    ports:
+      - 10000-10000
+      - 10001-10001
+      - 10002-10002
+
   api-gateway:
     build:
       context: .
@@ -35,7 +46,7 @@ services:
       - postgres
 
   user-service:
-    name: user-service
+    container_name: user-service
     build:
       context: .
       dockerfile: Dockerfile.userservice
@@ -50,7 +61,7 @@ services:
       - postgres    
   
   image-service:
-    name: image-service
+    container_name: image-service
     build:
       context: .
       dockerfile: Dockerfile.imageservice
@@ -65,7 +76,7 @@ services:
       - postgres          
 
   post-service:
-    name: post-service
+    container_name: post-service
     build:
       context: .
       dockerfile: Dockerfile.postservice
@@ -78,6 +89,7 @@ services:
     network_mode: bridge
     links:
       - postgres  
+      - azure-storage  
 
 
 volumes:

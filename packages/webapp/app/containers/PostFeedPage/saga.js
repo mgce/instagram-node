@@ -27,7 +27,7 @@ export function* getPosts() {
     });
     yield put(postsLoaded(response.data.posts));
   } catch (err) {
-    yield put(repoLoadingError(err));
+    yield put(loadPostsError(err));
   }
 }
 

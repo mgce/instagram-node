@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet";
 import "./style.scss";
 import Post from "components/Post";
 
-export default class PostFeedPage extends React.PureComponent {
+export default class PostFeedPage extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   /**
    * when initial state username is not null, submit the form to load repos
@@ -41,10 +41,10 @@ export default class PostFeedPage extends React.PureComponent {
         </Helmet>
         <div className="home-page">
           {this.props.posts.map(post => (
-
           <Post
             key={post.id}
             username={post.username}
+            imageId={post.imageid}
             likesCount={2}
             commentsCount={3}
             description={post.description}

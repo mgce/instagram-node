@@ -21,6 +21,7 @@ httpClient.interceptors.response.use(
   async response => Promise.resolve(response.data),
   async error => {
     const originalRequest = error.config;
+    if (!error.response) return Promise.reject(error);
     const status = error.response.status;
     if (status !== 401) return Promise.reject(error);
     var newAccessToken = await getNewAccessToken();
@@ -33,7 +34,8 @@ httpClient.interceptors.response.use(
 
 function getNewAccessToken() {
   const refreshToken = authenticator.getRefreshToken();
-  httpClient.get("token/" + refreshToken)
+  httpClient
+    .get("token/" + refreshToken)
     .then(result => {
       authenticator.setTokens(result.token, null);
       return result.token;

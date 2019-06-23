@@ -1,10 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import {httpClient} from "utils/httpClient"
 export default class Post extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      imageUrl: null
+    }
   }
+componentDidMount(){
+  httpClient({
+    method:'GET',
+    url: `image/download/${this.props.imageId}`,
+  }).then(response =>{
+    this.setState({imageUrl:response.data.url})
+  })
+}
   render() {
     return (
       <div className="home-page">
@@ -13,7 +24,7 @@ export default class Post extends React.PureComponent {
             <h5 className="card-title">{this.props.username}</h5>
           </div>
           <img
-            src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            src={this.state.imageUrl}
             className="card-img-top"
             alt="..."
           />

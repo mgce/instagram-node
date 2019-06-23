@@ -4,7 +4,7 @@ const selectPostFeed = (state) => state.get('postFeed');
 
 const makeSelectPosts = () => createSelector(
   selectPostFeed,
-  (homeState) => homeState.get('posts')
+  (postFeedState) => postFeedState.get('posts')
 )
 
 export {

@@ -36,10 +36,10 @@ export default class AddPostPage extends React.PureComponent {
   render() {
     return (
       <>
-        <form>
+        <form enctype="multipart/form-data">
           <div className="form-group">
             <div className="form-group files">
-              <label>Photo </label>
+              <label>Photo</label>
               <input
                 type="file"
                 name="file"

@@ -22,9 +22,9 @@ export function* addPost(data) {
         Accept: "application/json"
       }
     });
-
+    console.log(imageResponse);
     const postData = {
-      imageId: imageResponse.imageid,
+      imageId: imageResponse.data.imageid,
       description: data.description,
       userId: 1
     };
