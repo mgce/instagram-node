@@ -1,21 +1,14 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- */
-
-import React from "react";
-import PropTypes from "prop-types";
-import { Helmet } from "react-helmet";
-import "./style.scss";
-import Post from "components/Post";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
+import './style.scss';
+import Post from 'components/Post';
 
 export default class PostFeedPage extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
   componentDidMount() {
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.loadPosts();
   }
 
@@ -24,11 +17,8 @@ export default class PostFeedPage extends React.Component {
       loading,
       error,
       posts,
+      likePost
     } = this.props;
-    const reposListProps = {
-      loading,
-      error,
-    };
 
     return (
       <article>
@@ -40,16 +30,18 @@ export default class PostFeedPage extends React.Component {
           />
         </Helmet>
         <div className="home-page">
-          {this.props.posts.map(post => (
-          <Post
-            key={post.id}
-            username={post.username}
-            imageId={post.imageid}
-            likesCount={2}
-            commentsCount={3}
-            description={post.description}
-          />
-          ))}
+          {posts ? posts.map((post) => (
+            <Post
+              key={post.id}
+              id={post.id}
+              username={post.username}
+              imageId={post.imageid}
+              likes={post.likes}
+              commentsCount={3}
+              description={post.description}
+              likePost={likePost}
+            />
+          )) : null}
         </div>
       </article>
     );
@@ -59,6 +51,7 @@ export default class PostFeedPage extends React.Component {
 PostFeedPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  onSubmitForm: PropTypes.func,
+  posts: PropTypes.array,
+  likePost: PropTypes.func,
+  loadPosts: PropTypes.func,
 };

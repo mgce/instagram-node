@@ -14,11 +14,11 @@ const initService = function initService(connection: Connection) {
     const postLikeRepository = connection.getRepository(PostLikeModel);
 
     const server: Server = new Server()
-    server.addService(PostService, new PostGrpcService(postRepository))
+    server.addService(PostService, new PostGrpcService(postRepository, postLikeRepository))
     server.addService(PostLikeService, new PostLikeGrpcService(postLikeRepository, postRepository))
     server.bind(SERVER_URI, ServerCredentials.createInsecure())
     server.start()
     console.log('Server is running!')
 }
 
-connectWithRetry([PostModel], initService);
+connectWithRetry([PostModel, PostLikeModel], initService);

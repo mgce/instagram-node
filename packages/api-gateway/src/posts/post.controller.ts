@@ -61,6 +61,7 @@ export class PostController {
 
     @POST()
     @route('/:postId/like')
+    @before([authOnly])
     async like(req: RequestWithClaims, res: express.Response) {
         const request = new LikePostRequest();
         request.setUserid(req.claims.userId);
@@ -75,6 +76,7 @@ export class PostController {
 
     @POST()
     @route('/:postId/unlike')
+    @before([authOnly])
     async unlike(req: RequestWithClaims, res: express.Response) {
         const request = new LikePostRequest();
         request.setUserid(req.claims.userId);

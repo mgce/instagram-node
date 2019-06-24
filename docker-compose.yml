@@ -60,20 +60,20 @@ services:
     links:
       - postgres    
   
-  image-service:
-    container_name: image-service
-    build:
-      context: .
-      dockerfile: Dockerfile.imageservice
-    image: image-service
-    environment:
-      - PG_ADDRESS=postgres_db
-      - PG_PORT=5432
-    ports:
-      - "5002:5002"
-    network_mode: bridge
-    links:
-      - postgres          
+  #image-service:
+  #  container_name: image-service
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile.imageservice
+  #  image: image-service
+  #  environment:
+  #    - PG_ADDRESS=postgres_db
+  #    - PG_PORT=5432
+  #  ports:
+  #    - "5002:5002"
+  #  network_mode: bridge
+  #  links:
+  #    - postgres          
 
   post-service:
     container_name: post-service
