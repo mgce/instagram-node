@@ -1,5 +1,5 @@
-import { CreatePostRequest, DeletePostRequest, GetPostsRequest } from "@instagram-node/common";
-import { PostClient } from "./post.client";
+import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest } from "@instagram-node/common";
+import { PostClient, PostLikeClient } from "./post.client";
 import express = require("express");
 import { POST, route, before, DELETE, GET } from "awilix-router-core";
 import { requestValidator } from "../middlewares/requestValidator";
@@ -25,19 +25,19 @@ export class PostController {
 
         PostClient.create(request, (err, result) => {
             if (err)
-                return res.send(err);
+                return res.send(new ApiResponseMessage('Error occured', false, err));
             return res.send(new ApiResponseMessage(result.getMessage(), true, { postId: result.getPostid() }))
         });
     }
 
     @GET()
     @route('/')
-    async getPosts(req: RequestWithClaims, res: express.Response){
+    async getPosts(req: RequestWithClaims, res: express.Response) {
         const request = new GetPostsRequest();
 
-        PostClient.getPosts(request, (err, result)=>{
+        PostClient.getPosts(request, (err, result) => {
             if (err)
-                return res.send(err);
+                return res.send(new ApiResponseMessage('Error occured', false, err));
             return res.send(new ApiResponseMessage('', true, { posts: result.toObject().postsList }))
         })
     }
@@ -54,10 +54,37 @@ export class PostController {
 
         PostClient.delete(request, (err, result) => {
             if (err)
-                return res.send(err);
-            return res.send(result.getMessage())
+                return res.send(new ApiResponseMessage('Error occured', false, err));
+            return res.send(new ApiResponseMessage(result.getMessage(), true))
         });
+    }
 
+    @POST()
+    @route('/:postId/like')
+    async like(req: RequestWithClaims, res: express.Response) {
+        const request = new LikePostRequest();
+        request.setUserid(req.claims.userId);
+        request.setPostid(req.params.postId);
+
+        PostLikeClient.like(request, (err, result) => {
+            if (err)
+                return res.send(new ApiResponseMessage('Error occured', false, err));
+            return res.send(new ApiResponseMessage(result.getMessage(), true))
+        })
+    }
+
+    @POST()
+    @route('/:postId/unlike')
+    async unlike(req: RequestWithClaims, res: express.Response) {
+        const request = new LikePostRequest();
+        request.setUserid(req.claims.userId);
+        request.setPostid(req.params.postId);
+
+        PostLikeClient.unlike(request, (err, result) => {
+            if (err)
+                return res.send(new ApiResponseMessage('Error occured', false, err));
+            return res.send(new ApiResponseMessage(result.getMessage(), true))
+        })
     }
 }
 
