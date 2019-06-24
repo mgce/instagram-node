@@ -5,13 +5,16 @@ import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { EmptyResponse, DateDto } from '@instagram-node/common/protos/models/common_pb';
 import { validate } from 'class-validator';
-import { resources } from './resources';
+import { resources } from '../resources';
+import { PostLikeModel } from '../postLike/postlike.model';
 
-export class PostAppService implements IPostServer {
+export class PostGrpcService implements IPostServer {
     private postRepository: Repository<PostModel>
+    private postLikeRepository: Repository<PostLikeModel>
 
-    constructor(postRepository: Repository<PostModel>) {
+    constructor(postRepository: Repository<PostModel>, postLikeRepository: Repository<PostLikeModel>) {
         this.postRepository = postRepository;
+        this.postLikeRepository = postLikeRepository;
     }
 
     public async create(call: ServerUnaryCall<CreatePostRequest>, callback: sendUnaryData<PostCreatedResponse>): Promise<void> {
@@ -50,19 +53,7 @@ export class PostAppService implements IPostServer {
     public async getPosts(call: ServerUnaryCall<GetPostsRequest>, callback: sendUnaryData<GetPostsResponse>): Promise<void> {
         const posts = await this.postRepository.find();
 
-        const postsList: PostDto[] = posts.map(post => {
-            const dto = new PostDto();
-            dto.setAuthor(post.username);
-            dto.setDescription(post.description);
-            dto.setId(post.id);
-            dto.setImageid(post.imageId);
-            const dateCreate = new DateDto();
-            dateCreate.setDay(post.dateCreate.getDay())
-            dateCreate.setMonth(post.dateCreate.getMonth())
-            dateCreate.setYear(post.dateCreate.getFullYear())
-            dto.setDatecreated(dateCreate);
-            return dto;
-        })
+        const postsList = await this.mapPostsToDto(posts);
 
         const response = new GetPostsResponse();
         response.setPostsList(postsList);
@@ -70,4 +61,30 @@ export class PostAppService implements IPostServer {
         callback(null, response);
     }
 
+    private async mapPostsToDto(posts:PostModel[]){
+        return await Promise.all(posts.map(async (post) => {
+            const dto = new PostDto();
+            dto.setAuthor(post.username);
+            dto.setDescription(post.description);
+            dto.setId(post.id);
+            dto.setImageid(post.imageId);
+            dto.setDatecreated(this.setDate(post.dateCreate));
+            const likesCount = await this.getLikesCount(post.id);
+            dto.setLikes(likesCount);
+            return dto;
+        }))
+    }
+
+    private async getLikesCount(postId: number): Promise<number> {
+        const likes = await this.postLikeRepository.findAndCount({ postId: postId });
+        return likes[1];
+    }
+
+    private setDate(date: Date): DateDto {
+        const dateCreate = new DateDto();
+        dateCreate.setDay(date.getDay())
+        dateCreate.setMonth(date.getMonth())
+        dateCreate.setYear(date.getFullYear())
+        return dateCreate;
+    }
 }

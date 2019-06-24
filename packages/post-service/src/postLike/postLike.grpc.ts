@@ -3,11 +3,11 @@ import { PostLikeModel } from './postlike.model';
 import { Repository } from 'typeorm';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { resources } from '../resources';
-import { PostModel } from '../post.model';
+import { PostModel } from '../post/post.model';
 import { PostLike } from './postlike.entity';
 
 
-export class PostLikeAppService implements IPostLikeServer {
+export class PostLikeGrpcService implements IPostLikeServer {
     private postLikeRepository: Repository<PostLikeModel>
     private postRepository: Repository<PostModel>
 

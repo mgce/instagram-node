@@ -70,7 +70,8 @@ proto.grpc.post.v1.PostDto.toObject = function(includeInstance, msg) {
     author: jspb.Message.getFieldWithDefault(msg, 2, ""),
     imageid: jspb.Message.getFieldWithDefault(msg, 3, ""),
     description: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    datecreated: (f = msg.getDatecreated()) && common_pb.DateDto.toObject(includeInstance, f)
+    datecreated: (f = msg.getDatecreated()) && common_pb.DateDto.toObject(includeInstance, f),
+    likes: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -127,6 +128,10 @@ proto.grpc.post.v1.PostDto.deserializeBinaryFromReader = function(msg, reader) {
       var value = new common_pb.DateDto;
       reader.readMessage(value,common_pb.DateDto.deserializeBinaryFromReader);
       msg.setDatecreated(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLikes(value);
       break;
     default:
       reader.skipField();
@@ -191,6 +196,13 @@ proto.grpc.post.v1.PostDto.serializeBinaryToWriter = function(message, writer) {
       5,
       f,
       common_pb.DateDto.serializeBinaryToWriter
+    );
+  }
+  f = message.getLikes();
+  if (f !== 0) {
+    writer.writeInt32(
+      6,
+      f
     );
   }
 };
@@ -283,6 +295,21 @@ proto.grpc.post.v1.PostDto.prototype.clearDatecreated = function() {
  */
 proto.grpc.post.v1.PostDto.prototype.hasDatecreated = function() {
   return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional int32 likes = 6;
+ * @return {number}
+ */
+proto.grpc.post.v1.PostDto.prototype.getLikes = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/** @param {number} value */
+proto.grpc.post.v1.PostDto.prototype.setLikes = function(value) {
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
