@@ -51,7 +51,7 @@ export default class PostFeedPage extends React.Component {
 PostFeedPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  posts: PropTypes.array,
+  posts: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   likePost: PropTypes.func,
   loadPosts: PropTypes.func,
 };

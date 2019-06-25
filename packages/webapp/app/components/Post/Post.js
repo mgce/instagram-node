@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { httpClient } from 'utils/httpClient';
 
-export default class Post extends React.PureComponent {
+export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

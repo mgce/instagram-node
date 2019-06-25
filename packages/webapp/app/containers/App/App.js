@@ -6,18 +6,18 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React from "react";
-import { Helmet } from "react-helmet";
-import { Switch, Route } from "react-router-dom";
-import {PrivateRoute, PublicRoute} from 'utils/Routes'
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { Switch } from 'react-router-dom';
+// eslint-disable-next-line import/no-unresolved
+import { PrivateRoute, PublicRoute } from 'utils/Routes';
 
-import PostFeedPage from "containers/PostFeedPage/Loadable";
-import LoginPage from "containers/LoginPage/Loadable";
-import AddPostPage from "containers/AddPostPage/Loadable";
-import NotFoundPage from "containers/NotFoundPage/Loadable";
-import Header from "components/Header";
-import Footer from "components/Footer";
-import "./style.scss";
+import PostFeedPage from 'containers/PostFeedPage/Loadable';
+import LoginPage from 'containers/LoginPage/Loadable';
+import AddPostPage from 'containers/AddPostPage/Loadable';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import Header from 'components/Header';
+import './style.scss';
 
 const App = () => (
   <>

@@ -45,13 +45,12 @@ function postFeedReducer(state = initialState, action) {
     case LIKE_POST:
       return state.set('loading', true).set('error', false);
     case LIKE_POST_SUCCESS: {
-      // const index = state.get('posts').findIndex((item) => item.id === action.postId);
       return state
-        .updateIn(['posts'], (postList) => {
-          const index = postList.findIndex((item) => item.id === action.postId);
-          postList[index].likes += 1;
-          return postList;
-        })
+        .updateIn(['posts'], (postList) => postList.map((item) => {
+          if (item.id !== action.postId) return item;
+          item.likes += 1;
+          return item;
+        }))
         .set('loading', false);
     }
     case LIKE_POST_ERROR:
