@@ -5,6 +5,7 @@ export const createPostValidator = [
     body('imageId').exists(),
 ]
 
-export const deletePostValidator = [
+export const postIdExistValidator = [
     body('postId').exists(),
 ]
+

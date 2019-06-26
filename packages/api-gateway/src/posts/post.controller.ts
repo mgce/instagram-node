@@ -4,7 +4,7 @@ import express = require("express");
 import { POST, route, before, DELETE, GET } from "awilix-router-core";
 import { requestValidator } from "../middlewares/requestValidator";
 import { RequestWithClaims } from "../interfaces/requestWithClaims";
-import { createPostValidator, deletePostValidator } from "./post.validators";
+import { createPostValidator, postIdExistValidator } from "./post.validators";
 import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
 import { authOnly } from "../middlewares/jwtValidator";
 import { sendErrorResponse } from "../helpers/sendErrorResponse";
@@ -45,7 +45,7 @@ export class PostController {
 
     @DELETE()
     @route('/')
-    @before([deletePostValidator, requestValidator])
+    @before([postIdExistValidator, requestValidator])
     async delete(req: RequestWithClaims, res: express.Response) {
         const request = new DeletePostRequest();
         const { postId } = req.body;
@@ -62,7 +62,7 @@ export class PostController {
 
     @POST()
     @route('/:postId/like')
-    @before([authOnly])
+    @before([authOnly, postIdExistValidator])
     async like(req: RequestWithClaims, res: express.Response) {
         const request = new LikePostRequest();
         request.setUserid(req.claims.userId);
@@ -77,7 +77,7 @@ export class PostController {
 
     @POST()
     @route('/:postId/unlike')
-    @before([authOnly])
+    @before([authOnly, postIdExistValidator])
     async unlike(req: RequestWithClaims, res: express.Response) {
         const request = new LikePostRequest();
         request.setUserid(req.claims.userId);
