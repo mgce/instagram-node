@@ -49,6 +49,7 @@ function postFeedReducer(state = initialState, action) {
         .updateIn(['posts'], (postList) => postList.map((item) => {
           if (item.id !== action.postId) return item;
           item.likes += 1;
+          item.liked = true;
           return item;
         }))
         .set('loading', false);
@@ -59,7 +60,14 @@ function postFeedReducer(state = initialState, action) {
     case UNLIKE_POST:
       return state.set('loading', true).set('error', false);
     case UNLIKE_POST_SUCCESS:
-      return state.set('posts', action.posts).set('loading', false);
+      return state
+        .updateIn(['posts'], (postList) => postList.map((item) => {
+          if (item.id !== action.postId) return item;
+          item.likes -= 1;
+          item.liked = false;
+          return item;
+        }))
+        .set('loading', false);
     case UNLIKE_POST_ERROR:
       return state.set('error', action.error).set('loading', false);
 

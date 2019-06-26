@@ -71,7 +71,8 @@ proto.grpc.post.v1.PostDto.toObject = function(includeInstance, msg) {
     imageid: jspb.Message.getFieldWithDefault(msg, 3, ""),
     description: jspb.Message.getFieldWithDefault(msg, 4, ""),
     datecreated: (f = msg.getDatecreated()) && common_pb.DateDto.toObject(includeInstance, f),
-    likes: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    likes: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    liked: jspb.Message.getFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -132,6 +133,10 @@ proto.grpc.post.v1.PostDto.deserializeBinaryFromReader = function(msg, reader) {
     case 6:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setLikes(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setLiked(value);
       break;
     default:
       reader.skipField();
@@ -202,6 +207,13 @@ proto.grpc.post.v1.PostDto.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeInt32(
       6,
+      f
+    );
+  }
+  f = message.getLiked();
+  if (f) {
+    writer.writeBool(
+      7,
       f
     );
   }
@@ -310,6 +322,23 @@ proto.grpc.post.v1.PostDto.prototype.getLikes = function() {
 /** @param {number} value */
 proto.grpc.post.v1.PostDto.prototype.setLikes = function(value) {
   jspb.Message.setProto3IntField(this, 6, value);
+};
+
+
+/**
+ * optional bool liked = 7;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.grpc.post.v1.PostDto.prototype.getLiked = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+};
+
+
+/** @param {boolean} value */
+proto.grpc.post.v1.PostDto.prototype.setLiked = function(value) {
+  jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 

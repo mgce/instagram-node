@@ -9,6 +9,7 @@ export default class Post extends React.Component {
       imageUrl: null,
     };
     this.likePost = this.likePost.bind(this);
+    this.unlikePost = this.unlikePost.bind(this);
   }
 
   componentDidMount() {
@@ -24,12 +25,17 @@ export default class Post extends React.Component {
     this.props.likePost(this.props.id);
   }
 
+  unlikePost() {
+    this.props.unlikePost(this.props.id);
+  }
+
   render() {
     const {
       username,
       likes,
       description,
       commentsCount,
+      liked
     } = this.props;
     const {
       imageUrl,
@@ -42,7 +48,7 @@ export default class Post extends React.Component {
           </div>
           <img src={imageUrl} className="card-img-top" alt="..." />
           <div className="card-body">
-            <button type="submit" onClick={this.likePost}>Add like</button>
+            {liked ? <button type="submit" onClick={this.unlikePost}>Unlike</button> : <button type="submit" onClick={this.likePost}>Like</button>}
             <p className="card-title">{likes} likes</p>
             <p className="card-text">{description}</p>
             <p className="card-subtitle mb-2 text-muted">
@@ -62,5 +68,7 @@ Post.propTypes = {
   commentsCount: PropTypes.number,
   description: PropTypes.string,
   imageId: PropTypes.string,
+  liked: PropTypes.bool,
   likePost: PropTypes.func,
+  unlikePost: PropTypes.func,
 };

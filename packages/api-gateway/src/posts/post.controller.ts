@@ -1,10 +1,10 @@
-import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest } from "@instagram-node/common";
+import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest, UnlikePostRequest } from "@instagram-node/common";
 import { PostClient, PostLikeClient } from "./post.client";
 import express = require("express");
 import { POST, route, before, DELETE, GET } from "awilix-router-core";
 import { requestValidator } from "../middlewares/requestValidator";
 import { RequestWithClaims } from "../interfaces/requestWithClaims";
-import { createPostValidator, postIdExistValidator } from "./post.validators";
+import { createPostValidator, postIdExistInParamsValidator, postIdExistInBodyValidator } from "./post.validators";
 import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
 import { authOnly } from "../middlewares/jwtValidator";
 import { sendErrorResponse } from "../helpers/sendErrorResponse";
@@ -33,8 +33,10 @@ export class PostController {
 
     @GET()
     @route('/')
+    @before([authOnly])
     async getPosts(req: RequestWithClaims, res: express.Response) {
         const request = new GetPostsRequest();
+        request.setUserid(req.claims.userId);
 
         PostClient.getPosts(request, (err, result) => {
             if (err)
@@ -45,7 +47,7 @@ export class PostController {
 
     @DELETE()
     @route('/')
-    @before([postIdExistValidator, requestValidator])
+    @before([postIdExistInBodyValidator, requestValidator])
     async delete(req: RequestWithClaims, res: express.Response) {
         const request = new DeletePostRequest();
         const { postId } = req.body;
@@ -62,7 +64,7 @@ export class PostController {
 
     @POST()
     @route('/:postId/like')
-    @before([authOnly, postIdExistValidator])
+    @before([authOnly, postIdExistInParamsValidator])
     async like(req: RequestWithClaims, res: express.Response) {
         const request = new LikePostRequest();
         request.setUserid(req.claims.userId);
@@ -77,9 +79,9 @@ export class PostController {
 
     @POST()
     @route('/:postId/unlike')
-    @before([authOnly, postIdExistValidator])
+    @before([authOnly, postIdExistInParamsValidator])
     async unlike(req: RequestWithClaims, res: express.Response) {
-        const request = new LikePostRequest();
+        const request = new UnlikePostRequest();
         request.setUserid(req.claims.userId);
         request.setPostid(req.params.postId);
 

@@ -28,6 +28,9 @@ export class PostDto extends jspb.Message {
     getLikes(): number;
     setLikes(value: number): void;
 
+    getLiked(): boolean;
+    setLiked(value: boolean): void;
+
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostDto.AsObject;
@@ -47,6 +50,7 @@ export namespace PostDto {
         description: string,
         datecreated?: common_pb.DateDto.AsObject,
         likes: number,
+        liked: boolean,
     }
 }
 

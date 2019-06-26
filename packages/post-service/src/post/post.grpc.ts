@@ -53,7 +53,7 @@ export class PostGrpcService implements IPostServer {
     public async getPosts(call: ServerUnaryCall<GetPostsRequest>, callback: sendUnaryData<GetPostsResponse>): Promise<void> {
         const posts = await this.postRepository.find();
 
-        const postsList = await this.mapPostsToDto(posts);
+        const postsList = await this.mapPostsToDto(posts, call.request.getUserid());
 
         const response = new GetPostsResponse();
         response.setPostsList(postsList);
@@ -61,7 +61,7 @@ export class PostGrpcService implements IPostServer {
         callback(null, response);
     }
 
-    private async mapPostsToDto(posts:PostModel[]){
+    private async mapPostsToDto(posts:PostModel[], userId:number){
         return await Promise.all(posts.map(async (post) => {
             const dto = new PostDto();
             dto.setAuthor(post.username);
@@ -69,14 +69,21 @@ export class PostGrpcService implements IPostServer {
             dto.setId(post.id);
             dto.setImageid(post.imageId);
             dto.setDatecreated(this.setDate(post.dateCreate));
+            const liked = await this.likedByUser(post.id, userId)
+            dto.setLiked(liked);
             const likesCount = await this.getLikesCount(post.id);
             dto.setLikes(likesCount);
             return dto;
         }))
     }
 
+    private async likedByUser(postId:number, userId: number): Promise<boolean> {
+        const postLike = await this.postLikeRepository.createQueryBuilder('postLike').where(`postLike.postId = :postId AND postLike.userId = :userId AND postLike.deleted = false` , {postId, userId}).getCount();
+        return postLike > 0;
+    }
+
     private async getLikesCount(postId: number): Promise<number> {
-        const likes = await this.postLikeRepository.findAndCount({ postId: postId });
+        const likes = await this.postLikeRepository.findAndCount({ postId: postId, deleted: false });
         return likes[1];
     }
 

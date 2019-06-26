@@ -17,9 +17,10 @@ export default class PostFeedPage extends React.Component {
       loading,
       error,
       posts,
-      likePost
+      likePost,
+      unlikePost
     } = this.props;
-
+    console.log(this.props)
     return (
       <article>
         <Helmet>
@@ -40,6 +41,8 @@ export default class PostFeedPage extends React.Component {
               commentsCount={3}
               description={post.description}
               likePost={likePost}
+              unlikePost={unlikePost}
+              liked={post.liked}
             />
           )) : null}
         </div>
@@ -53,5 +56,6 @@ PostFeedPage.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   posts: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   likePost: PropTypes.func,
+  unlikePost: PropTypes.func,
   loadPosts: PropTypes.func,
 };

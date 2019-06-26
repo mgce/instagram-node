@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "build": "lerna exec --scope @instagram-node/common -- yarn build && lerna exec --ignore @instagram-node/common --ignore @instagram-node/image-service --parallel -- yarn build",
-    "bootstrap" : "lerna bootstrap --ignore @instagram-node/webapp"
+    "bootstrap" : "lerna bootstrap --ignore @instagram-node/webapp",
+    "build:proto": "lerna exec --scope @instagram-node/common -- npm run build:proto"
   },
   "devDependencies": {
     "@grpc/proto-loader": "^0.5.0",

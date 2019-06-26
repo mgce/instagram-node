@@ -45,7 +45,7 @@ export function* likePost({ postId }) {
   }
 }
 
-export function* unlikePost(postId) {
+export function* unlikePost({ postId }) {
   try {
     yield call(request, {
       method: 'POST',
