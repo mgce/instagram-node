@@ -7,6 +7,7 @@ import { RequestWithClaims } from "../interfaces/requestWithClaims";
 import { createPostValidator, deletePostValidator } from "./post.validators";
 import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
 import { authOnly } from "../middlewares/jwtValidator";
+import { sendErrorResponse } from "../helpers/sendErrorResponse";
 
 @route('/post')
 export class PostController {
@@ -25,7 +26,7 @@ export class PostController {
 
         PostClient.create(request, (err, result) => {
             if (err)
-                return res.send(new ApiResponseMessage('Error occured', false, err));
+                return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(result.getMessage(), true, { postId: result.getPostid() }))
         });
     }
@@ -37,7 +38,7 @@ export class PostController {
 
         PostClient.getPosts(request, (err, result) => {
             if (err)
-                return res.send(new ApiResponseMessage('Error occured', false, err));
+                return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage('', true, { posts: result.toObject().postsList }))
         })
     }
@@ -54,7 +55,7 @@ export class PostController {
 
         PostClient.delete(request, (err, result) => {
             if (err)
-                return res.send(new ApiResponseMessage('Error occured', false, err));
+                return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(result.getMessage(), true))
         });
     }
@@ -69,7 +70,7 @@ export class PostController {
 
         PostLikeClient.like(request, (err, result) => {
             if (err)
-                return res.send(new ApiResponseMessage('Error occured', false, err));
+                return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(result.getMessage(), true))
         })
     }
@@ -84,7 +85,7 @@ export class PostController {
 
         PostLikeClient.unlike(request, (err, result) => {
             if (err)
-                return res.send(new ApiResponseMessage('Error occured', false, err));
+                return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(result.getMessage(), true))
         })
     }

@@ -5,6 +5,7 @@ import { POST, route, before } from "awilix-router-core";
 import { createUserValidator } from "./user.validators";
 import { requestValidator } from "../middlewares/requestValidator";
 import { ApiResponseMessage } from "../interfaces/apiResponseMessage";
+import { sendErrorResponse } from "../helpers/sendErrorResponse";
 
 @route('/user')
 export class UserController {
@@ -22,7 +23,7 @@ export class UserController {
 
         UserClient.create(request, (err, result) => {
             if (err)
-                return res.send(new ApiResponseMessage(err.message, false));
+                return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(result.getMessage(), true))
         });
     }

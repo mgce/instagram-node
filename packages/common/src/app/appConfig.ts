@@ -7,5 +7,6 @@ export interface AppConfig{
     di: boolean;
     pgModels: any[],
     container: AwilixContainer,
-    callerDir: string
+    callerDir: string,
+    middlewares: any[]
 }

@@ -18,6 +18,7 @@ export class App {
         this.app = express();
         this.addCors();
         this.addBodyParser();
+        this.applyMiddleware(config.middlewares);
         if (config.di)
             this.addDi(config.container, config.callerDir);
 
@@ -74,6 +75,11 @@ export class App {
             console.log("Postgres connected");
         })();
 
+        return this;
+    }
+
+    private applyMiddleware(middlewares: any[]): App{
+        middlewares.forEach(middleware => this.app.use(middleware));
         return this;
     }
 }

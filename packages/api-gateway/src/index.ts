@@ -13,6 +13,7 @@ const appConfig: AppConfig = {
     di: true,
     container,
     callerDir: __dirname,
+    middlewares: []
 }
 
 createPostgresConnection([RefreshTokenModel]).then(connection => {
