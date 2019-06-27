@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from "@instagram-node/common";
-import {IsNumber, IsNotEmpty} from "class-validator";
+import { IsNumber, IsNotEmpty } from "class-validator";
 
 @Entity()
-export class PostModel extends BaseEntity{
+export class PostModel extends BaseEntity {
     @Column()
     @IsNumber()
     @IsNotEmpty()
@@ -20,7 +20,7 @@ export class PostModel extends BaseEntity{
     @IsNotEmpty()
     public description: string;
 
-    constructor(userId: number, username:string, imageId:string, description:string){
+    constructor(userId: number, username: string, imageId: string, description: string) {
         super();
         this.userId = userId;
         this.username = username;

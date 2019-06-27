@@ -25,6 +25,7 @@ rimraf.sync(`${MODEL_DIR}/*`);
   + ` ${PROTO_DIR}\\user.proto`
   + ` ${PROTO_DIR}\\common.proto`
   + ` ${PROTO_DIR}\\image.proto`
+  + ` ${PROTO_DIR}\\comment.proto`
   + ` ${PROTO_DIR}\\postLike.proto`
   +`  ${PROTO_DIR}\\post.proto`);
 

@@ -3,6 +3,7 @@ export const resources = {
         PostNotExist:"Post not exist, or you are not an owner",
         LikeExist:"Like for user currently exist",
         LikeNotExist:"Like for user not exist",
+        NotPostOwner:"You are not an owner of this post",
     },
     info: {
         PostHasBeenDeleted: (id: number) => `Post with id ${id} has been deleted`,

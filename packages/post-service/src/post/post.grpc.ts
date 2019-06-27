@@ -7,12 +7,13 @@ import { EmptyResponse, DateDto } from '@instagram-node/common/protos/models/com
 import { validate } from 'class-validator';
 import { resources } from '../resources';
 import { PostLikeModel } from '../postLike/postlike.model';
+import { PostRepository } from './post.repo';
 
 export class PostGrpcService implements IPostServer {
-    private postRepository: Repository<PostModel>
+    private postRepository: PostRepository
     private postLikeRepository: Repository<PostLikeModel>
 
-    constructor(postRepository: Repository<PostModel>, postLikeRepository: Repository<PostLikeModel>) {
+    constructor(postRepository: PostRepository, postLikeRepository: Repository<PostLikeModel>) {
         this.postRepository = postRepository;
         this.postLikeRepository = postLikeRepository;
     }
@@ -26,9 +27,7 @@ export class PostGrpcService implements IPostServer {
         if (errors.length > 0)
             return callback(new GrpcError(status.INVALID_ARGUMENT, errors), null)
 
-        let entity = this.postRepository.create(post);
-
-        entity = await this.postRepository.save(entity);
+        const entity = await this.postRepository.createAndSave(post);
 
         const response = new PostCreatedResponse();
         response.setPostid(entity.id);
@@ -38,10 +37,13 @@ export class PostGrpcService implements IPostServer {
     }
 
     public async delete(call: ServerUnaryCall<DeletePostRequest>, callback: sendUnaryData<EmptyResponse>): Promise<void> {
-        const post = await this.postRepository.createQueryBuilder().where({ postId: call.request.getPostid, userId: call.request.getUserid }).getOne();
+        const post = await this.postRepository.getById(call.request.getPostid());
 
         if (!post)
             return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PostNotExist), null)
+
+        if (post.userId !== call.request.getUserid())
+            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.NotPostOwner), null)
 
         await this.postRepository.delete(post);
 
@@ -51,7 +53,7 @@ export class PostGrpcService implements IPostServer {
     }
 
     public async getPosts(call: ServerUnaryCall<GetPostsRequest>, callback: sendUnaryData<GetPostsResponse>): Promise<void> {
-        const posts = await this.postRepository.find();
+        const posts = await this.postRepository.getAll();
 
         const postsList = await this.mapPostsToDto(posts, call.request.getUserid());
 
@@ -78,7 +80,10 @@ export class PostGrpcService implements IPostServer {
     }
 
     private async likedByUser(postId:number, userId: number): Promise<boolean> {
-        const postLike = await this.postLikeRepository.createQueryBuilder('postLike').where(`postLike.postId = :postId AND postLike.userId = :userId AND postLike.deleted = false` , {postId, userId}).getCount();
+        const postLike = await this.postLikeRepository
+        .createQueryBuilder('postLike')
+        .where(`postLike.postId = :postId AND postLike.userId = :userId AND postLike.deleted = false` , {postId, userId})
+        .getCount();
         return postLike > 0;
     }
 

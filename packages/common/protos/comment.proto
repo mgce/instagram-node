@@ -1,0 +1,33 @@
+syntax="proto3";
+
+package grpc.post.v1;
+
+import "common.proto";
+
+message CommentDto {
+    int64 id = 1;
+    int64 userId = 2;
+    int64 postId = 3;
+    string description = 4;
+    common.DateDto dateCreated = 5;
+    int32 likes = 6;
+    bool liked = 7;
+}
+
+message CreateCommentRequest {
+    int64 userId = 1;
+    string username = 2;
+    int64 postId = 3;
+    string description = 4;
+}
+
+message CommentCreatedResponse {
+    string message = 1;
+    int64 commentId = 2;
+    int64 postId = 3;
+    int64 userId = 4;
+}
+
+service Comment{
+    rpc Create(CreateCommentRequest) returns (CommentCreatedResponse){}
+}
