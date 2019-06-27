@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import { IsNotEmpty, IsNumber } from "class-validator";
-import { Column } from "typeorm";
+import { Column, Entity } from "typeorm";
 import { BaseEntity } from '@instagram-node/common';
 
+@Entity()
 export class PostCommentModel extends BaseEntity {
     @Column()
     @IsNumber()

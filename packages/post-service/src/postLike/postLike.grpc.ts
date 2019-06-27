@@ -5,14 +5,15 @@ import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { resources } from '../resources';
 import { PostModel } from '../post/post.model';
 import { PostLike } from './postlike.entity';
+import { PostRepository } from './../post/post.repo';
 
 
 export class PostLikeGrpcService implements IPostLikeServer {
     private postLikeRepository: Repository<PostLikeModel>
-    private postRepository: Repository<PostModel>
+    private postRepository: PostRepository
 
 
-    constructor(postLikeRepository: Repository<PostLikeModel>, postRepository: Repository<PostModel>) {
+    constructor(postLikeRepository: Repository<PostLikeModel>, postRepository: PostRepository) {
         this.postLikeRepository = postLikeRepository;
         this.postRepository = postRepository;
     }
@@ -64,6 +65,6 @@ export class PostLikeGrpcService implements IPostLikeServer {
     }
 
     private async getPost(postId: number) {
-        return await this.postRepository.findOne({ id: postId });
+        return await this.postRepository.getById(postId);
     }
 }

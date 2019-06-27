@@ -1,9 +1,5 @@
 import { ICommentServer, CreateCommentRequest, CommentCreatedResponse, GrpcError} from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
-import { PostModel } from '../post/post.model';
-import { Repository } from 'typeorm';
-import { PostLikeModel } from '../postLike/postlike.model';
-import { PostCommentModel } from './comment.model';
 import { PostRepository } from './../post/post.repo';
 import { resources } from '../resources';
 import { PostComment } from './comment.entity';
