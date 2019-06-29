@@ -14,9 +14,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
-import createHistory from 'history/createBrowserHistory';
-import {history} from 'utils/history';
+import { history } from 'utils/history';
 import 'sanitize.css/sanitize.css';
+import 'antd/dist/antd.css';
 
 // Import root app
 import App from 'containers/App';

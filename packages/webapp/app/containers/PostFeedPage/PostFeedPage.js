@@ -20,7 +20,6 @@ export default class PostFeedPage extends React.Component {
       likePost,
       unlikePost
     } = this.props;
-    console.log(this.props)
     return (
       <article>
         <Helmet>
@@ -30,12 +29,12 @@ export default class PostFeedPage extends React.Component {
             content="A React.js Boilerplate application homepage"
           />
         </Helmet>
-        <div className="home-page">
+        <div className="container">
           {posts ? posts.map((post) => (
             <Post
               key={post.id}
               id={post.id}
-              username={post.username}
+              author={post.author}
               imageId={post.imageid}
               likes={post.likes}
               commentsCount={3}

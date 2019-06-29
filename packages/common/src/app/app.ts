@@ -69,7 +69,6 @@ export class App {
      */
     private addPostgresDb(pgModels: any[]): App {
         (async () => {
-            console.log(pgModels);
             const conn: Connection = await createPostgresConnection(pgModels.map(model=>model));
             // await conn.createQueryRunner().createDatabase('instagram', true);
             console.log("Postgres connected");
