@@ -8,10 +8,11 @@ message CommentDto {
     int64 id = 1;
     int64 userId = 2;
     int64 postId = 3;
-    string description = 4;
-    common.DateDto dateCreated = 5;
-    int32 likes = 6;
-    bool liked = 7;
+    string username = 4;
+    string description = 5;
+    common.DateDto dateCreated = 6;
+    int32 likes = 7;
+    bool liked = 8;
 }
 
 message CreateCommentRequest {
@@ -28,6 +29,15 @@ message CommentCreatedResponse {
     int64 userId = 4;
 }
 
+message GetCommentsRequest {
+    int64 postId = 1;
+}
+
+message GetCommentsResponse {
+    repeated CommentDto comments = 1;
+}
+
 service Comment{
     rpc Create(CreateCommentRequest) returns (CommentCreatedResponse){}
+    rpc GetComments(GetCommentsRequest) returns (GetCommentsResponse){}
 }

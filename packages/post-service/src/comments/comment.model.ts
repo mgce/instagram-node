@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { Column, Entity } from "typeorm";
 import { BaseEntity } from '@instagram-node/common';
 
@@ -14,13 +14,18 @@ export class PostCommentModel extends BaseEntity {
     @IsNotEmpty()
     public postId: number;
     @Column()
+    @IsString()
+    @IsNotEmpty()
+    public username: string;
+    @Column()
     @IsNotEmpty()
     public description: string;
 
-    constructor(userId: number, postId: number, description:string){
+    constructor(userId: number, postId: number, username: string, description:string){
         super();
         this.userId = userId;
         this.postId = postId;
+        this.username = username;
         this.description = description;
     }
 }

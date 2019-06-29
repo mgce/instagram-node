@@ -1,9 +1,11 @@
-import { ICommentServer, CreateCommentRequest, CommentCreatedResponse, GrpcError} from '@instagram-node/common';
+import { ICommentServer, CreateCommentRequest, CommentCreatedResponse, GrpcError, GetCommentsResponse, GetCommentsRequest, CommentDto} from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { PostRepository } from './../post/post.repo';
 import { resources } from '../resources';
 import { PostComment } from './comment.entity';
 import { PostCommentRepository } from './comment.repo';
+import { PostCommentModel } from './comment.model';
+import { mapDateToDto } from '../utils';
 
 
 export class CommentGrpcService implements ICommentServer {
@@ -22,7 +24,7 @@ export class CommentGrpcService implements ICommentServer {
         if(!post)
             return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PostNotExist), null)
 
-        const comment = new PostComment(request.postid, request.userid, request.description);
+        const comment = new PostComment(request.postid, request.userid, request.username, request.description);
 
         const model = await this.commentRepository.createAndSave(comment);
 
@@ -32,5 +34,28 @@ export class CommentGrpcService implements ICommentServer {
         response.setUserid(model.userId);
 
         callback(null, response);
+    }
+
+    public async getComments(call: ServerUnaryCall<GetCommentsRequest>, callback: sendUnaryData<GetCommentsResponse>): Promise<void> {
+        const comments = await this.commentRepository.getForPost(call.request.getPostid());
+        const commentsList = await this.mapCommentsToDto(comments);
+
+        const response = new GetCommentsResponse();
+        response.setCommentsList(commentsList);
+
+        callback(null, response);
+    }
+
+    private async mapCommentsToDto(comments:PostCommentModel[]){
+        return await Promise.all(comments.map(comment => {
+            const dto = new CommentDto();
+            dto.setId(comment.id);
+            dto.setUserid(comment.userId);
+            dto.setPostid(comment.postId);
+            dto.setUsername(comment.username);
+            dto.setDescription(comment.description);
+            dto.setDatecreated(mapDateToDto(comment.dateCreate));
+            return dto;
+        }));
     }
 }

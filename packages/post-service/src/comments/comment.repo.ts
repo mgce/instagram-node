@@ -3,15 +3,19 @@ import { Repository, getRepository } from "typeorm";
 import { PostComment } from "./comment.entity";
 
 export class PostCommentRepository {
-    private postRepository: Repository<PostCommentModel>
+    private commentRepository: Repository<PostCommentModel>
 
     constructor() {
-        this.postRepository = getRepository(PostCommentModel);
+        this.commentRepository = getRepository(PostCommentModel);
     }
 
     public async createAndSave(entity: PostComment) : Promise<PostCommentModel>{
-        let model = await this.postRepository.create(entity);
-        model = await this.postRepository.save(model);
+        let model = await this.commentRepository.create(entity);
+        model = await this.commentRepository.save(model);
         return model;
+    }
+
+    public async getForPost(postId: number) : Promise<PostCommentModel[]>{
+        return this.commentRepository.createQueryBuilder().where({postId:postId, deleted: false}).getMany();
     }
 }

@@ -1,5 +1,5 @@
-import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest, UnlikePostRequest } from "@instagram-node/common";
-import { PostClient, PostLikeClient } from "./post.client";
+import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest, UnlikePostRequest, GetCommentsRequest } from "@instagram-node/common";
+import { PostClient, PostLikeClient, CommentClient } from "./post.client";
 import express = require("express");
 import { POST, route, before, DELETE, GET } from "awilix-router-core";
 import { requestValidator } from "../middlewares/requestValidator";
@@ -89,6 +89,20 @@ export class PostController {
             if (err)
                 return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(result.getMessage(), true))
+        })
+    }
+
+    @GET()
+    @route('/:postId/comment')
+    @before([authOnly])
+    async getComments(req: RequestWithClaims, res: express.Response) {
+        const request = new GetCommentsRequest();
+        request.setPostid(req.params.postId);
+
+        CommentClient.getComments(request, (err, result) => {
+            if (err)
+                return sendErrorResponse(res, err);
+            return res.send(new ApiResponseMessage('', true, { posts: result.toObject().commentsList }))
         })
     }
 }

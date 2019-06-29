@@ -66,9 +66,9 @@ export class PostGrpcService implements IPostServer {
     private async mapPostsToDto(posts:PostModel[], userId:number){
         return await Promise.all(posts.map(async (post) => {
             const dto = new PostDto();
+            dto.setId(post.id);
             dto.setAuthor(post.username);
             dto.setDescription(post.description);
-            dto.setId(post.id);
             dto.setImageid(post.imageId);
             dto.setDatecreated(this.setDate(post.dateCreate));
             const liked = await this.likedByUser(post.id, userId)
