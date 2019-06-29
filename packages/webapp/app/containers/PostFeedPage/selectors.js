@@ -5,9 +5,15 @@ const selectPostFeed = (state) => state.get('postFeed');
 const makeSelectPosts = () => createSelector(
   selectPostFeed,
   (postFeedState) => postFeedState.get('posts')
-)
+);
+
+const makeSelectComments = () => createSelector(
+  selectPostFeed,
+  (postFeedState) => postFeedState.get('comments')
+);
 
 export {
   selectPostFeed,
-  makeSelectPosts
+  makeSelectPosts,
+  makeSelectComments
 };

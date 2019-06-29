@@ -18,7 +18,9 @@ export default class PostFeedPage extends React.Component {
       error,
       posts,
       likePost,
-      unlikePost
+      unlikePost,
+      loadComments,
+      comments
     } = this.props;
     return (
       <article>
@@ -42,6 +44,8 @@ export default class PostFeedPage extends React.Component {
               likePost={likePost}
               unlikePost={unlikePost}
               liked={post.liked}
+              loadComments={loadComments}
+              comments={comments[post.id]}
             />
           )) : null}
         </div>
@@ -57,4 +61,5 @@ PostFeedPage.propTypes = {
   likePost: PropTypes.func,
   unlikePost: PropTypes.func,
   loadPosts: PropTypes.func,
+  loadComments: PropTypes.func,
 };

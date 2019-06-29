@@ -102,7 +102,8 @@ export class PostController {
         CommentClient.getComments(request, (err, result) => {
             if (err)
                 return sendErrorResponse(res, err);
-            return res.send(new ApiResponseMessage('', true, { posts: result.toObject().commentsList }))
+            return res.send(new ApiResponseMessage('', true, 
+            { postId: req.params.postId, comments: result.toObject().commentsList }))
         })
     }
 }

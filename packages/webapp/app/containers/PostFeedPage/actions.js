@@ -8,6 +8,9 @@ import {
   UNLIKE_POST,
   UNLIKE_POST_SUCCESS,
   UNLIKE_POST_ERROR,
+  LOAD_COMMENTS,
+  LOAD_COMMENTS_SUCCESS,
+  LOAD_COMMENTS_ERROR,
 } from './constants';
 
 // Load posts
@@ -75,5 +78,28 @@ export function unlikePostError(err) {
   return {
     type: UNLIKE_POST_ERROR,
     err
+  };
+}
+
+// load comments
+
+export function loadComments(postId) {
+  return {
+    type: LOAD_COMMENTS,
+    postId
+  };
+}
+
+export function commentsLoaded(data) {
+  return {
+    type: LOAD_COMMENTS_SUCCESS,
+    data,
+  };
+}
+
+export function loadCommentsError(err) {
+  return {
+    type: LOAD_COMMENTS_ERROR,
+    err,
   };
 }

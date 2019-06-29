@@ -15,11 +15,15 @@ import {
   UNLIKE_POST,
   UNLIKE_POST_SUCCESS,
   UNLIKE_POST_ERROR,
+  LOAD_COMMENTS,
+  LOAD_COMMENTS_SUCCESS,
+  LOAD_COMMENTS_ERROR,
 } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
   posts: [],
+  comments: []
 });
 
 function postFeedReducer(state = initialState, action) {
@@ -69,6 +73,23 @@ function postFeedReducer(state = initialState, action) {
         }))
         .set('loading', false);
     case UNLIKE_POST_ERROR:
+      return state.set('error', action.error).set('loading', false);
+
+    case LOAD_COMMENTS:
+      return state
+        .set('loading', true)
+        .set('error', false);
+    case LOAD_COMMENTS_SUCCESS:
+      return state
+        .updateIn(['comments'], (arr) => {
+          arr.filter((item) => item.postId !== action.data.postId);
+          const comments = {};
+          const { postId } = action.data;
+          comments[postId] = action.data.comments;
+          return arr.concat([comments]);
+        })
+        .set('loading', false);
+    case LOAD_COMMENTS_ERROR:
       return state.set('error', action.error).set('loading', false);
 
     default:

@@ -9,3 +9,7 @@ export const LIKE_POST_ERROR = 'instagram-node/PostFeed/LIKE_POST_ERROR';
 export const UNLIKE_POST = 'instagram-node/PostFeed/UNLIKE_POST';
 export const UNLIKE_POST_SUCCESS = 'instagram-node/PostFeed/UNLIKE_POST_SUCCESS';
 export const UNLIKE_POST_ERROR = 'instagram-node/PostFeed/UNLIKE_POST_ERROR';
+
+export const LOAD_COMMENTS = 'instagram-node/PostFeed/LOAD_COMMENTS';
+export const LOAD_COMMENTS_SUCCESS = 'instagram-node/PostFeed/LOAD_COMMENTS_SUCCESS';
+export const LOAD_COMMENTS_ERROR = 'instagram-node/PostFeed/LOAD_COMMENTS_ERROR';
