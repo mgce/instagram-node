@@ -2,18 +2,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { httpClient } from 'utils/httpClient';
-import { Card, Icon, List } from 'antd';
+import {
+  Card, Icon, List, Input, Form, Button
+} from 'antd';
 
 export default class Post extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       imageUrl: null,
-      commentsExpanded: false,
+      commentsFormExpanded: false,
     };
     this.likePost = this.likePost.bind(this);
     this.unlikePost = this.unlikePost.bind(this);
-    this.expondComments = this.expondComments.bind(this);
+    this.expandComments = this.expandComments.bind(this);
   }
 
   componentDidMount() {
@@ -33,33 +35,31 @@ export default class Post extends React.PureComponent {
     this.props.unlikePost(this.props.id);
   }
 
-  expondComments() {
+  expandComments() {
     this.setState((prevState) => ({
-      commentsExpanded: !prevState.commentsExpanded,
+      commentsFormExpanded: !prevState.commentsFormExpanded,
     }));
-    this.props.loadComments(this.props.id);
+
+    if (this.state.commentsFormExpanded) { this.props.loadComments(this.props.id); }
   }
 
   render() {
     const {
-      author, likes, description, commentsCount, liked, comments 
+      author, likes, description, commentsCount, liked, comments
     } = this.props;
-    const { imageUrl } = this.state;
-    const likeIcon = liked ? <Icon type="dislike" onClick={this.unlikePost} /> : <Icon type="like" onClick={this.likePost} />;
-    const iconWithCount = (likeCount, icon) => (<div className="d-inline"> <p>{likeCount}</p>{icon}</div>);
-    return (
+    const { imageUrl, commentsFormExpanded } = this.state;
+    // const iconWithCount = (likeCount, icon) => (<div className="d-inline"> <p>{likeCount}</p>{icon}</div>);
+    const IconText = ({ type, text, onClick }) => (
+      <span onClick={onClick} role="button" >
+        <Icon type={type} style={{ marginRight: 8 }} />
+        {text}
+      </span>
+    );
+
+    const likeIcon = liked ? <IconText type="dislike" text={likes} onClick={this.unlikePost} /> : <IconText type="like" text={likes} onClick={this.likePost} />;
+
+    const CommentForm = () => (
       <>
-        <Card
-          cover={
-            <img src={imageUrl} alt="test" />
-          }
-          actions={[iconWithCount(likes, likeIcon), iconWithCount(commentsCount, <Icon type="message" onClick={this.expondComments} />)]}
-        >
-          <Card.Meta
-            title={author}
-            description={description}
-          />
-        </Card>
         <List
           itemLayout="vertical"
           size="large"
@@ -70,6 +70,33 @@ export default class Post extends React.PureComponent {
         >
 
         </List>
+        <Form layout="horizontal">
+          <Form.Item>
+            <Input.TextArea row={4} />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+                  Add Comment
+            </Button>
+          </Form.Item>
+        </Form>
+      </>
+    );
+
+    return (
+      <>
+        <Card
+          cover={
+            <img src={imageUrl} alt="test" />
+          }
+          actions={[likeIcon, <IconText type="message" text={commentsCount} onClick={this.expandComments} />]}
+        >
+          <Card.Meta
+            title={author}
+            description={description}
+          />
+        </Card>
+        {commentsFormExpanded ? <CommentForm /> : null}
       </>
     );
   }

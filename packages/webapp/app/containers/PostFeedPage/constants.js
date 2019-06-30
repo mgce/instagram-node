@@ -13,3 +13,7 @@ export const UNLIKE_POST_ERROR = 'instagram-node/PostFeed/UNLIKE_POST_ERROR';
 export const LOAD_COMMENTS = 'instagram-node/PostFeed/LOAD_COMMENTS';
 export const LOAD_COMMENTS_SUCCESS = 'instagram-node/PostFeed/LOAD_COMMENTS_SUCCESS';
 export const LOAD_COMMENTS_ERROR = 'instagram-node/PostFeed/LOAD_COMMENTS_ERROR';
+
+export const ADD_COMMENT = 'instagram-node/PostFeed/ADD_COMMENT';
+export const ADD_COMMENT_SUCCESS = 'instagram-node/PostFeed/ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_ERROR = 'instagram-node/PostFeed/ADD_COMMENT_ERROR';
