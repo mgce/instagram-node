@@ -5,7 +5,12 @@ import { Helmet } from 'react-helmet';
 import './style.scss';
 import Post from 'components/Post';
 
-export default class PostFeedPage extends React.Component {
+export default class PostFeedPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.onFieldChanged = this.onFieldChanged.bind(this);
+  }
+
   // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
     // eslint-disable-next-line react/destructuring-assignment
@@ -21,7 +26,7 @@ export default class PostFeedPage extends React.Component {
       unlikePost,
       loadComments,
       comments,
-      addComment
+      addComment,
     } = this.props;
 
     const com = this.props.comments.size > 0 ? comments.get(0) : [];
@@ -36,23 +41,25 @@ export default class PostFeedPage extends React.Component {
           />
         </Helmet>
         <div className="container">
-          {posts ? posts.map((post) => (
-            <Post
-              key={post.id}
-              id={post.id}
-              author={post.author}
-              imageId={post.imageid}
-              likes={post.likes}
-              commentsCount={3}
-              description={post.description}
-              likePost={likePost}
-              unlikePost={unlikePost}
-              liked={post.liked}
-              loadComments={loadComments}
-              comments={com[post.id]}
-              addComment={addComment}
-            />
-          )) : null}
+          {posts
+            ? posts.map(post => (
+              <Post
+                key={post.id}
+                id={post.id}
+                author={post.author}
+                imageId={post.imageid}
+                likes={post.likes}
+                commentsCount={3}
+                description={post.description}
+                likePost={likePost}
+                unlikePost={unlikePost}
+                liked={post.liked}
+                loadComments={loadComments}
+                comments={com[post.id]}
+                addComment={addComment}
+              />
+            ))
+            : null}
         </div>
       </article>
     );

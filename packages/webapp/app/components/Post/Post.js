@@ -1,10 +1,8 @@
-/* eslint-disable react/jsx-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { httpClient } from 'utils/httpClient';
-import {
-  Card, Icon, List, Input, Form, Button
-} from 'antd';
+import { Card, Icon } from 'antd';
+import PostComments from '../PostComments/PostComments';
 
 export default class Post extends React.PureComponent {
   constructor(props) {
@@ -12,7 +10,7 @@ export default class Post extends React.PureComponent {
     this.state = {
       imageUrl: null,
       commentsFormExpanded: false,
-      commentDescription: ''
+      commentDescription: '',
     };
     this.likePost = this.likePost.bind(this);
     this.unlikePost = this.unlikePost.bind(this);
@@ -33,7 +31,7 @@ export default class Post extends React.PureComponent {
   onFieldChanged(event) {
     event.preventDefault();
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -41,7 +39,7 @@ export default class Post extends React.PureComponent {
     event.preventDefault();
     const comment = {
       postId: this.props.id,
-      description: this.state.commentDescription
+      description: this.state.commentDescription,
     };
     this.props.addComment(comment);
   }
@@ -55,18 +53,24 @@ export default class Post extends React.PureComponent {
   }
 
   expandComments() {
-    if (!this.state.commentsFormExpanded) { this.props.loadComments(this.props.id); }
-    this.setState((prevState) => ({
+    if (!this.state.commentsFormExpanded) {
+      this.props.loadComments(this.props.id);
+    }
+    this.setState(prevState => ({
       commentsFormExpanded: !prevState.commentsFormExpanded,
     }));
   }
 
   render() {
     const {
-      author, likes, description, commentsCount, liked, comments
+      author,
+      likes,
+      description,
+      commentsCount,
+      liked,
+      comments,
     } = this.props;
     const { imageUrl, commentsFormExpanded, commentDescription } = this.state;
-    // const iconWithCount = (likeCount, icon) => (<div className="d-inline"> <p>{likeCount}</p>{icon}</div>);
     const IconText = ({ type, text, onClick }) => (
       <span onClick={onClick} role="button">
         <Icon type={type} style={{ marginRight: 8 }} />
@@ -74,58 +78,39 @@ export default class Post extends React.PureComponent {
       </span>
     );
 
-    const likeIcon = liked ? <IconText type="dislike" text={likes} onClick={this.unlikePost} /> : <IconText type="like" text={likes} onClick={this.likePost} />;
-
-    const CommentForm = () => (
-      <>
-        <List
-          itemLayout="vertical"
-          size="large"
-          dataSource={comments}
-          renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta
-                description={item.description}
-                title={item.username}
-              />
-
-            </List.Item>
-          )}
-        >
-
-        </List>
-        <Form layout="horizontal" onSubmit={this.addComment}>
-          <Form.Item>
-            <Input.TextArea autosize="true" name="commentDescription" onChange={this.onFieldChanged} value={commentDescription} />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-                  Add Comment
-            </Button>
-          </Form.Item>
-        </Form>
-      </>
+    const likeIcon = liked ? (
+      <IconText type="dislike" text={likes} onClick={this.unlikePost} />
+    ) : (
+      <IconText type="like" text={likes} onClick={this.likePost} />
     );
 
     return (
       <>
         <Card
-          cover={
-            <img src={imageUrl} alt="test" />
-          }
-          actions={[likeIcon, <IconText type="message" text={commentsCount} onClick={this.expandComments} />]}
+          cover={<img src={imageUrl} alt="test" />}
+          actions={[
+            likeIcon,
+            <IconText
+              type="message"
+              text={commentsCount}
+              onClick={this.expandComments}
+            />,
+          ]}
         >
-          <Card.Meta
-            title={author}
-            description={description}
-          />
+          <Card.Meta title={author} description={description} />
         </Card>
-        {commentsFormExpanded ? <CommentForm /> : null}
+        {commentsFormExpanded ? (
+          <PostComments
+            comments={comments}
+            commentDescription={commentDescription}
+            onFieldChanged={this.onFieldChanged}
+            addComment={this.addComment}
+          />
+        ) : null}
       </>
     );
   }
 }
-
 
 Post.propTypes = {
   id: PropTypes.number,
@@ -140,4 +125,5 @@ Post.propTypes = {
   loadComments: PropTypes.func,
   comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   addComment: PropTypes.func,
+  onFieldChanged: PropTypes.func,
 };
