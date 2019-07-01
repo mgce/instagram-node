@@ -102,10 +102,11 @@ function postFeedReducer(state = initialState, action) {
     case ADD_COMMENT_SUCCESS:
       return state
         .updateIn(['comments'], (arr) => {
-          arr.filter((item) => item.postId !== action.data.postId);
+          arr = arr.filter((item) => item.postId !== action.data.postId);
           const comments = {};
-          const { postId } = action.data;
-          comments[postId] = action.data.comments;
+          const { postId } = action.comment;
+          delete action.comment.postId;
+          comments[postId] = action.comment.comments;
           return arr.concat([comments]);
         })
         .set('loading', false);

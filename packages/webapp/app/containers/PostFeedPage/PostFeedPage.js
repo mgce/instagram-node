@@ -23,6 +23,9 @@ export default class PostFeedPage extends React.Component {
       comments,
       addComment
     } = this.props;
+
+    const com = this.props.comments.size > 0 ? comments.get(0) : [];
+
     return (
       <article>
         <Helmet>
@@ -46,7 +49,7 @@ export default class PostFeedPage extends React.Component {
               unlikePost={unlikePost}
               liked={post.liked}
               loadComments={loadComments}
-              comments={comments.get(0)[post.id]}
+              comments={com[post.id]}
               addComment={addComment}
             />
           )) : null}

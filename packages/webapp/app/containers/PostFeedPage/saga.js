@@ -99,7 +99,7 @@ export function* addComment({ comment }) {
       postId: response.data.comment.postid,
       description: comment.description
     };
-    yield put(commentAdded(commentData));
+    yield put(commentAdded(response.data.comment));
   } catch (err) {
     yield put(addCommentError(err));
   }
