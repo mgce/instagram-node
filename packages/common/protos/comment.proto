@@ -23,10 +23,7 @@ message CreateCommentRequest {
 }
 
 message CommentCreatedResponse {
-    string message = 1;
-    int64 commentId = 2;
-    int64 postId = 3;
-    int64 userId = 4;
+    CommentDto comment = 1;
 }
 
 message GetCommentsRequest {

@@ -5,7 +5,7 @@ import { injectReducer } from 'utils/injectReducer';
 import { injectSaga } from 'utils/injectSaga';
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 import {
-  loadPosts, loadComments, likePost, unlikePost
+  loadPosts, loadComments, likePost, unlikePost, addComment
 } from './actions';
 import { makeSelectPosts, makeSelectComments } from './selectors';
 import reducer from './reducer';
@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadComments: (postId) => dispatch(loadComments(postId)),
   likePost: (postId) => dispatch(likePost(postId)),
   unlikePost: (postId) => dispatch(unlikePost(postId)),
+  addComment: (comment) => dispatch(addComment(comment)),
 });
 
 const mapStateToProps = createStructuredSelector({

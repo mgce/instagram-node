@@ -29,9 +29,9 @@ export class CommentGrpcService implements ICommentServer {
         const model = await this.commentRepository.createAndSave(comment);
 
         const response = new CommentCreatedResponse();
-        response.setCommentid(model.id);
-        response.setPostid(model.postId);
-        response.setUserid(model.userId);
+
+        const dto = await this.mapCommentToDto(model);
+        response.setComment(dto)
 
         callback(null, response);
     }
@@ -48,6 +48,11 @@ export class CommentGrpcService implements ICommentServer {
 
     private async mapCommentsToDto(comments:PostCommentModel[]){
         return await Promise.all(comments.map(comment => {
+            return this.mapCommentToDto(comment);
+        }));
+    }
+
+    private async mapCommentToDto(comment:PostCommentModel){
             const dto = new CommentDto();
             dto.setId(comment.id);
             dto.setUserid(comment.userId);
@@ -56,6 +61,6 @@ export class CommentGrpcService implements ICommentServer {
             dto.setDescription(comment.description);
             dto.setDatecreated(mapDateToDto(comment.dateCreate));
             return dto;
-        }));
     }
+
 }

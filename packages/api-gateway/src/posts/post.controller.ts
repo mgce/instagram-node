@@ -1,4 +1,4 @@
-import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest, UnlikePostRequest, GetCommentsRequest } from "@instagram-node/common";
+import { CreatePostRequest, DeletePostRequest, GetPostsRequest, LikePostRequest, UnlikePostRequest, GetCommentsRequest, CreateCommentRequest, CommentCreatedResponse } from "@instagram-node/common";
 import { PostClient, PostLikeClient, CommentClient } from "./post.client";
 import express = require("express");
 import { POST, route, before, DELETE, GET } from "awilix-router-core";
@@ -102,8 +102,26 @@ export class PostController {
         CommentClient.getComments(request, (err, result) => {
             if (err)
                 return sendErrorResponse(res, err);
-            return res.send(new ApiResponseMessage('', true, 
-            { postId: req.params.postId, comments: result.toObject().commentsList }))
+            return res.send(new ApiResponseMessage('', true,
+                { postId: req.params.postId, comments: result.toObject().commentsList }))
+        })
+    }
+
+    @POST()
+    @route('/:postId/comment')
+    @before([authOnly])
+    async addComment(req: RequestWithClaims, res: express.Response) {
+        const request = new CreateCommentRequest();
+        request.setPostid(req.params.postId);
+        request.setDescription(req.body.description)
+        request.setUserid(req.claims.userId);
+        request.setUsername(req.claims.username)
+
+        CommentClient.create(request, (err: Error, result: CommentCreatedResponse) => {
+            if (err)
+                return sendErrorResponse(res, err);
+            const response = result.toObject();
+            return res.send(new ApiResponseMessage('', true, response))
         })
     }
 }

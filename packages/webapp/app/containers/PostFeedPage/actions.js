@@ -11,6 +11,9 @@ import {
   LOAD_COMMENTS,
   LOAD_COMMENTS_SUCCESS,
   LOAD_COMMENTS_ERROR,
+  ADD_COMMENT,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_ERROR,
 } from './constants';
 
 // Load posts
@@ -100,6 +103,29 @@ export function commentsLoaded(data) {
 export function loadCommentsError(err) {
   return {
     type: LOAD_COMMENTS_ERROR,
+    err,
+  };
+}
+
+// add comment
+
+export function addComment(comment) {
+  return {
+    type: ADD_COMMENT,
+    comment
+  };
+}
+
+export function commentAdded(comment) {
+  return {
+    type: ADD_COMMENT_SUCCESS,
+    comment,
+  };
+}
+
+export function addCommentError(err) {
+  return {
+    type: ADD_COMMENT_ERROR,
     err,
   };
 }

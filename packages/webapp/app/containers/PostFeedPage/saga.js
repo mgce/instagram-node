@@ -4,7 +4,7 @@ import {
 } from 'redux-saga/effects';
 import request from 'utils/request';
 import {
-  LOAD_POSTS, LIKE_POST, UNLIKE_POST, LOAD_COMMENTS
+  LOAD_POSTS, LIKE_POST, UNLIKE_POST, LOAD_COMMENTS, ADD_COMMENT
 } from './constants';
 import {
   postsLoaded,
@@ -14,7 +14,9 @@ import {
   postUnliked,
   unlikePostError,
   commentsLoaded,
-  loadCommentsError
+  loadCommentsError,
+  commentAdded,
+  addCommentError
 } from './actions';
 
 export function* getPosts() {
@@ -81,9 +83,32 @@ export function* getComments({ postId }) {
   }
 }
 
+export function* addComment({ comment }) {
+  try {
+    const response = yield call(request, {
+      method: 'POST',
+      url: `post/${comment.postId}/comment`,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      data: { description: comment.description }
+    });
+    const commentData = {
+      commentId: response.data.comment.id,
+      postId: response.data.comment.postid,
+      description: comment.description
+    };
+    yield put(commentAdded(commentData));
+  } catch (err) {
+    yield put(addCommentError(err));
+  }
+}
+
 export default function* postFeedData() {
   yield takeLatest(LOAD_POSTS, getPosts);
   yield takeLatest(LIKE_POST, likePost);
   yield takeLatest(UNLIKE_POST, unlikePost);
   yield takeLatest(LOAD_COMMENTS, getComments);
+  yield takeLatest(ADD_COMMENT, addComment);
 }

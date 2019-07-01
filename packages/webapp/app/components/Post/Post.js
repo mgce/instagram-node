@@ -12,10 +12,13 @@ export default class Post extends React.PureComponent {
     this.state = {
       imageUrl: null,
       commentsFormExpanded: false,
+      commentDescription: ''
     };
     this.likePost = this.likePost.bind(this);
     this.unlikePost = this.unlikePost.bind(this);
     this.expandComments = this.expandComments.bind(this);
+    this.addComment = this.addComment.bind(this);
+    this.onFieldChanged = this.onFieldChanged.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +30,22 @@ export default class Post extends React.PureComponent {
     });
   }
 
+  onFieldChanged(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  addComment(event) {
+    event.preventDefault();
+    const comment = {
+      postId: this.props.id,
+      description: this.state.commentDescription
+    };
+    this.props.addComment(comment);
+  }
+
   likePost() {
     this.props.likePost(this.props.id);
   }
@@ -36,21 +55,20 @@ export default class Post extends React.PureComponent {
   }
 
   expandComments() {
+    if (!this.state.commentsFormExpanded) { this.props.loadComments(this.props.id); }
     this.setState((prevState) => ({
       commentsFormExpanded: !prevState.commentsFormExpanded,
     }));
-
-    if (this.state.commentsFormExpanded) { this.props.loadComments(this.props.id); }
   }
 
   render() {
     const {
       author, likes, description, commentsCount, liked, comments
     } = this.props;
-    const { imageUrl, commentsFormExpanded } = this.state;
+    const { imageUrl, commentsFormExpanded, commentDescription } = this.state;
     // const iconWithCount = (likeCount, icon) => (<div className="d-inline"> <p>{likeCount}</p>{icon}</div>);
     const IconText = ({ type, text, onClick }) => (
-      <span onClick={onClick} role="button" >
+      <span onClick={onClick} role="button">
         <Icon type={type} style={{ marginRight: 8 }} />
         {text}
       </span>
@@ -65,14 +83,20 @@ export default class Post extends React.PureComponent {
           size="large"
           dataSource={comments}
           renderItem={(item) => (
-            <List.Item></List.Item>
+            <List.Item>
+              <List.Item.Meta
+                description={item.description}
+                title={item.username}
+              />
+
+            </List.Item>
           )}
         >
 
         </List>
-        <Form layout="horizontal">
+        <Form layout="horizontal" onSubmit={this.addComment}>
           <Form.Item>
-            <Input.TextArea row={4} />
+            <Input.TextArea autosize="true" name="commentDescription" onChange={this.onFieldChanged} value={commentDescription} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -114,5 +138,6 @@ Post.propTypes = {
   likePost: PropTypes.func,
   unlikePost: PropTypes.func,
   loadComments: PropTypes.func,
-  comments: PropTypes.array,
+  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  addComment: PropTypes.func,
 };
