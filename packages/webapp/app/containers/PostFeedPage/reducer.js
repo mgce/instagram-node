@@ -26,7 +26,7 @@ import {
 // The initial state of the App
 const initialState = fromJS({
   posts: [],
-  comments: []
+  comments: {},
 });
 
 function postFeedReducer(state = initialState, action) {
@@ -38,7 +38,7 @@ function postFeedReducer(state = initialState, action) {
         .setIn(['posts'], []);
     case ADD_POST_SUCCESS:
       return state
-        .updateIn(['posts'], (arr) => arr.concat([action.post]))
+        .updateIn(['posts'], arr => arr.concat([action.post]))
         .set('loading', false);
     case ADD_POST_ERROR:
       return state.set('error', action.error).set('loading', false);
@@ -53,11 +53,12 @@ function postFeedReducer(state = initialState, action) {
       return state.set('loading', true).set('error', false);
     case LIKE_POST_SUCCESS: {
       return state
-        .updateIn(['posts'], (postList) => postList.map((item) => {
+        .updateIn(['posts'], postList => postList.map((item) => {
           if (item.id !== action.postId) return item;
-          item.likes += 1;
-          item.liked = true;
-          return item;
+          const newItem = item;
+          newItem.likes += 1;
+          newItem.liked = true;
+          return newItem;
         }))
         .set('loading', false);
     }
@@ -68,11 +69,12 @@ function postFeedReducer(state = initialState, action) {
       return state.set('loading', true).set('error', false);
     case UNLIKE_POST_SUCCESS:
       return state
-        .updateIn(['posts'], (postList) => postList.map((item) => {
+        .updateIn(['posts'], postList => postList.map((item) => {
           if (item.id !== action.postId) return item;
-          item.likes -= 1;
-          item.liked = false;
-          return item;
+          const newItem = item;
+          newItem.likes -= 1;
+          newItem.liked = false;
+          return newItem;
         }))
         .set('loading', false);
     case UNLIKE_POST_ERROR:
@@ -84,13 +86,7 @@ function postFeedReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_COMMENTS_SUCCESS:
       return state
-        .updateIn(['comments'], (arr) => {
-          arr = arr.filter((item) => item.postId !== action.data.postId);
-          const comments = {};
-          const { postId } = action.data;
-          comments[postId] = action.data.comments;
-          return arr.concat([comments]);
-        })
+        .setIn(['comments', action.data.postId], action.data.comments)
         .set('loading', false);
     case LOAD_COMMENTS_ERROR:
       return state.set('error', action.error).set('loading', false);
@@ -101,14 +97,10 @@ function postFeedReducer(state = initialState, action) {
         .set('error', false);
     case ADD_COMMENT_SUCCESS:
       return state
-        .updateIn(['comments'], (arr) => {
-          arr = arr.filter((item) => item.postId !== action.data.postId);
-          const comments = {};
-          const { postId } = action.comment;
-          delete action.comment.postId;
-          comments[postId] = action.comment.comments;
-          return arr.concat([comments]);
-        })
+        .updateIn(['comments', action.comment.postId], (obj) => {
+          obj.setIn([action.data.postId], action.data.comment)
+          return obj.setIn([action.data.postId], action.data.comment)
+          })
         .set('loading', false);
     case ADD_COMMENT_ERROR:
       return state.set('error', action.error).set('loading', false);

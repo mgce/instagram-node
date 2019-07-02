@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import {
-  call, put, select, takeLatest
+  call, put, select, takeLatest,
 } from 'redux-saga/effects';
 import request from 'utils/request';
 import {
-  LOAD_POSTS, LIKE_POST, UNLIKE_POST, LOAD_COMMENTS, ADD_COMMENT
+  LOAD_POSTS, LIKE_POST, UNLIKE_POST, LOAD_COMMENTS, ADD_COMMENT,
 } from './constants';
 import {
   postsLoaded,
@@ -16,7 +16,7 @@ import {
   commentsLoaded,
   loadCommentsError,
   commentAdded,
-  addCommentError
+  addCommentError,
 } from './actions';
 
 export function* getPosts() {
@@ -92,14 +92,18 @@ export function* addComment({ comment }) {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      data: { description: comment.description }
+      data: { description: comment.description },
     });
     const commentData = {
       commentId: response.data.comment.id,
       postId: response.data.comment.postid,
-      description: comment.description
+      description: comment.description,
+      liked: response.data.comment.liked,
+      likes: response.data.comment.likes,
+      username: response.data.comment.username,
+      userId: response.data.comment.userid,
     };
-    yield put(commentAdded(response.data.comment));
+    yield put(commentAdded(commentData));
   } catch (err) {
     yield put(addCommentError(err));
   }

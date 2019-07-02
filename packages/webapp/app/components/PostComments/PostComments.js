@@ -48,7 +48,7 @@ export default class PostComments extends React.PureComponent {
 }
 
 PostComments.propTypes = {
-  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   commentDescription: PropTypes.string,
   onFieldChanged: PropTypes.func,
   addComment: PropTypes.func,

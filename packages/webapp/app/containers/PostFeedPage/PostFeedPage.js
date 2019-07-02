@@ -6,11 +6,6 @@ import './style.scss';
 import Post from 'components/Post';
 
 export default class PostFeedPage extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.onFieldChanged = this.onFieldChanged.bind(this);
-  }
-
   // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
     // eslint-disable-next-line react/destructuring-assignment
@@ -29,7 +24,7 @@ export default class PostFeedPage extends React.PureComponent {
       addComment,
     } = this.props;
 
-    const com = this.props.comments.size > 0 ? comments.get(0) : [];
+    const com = this.props.comments.size > 0 ? comments.toJS() : [];
 
     return (
       <article>

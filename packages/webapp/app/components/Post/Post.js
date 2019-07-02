@@ -29,7 +29,7 @@ export default class Post extends React.PureComponent {
   }
 
   onFieldChanged(event) {
-    event.preventDefault();
+    // event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value,
     });
@@ -42,6 +42,7 @@ export default class Post extends React.PureComponent {
       description: this.state.commentDescription,
     };
     this.props.addComment(comment);
+    this.setState(() => ({ commentDescription: '' }));
   }
 
   likePost() {
@@ -123,7 +124,7 @@ Post.propTypes = {
   likePost: PropTypes.func,
   unlikePost: PropTypes.func,
   loadComments: PropTypes.func,
-  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   addComment: PropTypes.func,
   onFieldChanged: PropTypes.func,
 };
