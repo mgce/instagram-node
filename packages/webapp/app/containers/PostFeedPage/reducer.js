@@ -86,7 +86,10 @@ function postFeedReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_COMMENTS_SUCCESS:
         const loadCommentsState = state.get('comments').toJS();
-        loadCommentsState[action.data.postId].push(action.comment);
+        if(loadCommentsState[action.data.postId] === undefined)
+          loadCommentsState[action.data.postId] = action.data.comments
+        else
+          loadCommentsState[action.data.postId].push(action.data.comments);
       return state
         .set('comments', fromJS(loadCommentsState))
         .set('loading', false);

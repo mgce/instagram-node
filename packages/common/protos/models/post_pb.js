@@ -71,8 +71,9 @@ proto.grpc.post.v1.PostDto.toObject = function(includeInstance, msg) {
     imageid: jspb.Message.getFieldWithDefault(msg, 3, ""),
     description: jspb.Message.getFieldWithDefault(msg, 4, ""),
     datecreated: (f = msg.getDatecreated()) && common_pb.DateDto.toObject(includeInstance, f),
-    likes: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    liked: jspb.Message.getFieldWithDefault(msg, 7, false)
+    likescount: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    commentscount: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    liked: jspb.Message.getFieldWithDefault(msg, 8, false)
   };
 
   if (includeInstance) {
@@ -132,9 +133,13 @@ proto.grpc.post.v1.PostDto.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 6:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setLikes(value);
+      msg.setLikescount(value);
       break;
     case 7:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setCommentscount(value);
+      break;
+    case 8:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setLiked(value);
       break;
@@ -203,17 +208,24 @@ proto.grpc.post.v1.PostDto.serializeBinaryToWriter = function(message, writer) {
       common_pb.DateDto.serializeBinaryToWriter
     );
   }
-  f = message.getLikes();
+  f = message.getLikescount();
   if (f !== 0) {
     writer.writeInt32(
       6,
       f
     );
   }
+  f = message.getCommentscount();
+  if (f !== 0) {
+    writer.writeInt32(
+      7,
+      f
+    );
+  }
   f = message.getLiked();
   if (f) {
     writer.writeBool(
-      7,
+      8,
       f
     );
   }
@@ -311,34 +323,49 @@ proto.grpc.post.v1.PostDto.prototype.hasDatecreated = function() {
 
 
 /**
- * optional int32 likes = 6;
+ * optional int32 likesCount = 6;
  * @return {number}
  */
-proto.grpc.post.v1.PostDto.prototype.getLikes = function() {
+proto.grpc.post.v1.PostDto.prototype.getLikescount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
 };
 
 
 /** @param {number} value */
-proto.grpc.post.v1.PostDto.prototype.setLikes = function(value) {
+proto.grpc.post.v1.PostDto.prototype.setLikescount = function(value) {
   jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
 /**
- * optional bool liked = 7;
+ * optional int32 commentsCount = 7;
+ * @return {number}
+ */
+proto.grpc.post.v1.PostDto.prototype.getCommentscount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {number} value */
+proto.grpc.post.v1.PostDto.prototype.setCommentscount = function(value) {
+  jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional bool liked = 8;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.grpc.post.v1.PostDto.prototype.getLiked = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
 };
 
 
 /** @param {boolean} value */
 proto.grpc.post.v1.PostDto.prototype.setLiked = function(value) {
-  jspb.Message.setProto3BooleanField(this, 7, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 

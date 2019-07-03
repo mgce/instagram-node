@@ -25,8 +25,11 @@ export class PostDto extends jspb.Message {
     getDatecreated(): common_pb.DateDto | undefined;
     setDatecreated(value?: common_pb.DateDto): void;
 
-    getLikes(): number;
-    setLikes(value: number): void;
+    getLikescount(): number;
+    setLikescount(value: number): void;
+
+    getCommentscount(): number;
+    setCommentscount(value: number): void;
 
     getLiked(): boolean;
     setLiked(value: boolean): void;
@@ -49,7 +52,8 @@ export namespace PostDto {
         imageid: string,
         description: string,
         datecreated?: common_pb.DateDto.AsObject,
-        likes: number,
+        likescount: number,
+        commentscount: number,
         liked: boolean,
     }
 }

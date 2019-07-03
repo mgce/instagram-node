@@ -10,8 +10,9 @@ message PostDto {
     string imageId = 3;
     string description = 4;
     common.DateDto dateCreated = 5;
-    int32 likes = 6;
-    bool liked = 7;
+    int32 likesCount = 6;
+    int32 commentsCount = 7;
+    bool liked = 8;
 }
 
 message CreatePostRequest {

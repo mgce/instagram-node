@@ -8,13 +8,16 @@ import { validate } from 'class-validator';
 import { resources } from '../resources';
 import { PostLikeModel } from '../postLike/postlike.model';
 import { PostRepository } from './post.repo';
+import { PostCommentRepository } from '../comments/comment.repo';
 
 export class PostGrpcService implements IPostServer {
     private postRepository: PostRepository
+    private commentRepository: PostCommentRepository
     private postLikeRepository: Repository<PostLikeModel>
 
-    constructor(postRepository: PostRepository, postLikeRepository: Repository<PostLikeModel>) {
+    constructor(postRepository: PostRepository, commentRepository: PostCommentRepository, postLikeRepository: Repository<PostLikeModel>) {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
         this.postLikeRepository = postLikeRepository;
     }
 
@@ -70,11 +73,13 @@ export class PostGrpcService implements IPostServer {
             dto.setAuthor(post.username);
             dto.setDescription(post.description);
             dto.setImageid(post.imageId);
-            dto.setDatecreated(this.setDate(post.dateCreate));
+            dto.setDatecreated(this.dateToDto(post.dateCreate));
             const liked = await this.likedByUser(post.id, userId)
             dto.setLiked(liked);
             const likesCount = await this.getLikesCount(post.id);
-            dto.setLikes(likesCount);
+            dto.setLikescount(likesCount);
+            const commentsCount = await this.commentRepository.countCommentsForPost(post.id);
+            dto.setCommentscount(commentsCount);
             return dto;
         }))
     }
@@ -88,15 +93,14 @@ export class PostGrpcService implements IPostServer {
     }
 
     private async getLikesCount(postId: number): Promise<number> {
-        const likes = await this.postLikeRepository.findAndCount({ postId: postId, deleted: false });
-        return likes[1];
+        return this.postLikeRepository.createQueryBuilder().where({postId:postId, deleted: false}).getCount();
     }
 
-    private setDate(date: Date): DateDto {
-        const dateCreate = new DateDto();
-        dateCreate.setDay(date.getDay())
-        dateCreate.setMonth(date.getMonth())
-        dateCreate.setYear(date.getFullYear())
-        return dateCreate;
+    private dateToDto(date: Date): DateDto {
+        const dto = new DateDto();
+        dto.setDay(date.getDay())
+        dto.setMonth(date.getMonth())
+        dto.setYear(date.getFullYear())
+        return dto;
     }
 }

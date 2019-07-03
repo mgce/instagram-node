@@ -29,7 +29,17 @@ export function* getPosts() {
         'Content-Type': 'application/json',
       },
     });
-    yield put(postsLoaded(response.data.posts));
+    const posts = response.data.posts.map(post => ({
+      author: post.author,
+      commentsCount:post.commentscount,
+      dateCreated:post.dateCreated,
+      description:post.description,
+      id:post.id,
+      imageId:post.imageid,
+      liked:post.liked,
+      likesCount:post.likescount
+    }));
+    yield put(postsLoaded(posts));
   } catch (err) {
     yield put(loadPostsError(err));
   }
@@ -99,7 +109,8 @@ export function* addComment({ comment }) {
       postId: response.data.comment.postid,
       description: comment.description,
       liked: response.data.comment.liked,
-      likes: response.data.comment.likes,
+      likesCount: response.data.comment.likescount,
+      commentsCount: response.data.comment.commentscount,
       username: response.data.comment.username,
       userId: response.data.comment.userid,
     };

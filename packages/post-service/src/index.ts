@@ -21,7 +21,7 @@ const initService = function initService(connection: Connection) {
     const postLikeRepository = connection.getRepository(PostLikeModel);
 
     const server: Server = new Server()
-    server.addService(PostService, new PostGrpcService(postRepository, postLikeRepository))
+    server.addService(PostService, new PostGrpcService(postRepository, postCommentRepository, postLikeRepository))
     server.addService(PostLikeService, new PostLikeGrpcService(postLikeRepository, postRepository))
     server.addService(CommentService, new CommentGrpcService(postRepository, postCommentRepository))
     server.bind(SERVER_URI, ServerCredentials.createInsecure())

@@ -17,6 +17,7 @@ export default class Post extends React.PureComponent {
     this.expandComments = this.expandComments.bind(this);
     this.addComment = this.addComment.bind(this);
     this.onFieldChanged = this.onFieldChanged.bind(this);
+    this.parseDescription = this.parseDescription.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +30,6 @@ export default class Post extends React.PureComponent {
   }
 
   onFieldChanged(event) {
-    // event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value,
     });
@@ -62,27 +62,38 @@ export default class Post extends React.PureComponent {
     }));
   }
 
+  parseDescription(){
+    const wordArr = this.props.description.split(' ');
+    const newWordArr = wordArr.map(word => {
+      if(!word.startsWith('#')) return word;
+      const newWord = `<b>${word}</b>`;
+      return newWord
+    })
+    return newWordArr.join(' ');
+  }
+
   render() {
     const {
       author,
-      likes,
-      description,
+      likesCount,
       commentsCount,
+      description,
       liked,
       comments,
     } = this.props;
     const { imageUrl, commentsFormExpanded, commentDescription } = this.state;
+
     const IconText = ({ type, text, onClick }) => (
-      <span onClick={onClick} role="button">
+      <span onClick={onClick} role="link">
         <Icon type={type} style={{ marginRight: 8 }} />
         {text}
       </span>
     );
 
     const likeIcon = liked ? (
-      <IconText type="dislike" text={likes} onClick={this.unlikePost} />
+      <IconText type="dislike" text={likesCount} onClick={this.unlikePost} />
     ) : (
-      <IconText type="like" text={likes} onClick={this.likePost} />
+      <IconText type="like" text={likesCount} onClick={this.likePost} />
     );
 
     return (
@@ -92,13 +103,15 @@ export default class Post extends React.PureComponent {
           actions={[
             likeIcon,
             <IconText
+              key={1}
               type="message"
               text={commentsCount}
               onClick={this.expandComments}
             />,
           ]}
         >
-          <Card.Meta title={author} description={description} />
+          <Card.Meta title={author}/>
+          <p dangerouslySetInnerHTML={{ __html: this.parseDescription() }}></p>
         </Card>
         {commentsFormExpanded ? (
           <PostComments
@@ -126,5 +139,4 @@ Post.propTypes = {
   loadComments: PropTypes.func,
   comments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   addComment: PropTypes.func,
-  onFieldChanged: PropTypes.func,
 };

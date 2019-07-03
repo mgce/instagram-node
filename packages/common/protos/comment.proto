@@ -11,7 +11,7 @@ message CommentDto {
     string username = 4;
     string description = 5;
     common.DateDto dateCreated = 6;
-    int32 likes = 7;
+    int32 likesCount = 7;
     bool liked = 8;
 }
 

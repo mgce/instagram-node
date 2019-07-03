@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
@@ -6,9 +5,7 @@ import './style.scss';
 import Post from 'components/Post';
 
 export default class PostFeedPage extends React.PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.loadPosts();
   }
 
@@ -20,11 +17,10 @@ export default class PostFeedPage extends React.PureComponent {
       likePost,
       unlikePost,
       loadComments,
-      comments,
       addComment,
     } = this.props;
 
-    const com = this.props.comments.size > 0 ? comments.toJS() : [];
+    const comments = this.props.comments.toJS();
 
     return (
       <article>
@@ -43,14 +39,14 @@ export default class PostFeedPage extends React.PureComponent {
                 id={post.id}
                 author={post.author}
                 imageId={post.imageid}
-                likes={post.likes}
-                commentsCount={com[post.id].length}
+                likesCount={post.likesCount}
+                commentsCount={post.commentsCount}
                 description={post.description}
                 likePost={likePost}
                 unlikePost={unlikePost}
                 liked={post.liked}
                 loadComments={loadComments}
-                comments={com[post.id]}
+                comments={comments[post.id]}
                 addComment={addComment}
               />
             ))

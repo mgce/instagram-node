@@ -18,4 +18,8 @@ export class PostCommentRepository {
     public async getForPost(postId: number) : Promise<PostCommentModel[]>{
         return this.commentRepository.createQueryBuilder().where({postId:postId, deleted: false}).getMany();
     }
+
+    public async countCommentsForPost(postId: number) : Promise<number>{
+        return this.commentRepository.createQueryBuilder().where({postId:postId, deleted: false}).getCount();
+    }
 }
