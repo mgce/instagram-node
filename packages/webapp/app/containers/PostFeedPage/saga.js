@@ -95,7 +95,7 @@ export function* addComment({ comment }) {
       data: { description: comment.description },
     });
     const commentData = {
-      commentId: response.data.comment.id,
+      id: response.data.comment.id,
       postId: response.data.comment.postid,
       description: comment.description,
       liked: response.data.comment.liked,

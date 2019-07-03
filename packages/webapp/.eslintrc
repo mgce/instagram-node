@@ -11,7 +11,8 @@
   "plugins": [
     "redux-saga",
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 6,

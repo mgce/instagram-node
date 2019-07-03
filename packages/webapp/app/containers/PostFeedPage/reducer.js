@@ -85,8 +85,10 @@ function postFeedReducer(state = initialState, action) {
         .set('loading', true)
         .set('error', false);
     case LOAD_COMMENTS_SUCCESS:
+        const loadCommentsState = state.get('comments').toJS();
+        loadCommentsState[action.data.postId].push(action.comment);
       return state
-        .setIn(['comments', action.data.postId], action.data.comments)
+        .set('comments', fromJS(loadCommentsState))
         .set('loading', false);
     case LOAD_COMMENTS_ERROR:
       return state.set('error', action.error).set('loading', false);
@@ -96,11 +98,10 @@ function postFeedReducer(state = initialState, action) {
         .set('loading', true)
         .set('error', false);
     case ADD_COMMENT_SUCCESS:
+      const addCommentState = state.get('comments').toJS();
+      addCommentState[action.comment.postId].push(action.comment);
       return state
-        .updateIn(['comments', action.comment.postId], (obj) => {
-          obj.setIn([action.data.postId], action.data.comment)
-          return obj.setIn([action.data.postId], action.data.comment)
-          })
+      .set('comments', fromJS(addCommentState))
         .set('loading', false);
     case ADD_COMMENT_ERROR:
       return state.set('error', action.error).set('loading', false);
