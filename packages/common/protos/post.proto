@@ -22,6 +22,14 @@ message CreatePostRequest {
     string description = 4;
 }
 
+message GetPostsRequest {
+    int64 userId = 1;
+}
+
+message GetPostsResponse {
+    repeated PostDto posts = 1;
+}
+
 message PostCreatedResponse {
     string message = 1;
     int64 postId = 2;
@@ -32,11 +40,12 @@ message DeletePostRequest {
     int64 postId = 2;
 }
 
-message GetPostsRequest {
-    int64 userId = 1;
+message SearchByTagRequest {
+    string tag = 1;
+    int64 userId = 2;
 }
 
-message GetPostsResponse {
+message SearchByTagResponse {
     repeated PostDto posts = 1;
 }
 
@@ -44,4 +53,5 @@ service Post{
     rpc Create(CreatePostRequest) returns (PostCreatedResponse){}
     rpc Delete(DeletePostRequest) returns (common.EmptyResponse){}
     rpc GetPosts(GetPostsRequest) returns (GetPostsResponse){}
+    rpc SearchByTag(SearchByTagRequest) returns (SearchByTagResponse){}
 }

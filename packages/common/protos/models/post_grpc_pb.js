@@ -71,6 +71,28 @@ function deserialize_grpc_post_v1_PostCreatedResponse(buffer_arg) {
   return post_pb.PostCreatedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_grpc_post_v1_SearchByTagRequest(arg) {
+  if (!(arg instanceof post_pb.SearchByTagRequest)) {
+    throw new Error('Expected argument of type grpc.post.v1.SearchByTagRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_SearchByTagRequest(buffer_arg) {
+  return post_pb.SearchByTagRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_grpc_post_v1_SearchByTagResponse(arg) {
+  if (!(arg instanceof post_pb.SearchByTagResponse)) {
+    throw new Error('Expected argument of type grpc.post.v1.SearchByTagResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_SearchByTagResponse(buffer_arg) {
+  return post_pb.SearchByTagResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var PostService = exports.PostService = {
   create: {
@@ -105,6 +127,17 @@ var PostService = exports.PostService = {
     requestDeserialize: deserialize_grpc_post_v1_GetPostsRequest,
     responseSerialize: serialize_grpc_post_v1_GetPostsResponse,
     responseDeserialize: deserialize_grpc_post_v1_GetPostsResponse,
+  },
+  searchByTag: {
+    path: '/grpc.post.v1.Post/SearchByTag',
+    requestStream: false,
+    responseStream: false,
+    requestType: post_pb.SearchByTagRequest,
+    responseType: post_pb.SearchByTagResponse,
+    requestSerialize: serialize_grpc_post_v1_SearchByTagRequest,
+    requestDeserialize: deserialize_grpc_post_v1_SearchByTagRequest,
+    responseSerialize: serialize_grpc_post_v1_SearchByTagResponse,
+    responseDeserialize: deserialize_grpc_post_v1_SearchByTagResponse,
   },
 };
 

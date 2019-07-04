@@ -1,4 +1,4 @@
-import { Repository, getRepository } from "typeorm";
+import { Repository, getRepository, Like } from "typeorm";
 import { PostModel } from "./post.model";
 import { PostComment } from './../comments/comment.entity';
 import { Post } from "./post.entity";
@@ -32,5 +32,9 @@ export class PostRepository {
 
     public async delete(model: PostModel){
         this.postRepository.delete(model);
+    }
+
+    public async getWithTag(tag: string){
+        return this.postRepository.createQueryBuilder().where({deleted: false, description: Like(`%#${tag}%`)}).getMany();
     }
 }

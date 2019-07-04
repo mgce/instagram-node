@@ -91,6 +91,50 @@ export namespace CreatePostRequest {
     }
 }
 
+export class GetPostsRequest extends jspb.Message { 
+    getUserid(): number;
+    setUserid(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetPostsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetPostsRequest): GetPostsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetPostsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetPostsRequest;
+    static deserializeBinaryFromReader(message: GetPostsRequest, reader: jspb.BinaryReader): GetPostsRequest;
+}
+
+export namespace GetPostsRequest {
+    export type AsObject = {
+        userid: number,
+    }
+}
+
+export class GetPostsResponse extends jspb.Message { 
+    clearPostsList(): void;
+    getPostsList(): Array<PostDto>;
+    setPostsList(value: Array<PostDto>): void;
+    addPosts(value?: PostDto, index?: number): PostDto;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetPostsResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: GetPostsResponse): GetPostsResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetPostsResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetPostsResponse;
+    static deserializeBinaryFromReader(message: GetPostsResponse, reader: jspb.BinaryReader): GetPostsResponse;
+}
+
+export namespace GetPostsResponse {
+    export type AsObject = {
+        postsList: Array<PostDto.AsObject>,
+    }
+}
+
 export class PostCreatedResponse extends jspb.Message { 
     getMessage(): string;
     setMessage(value: string): void;
@@ -141,28 +185,32 @@ export namespace DeletePostRequest {
     }
 }
 
-export class GetPostsRequest extends jspb.Message { 
+export class SearchByTagRequest extends jspb.Message { 
+    getTag(): string;
+    setTag(value: string): void;
+
     getUserid(): number;
     setUserid(value: number): void;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): GetPostsRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: GetPostsRequest): GetPostsRequest.AsObject;
+    toObject(includeInstance?: boolean): SearchByTagRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: SearchByTagRequest): SearchByTagRequest.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: GetPostsRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): GetPostsRequest;
-    static deserializeBinaryFromReader(message: GetPostsRequest, reader: jspb.BinaryReader): GetPostsRequest;
+    static serializeBinaryToWriter(message: SearchByTagRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SearchByTagRequest;
+    static deserializeBinaryFromReader(message: SearchByTagRequest, reader: jspb.BinaryReader): SearchByTagRequest;
 }
 
-export namespace GetPostsRequest {
+export namespace SearchByTagRequest {
     export type AsObject = {
+        tag: string,
         userid: number,
     }
 }
 
-export class GetPostsResponse extends jspb.Message { 
+export class SearchByTagResponse extends jspb.Message { 
     clearPostsList(): void;
     getPostsList(): Array<PostDto>;
     setPostsList(value: Array<PostDto>): void;
@@ -170,16 +218,16 @@ export class GetPostsResponse extends jspb.Message {
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): GetPostsResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: GetPostsResponse): GetPostsResponse.AsObject;
+    toObject(includeInstance?: boolean): SearchByTagResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SearchByTagResponse): SearchByTagResponse.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: GetPostsResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): GetPostsResponse;
-    static deserializeBinaryFromReader(message: GetPostsResponse, reader: jspb.BinaryReader): GetPostsResponse;
+    static serializeBinaryToWriter(message: SearchByTagResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SearchByTagResponse;
+    static deserializeBinaryFromReader(message: SearchByTagResponse, reader: jspb.BinaryReader): SearchByTagResponse;
 }
 
-export namespace GetPostsResponse {
+export namespace SearchByTagResponse {
     export type AsObject = {
         postsList: Array<PostDto.AsObject>,
     }

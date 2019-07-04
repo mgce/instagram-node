@@ -38,7 +38,7 @@ export default class PostFeedPage extends React.PureComponent {
                 key={post.id}
                 id={post.id}
                 author={post.author}
-                imageId={post.imageid}
+                imageId={post.imageId}
                 likesCount={post.likesCount}
                 commentsCount={post.commentsCount}
                 description={post.description}

@@ -1,4 +1,4 @@
-import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest, GrpcError, GetPostsRequest, GetPostsResponse, PostDto } from '@instagram-node/common';
+import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest, GrpcError, GetPostsRequest, GetPostsResponse, PostDto, SearchByTagResponse } from '@instagram-node/common';
 import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
 import { PostModel } from './post.model';
 import { Repository } from 'typeorm';
@@ -9,6 +9,7 @@ import { resources } from '../resources';
 import { PostLikeModel } from '../postLike/postlike.model';
 import { PostRepository } from './post.repo';
 import { PostCommentRepository } from '../comments/comment.repo';
+import { SearchByTagRequest } from './../../../common/protos/models/post_pb.d';
 
 export class PostGrpcService implements IPostServer {
     private postRepository: PostRepository
@@ -61,6 +62,17 @@ export class PostGrpcService implements IPostServer {
         const postsList = await this.mapPostsToDto(posts, call.request.getUserid());
 
         const response = new GetPostsResponse();
+        response.setPostsList(postsList);
+
+        callback(null, response);
+    }
+
+    public async searchByTag(call: ServerUnaryCall<SearchByTagRequest>, callback: sendUnaryData<SearchByTagResponse>): Promise<void> {
+        const posts = await this.postRepository.getWithTag(call.request.getTag());
+
+        const postsList = await this.mapPostsToDto(posts, call.request.getUserid());
+
+        const response = new SearchByTagResponse();
         response.setPostsList(postsList);
 
         callback(null, response);
