@@ -13,6 +13,7 @@ import { Switch } from 'react-router-dom';
 import { PrivateRoute, PublicRoute } from 'utils/Routes';
 
 import PostFeedPage from 'containers/PostFeedPage/Loadable';
+import TagFeedPage from 'containers/TagFeedPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import AddPostPage from 'containers/AddPostPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -32,6 +33,7 @@ const App = () => (
       <Switch>
         <PublicRoute exact path="/login" component={LoginPage} />
         <PrivateRoute exact path="/" component={PostFeedPage} />
+        <PrivateRoute exact path="/tag/:tagName" component={TagFeedPage} />
         <PrivateRoute path="/add" component={AddPostPage} />
         <PrivateRoute path="" component={NotFoundPage} />
       </Switch>
