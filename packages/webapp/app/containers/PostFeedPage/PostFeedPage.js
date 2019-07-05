@@ -23,17 +23,9 @@ export default class PostFeedPage extends React.PureComponent {
     const comments = this.props.comments.toJS();
 
     return (
-      <article>
-        <Helmet>
-          <title>Home Page</title>
-          <meta
-            name="description"
-            content="A React.js Boilerplate application homepage"
-          />
-        </Helmet>
-        <div className="container">
-          {posts
-            ? posts.map(post => (
+      <div className="container">
+        {posts
+          ? posts.map(post => (
               <Post
                 key={post.id}
                 id={post.id}
@@ -50,9 +42,8 @@ export default class PostFeedPage extends React.PureComponent {
                 addComment={addComment}
               />
             ))
-            : null}
-        </div>
-      </article>
+          : null}
+      </div>
     );
   }
 }

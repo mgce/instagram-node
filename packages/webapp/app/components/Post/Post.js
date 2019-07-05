@@ -24,7 +24,7 @@ export default class Post extends React.PureComponent {
     httpClient({
       method: 'GET',
       url: `image/download/${this.props.imageId}`,
-    }).then((response) => {
+    }).then(response => {
       this.setState({ imageUrl: response.data.url });
     });
   }
@@ -62,13 +62,13 @@ export default class Post extends React.PureComponent {
     }));
   }
 
-  parseDescription(){
+  parseDescription() {
     const wordArr = this.props.description.split(' ');
     const newWordArr = wordArr.map(word => {
-      if(!word.startsWith('#')) return word;
+      if (!word.startsWith('#')) return word;
       const newWord = `<b>${word}</b>`;
-      return newWord
-    })
+      return newWord;
+    });
     return newWordArr.join(' ');
   }
 
@@ -110,8 +110,8 @@ export default class Post extends React.PureComponent {
             />,
           ]}
         >
-          <Card.Meta title={author}/>
-          <p dangerouslySetInnerHTML={{ __html: this.parseDescription() }}></p>
+          <Card.Meta title={author} />
+          <p dangerouslySetInnerHTML={{ __html: this.parseDescription() }} />
         </Card>
         {commentsFormExpanded ? (
           <PostComments

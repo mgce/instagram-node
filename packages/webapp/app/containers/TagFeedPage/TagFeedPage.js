@@ -6,31 +6,19 @@ import Post from 'components/Post';
 
 export default class TagFeedPage extends React.PureComponent {
   componentDidMount() {
-    const {tagName} = this.props.match.params;
+    const { tagName } = this.props.match.params;
     this.props.loadTag(tagName);
   }
 
   render() {
-    const {
-      loading,
-      error,
-      tags
-    } = this.props;
+    const { loading, error, tags } = this.props;
 
     // const comments = this.props.comments.toJS();
 
     return (
-      <article>
-        <Helmet>
-          <title>Home Page</title>
-          <meta
-            name="description"
-            content="A React.js Boilerplate application homepage"
-          />
-        </Helmet>
-        <div className="container">
-          {tags
-            ? tags.map(tagPost => (
+      <div className="container">
+        {tags
+          ? tags.map(tagPost => (
               <Post
                 key={tagPost.id}
                 id={tagPost.id}
@@ -47,9 +35,8 @@ export default class TagFeedPage extends React.PureComponent {
                 // addComment={addComment}
               />
             ))
-            : null}
-        </div>
-      </article>
+          : null}
+      </div>
     );
   }
 }
