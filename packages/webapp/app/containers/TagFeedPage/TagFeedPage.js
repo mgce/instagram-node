@@ -11,15 +11,11 @@ export default class TagFeedPage extends React.PureComponent {
   }
 
   render() {
-    // const {
-    //   loading,
-    //   error,
-    //   posts,
-    //   likePost,
-    //   unlikePost,
-    //   loadComments,
-    //   addComment,
-    // } = this.props;
+    const {
+      loading,
+      error,
+      tags
+    } = this.props;
 
     // const comments = this.props.comments.toJS();
 
@@ -33,39 +29,39 @@ export default class TagFeedPage extends React.PureComponent {
           />
         </Helmet>
         <div className="container">
-          {/* {posts
-            ? posts.map(post => (
+          {tags
+            ? tags.map(tagPost => (
               <Post
-                key={post.id}
-                id={post.id}
-                author={post.author}
-                imageId={post.imageId}
-                likesCount={post.likesCount}
-                commentsCount={post.commentsCount}
-                description={post.description}
-                likePost={likePost}
-                unlikePost={unlikePost}
-                liked={post.liked}
-                loadComments={loadComments}
-                comments={comments[post.id]}
-                addComment={addComment}
+                key={tagPost.id}
+                id={tagPost.id}
+                author={tagPost.author}
+                imageId={tagPost.imageId}
+                likesCount={tagPost.likesCount}
+                commentsCount={tagPost.commentsCount}
+                description={tagPost.description}
+                // likePost={likePost}
+                // unlikePost={unlikePost}
+                liked={tagPost.liked}
+                // loadComments={loadComments}
+                // comments={comments[tagPost.id]}
+                // addComment={addComment}
               />
             ))
-            : null} */}
+            : null}
         </div>
       </article>
     );
   }
 }
 
-PostFeedPage.propTypes = {
+TagFeedPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  posts: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  comments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  likePost: PropTypes.func,
-  unlikePost: PropTypes.func,
-  loadPosts: PropTypes.func,
-  loadComments: PropTypes.func,
-  addComment: PropTypes.func,
+  tags: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  // comments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  // likePost: PropTypes.func,
+  // unlikePost: PropTypes.func,
+  // loadPosts: PropTypes.func,
+  // loadComments: PropTypes.func,
+  // addComment: PropTypes.func,
 };

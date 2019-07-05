@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const selectTagFeed = state => state.get('tags');
+const selectTagFeed = state => state.get('tagsFeed');
 
 const makeSelectTags = () => createSelector(
   selectTagFeed,
