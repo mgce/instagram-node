@@ -16,7 +16,7 @@ export function* getTag({payload}) {
       },
     });
     const posts = mapPostsToDto(response.data.posts);
-    yield put(tagLoaded(posts));
+    yield put(tagLoaded(payload.tagName, posts));
   } catch (err) {
     yield put(loadTagError(err));
   }

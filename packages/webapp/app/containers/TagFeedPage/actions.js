@@ -11,10 +11,11 @@ export function loadTag(tagName) {
   };
 }
 
-export function tagLoaded(posts) {
+export function tagLoaded(tagName, posts) {
   return {
     type: LOAD_TAG_SUCCESS,
     payload: {
+      tagName,
       posts,
     },
   };

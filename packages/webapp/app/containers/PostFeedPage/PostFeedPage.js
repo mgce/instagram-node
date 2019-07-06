@@ -17,16 +17,16 @@ export default class PostFeedPage extends React.PureComponent {
       likePost,
       unlikePost,
       loadComments,
+      comments,
       addComment,
     } = this.props;
-
-    const comments = this.props.comments.toJS();
 
     return (
       <div className="container">
         {posts
-          ? posts.map(post => (
-              <Post
+          ? posts.map(post => {
+            const postComments = comments.get(post.id.toString());
+              return <Post
                 key={post.id}
                 id={post.id}
                 author={post.author}
@@ -38,10 +38,10 @@ export default class PostFeedPage extends React.PureComponent {
                 unlikePost={unlikePost}
                 liked={post.liked}
                 loadComments={loadComments}
-                comments={comments[post.id]}
+                comments={comments.get(post.id.toString())}
                 addComment={addComment}
               />
-            ))
+          })
           : null}
       </div>
     );

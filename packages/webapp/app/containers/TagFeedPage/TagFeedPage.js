@@ -12,13 +12,13 @@ export default class TagFeedPage extends React.PureComponent {
 
   render() {
     const { loading, error, tags } = this.props;
-
+    const { tagName } = this.props.match.params;
     // const comments = this.props.comments.toJS();
 
     return (
       <div className="container">
-        {tags
-          ? tags.map(tagPost => (
+        {tags.get(tagName)
+          ? tags.get(tagName).map(tagPost => (
               <Post
                 key={tagPost.id}
                 id={tagPost.id}
@@ -27,12 +27,7 @@ export default class TagFeedPage extends React.PureComponent {
                 likesCount={tagPost.likesCount}
                 commentsCount={tagPost.commentsCount}
                 description={tagPost.description}
-                // likePost={likePost}
-                // unlikePost={unlikePost}
                 liked={tagPost.liked}
-                // loadComments={loadComments}
-                // comments={comments[tagPost.id]}
-                // addComment={addComment}
               />
             ))
           : null}
