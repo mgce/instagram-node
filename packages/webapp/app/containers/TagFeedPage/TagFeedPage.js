@@ -13,7 +13,6 @@ export default class TagFeedPage extends React.PureComponent {
   render() {
     const { loading, error, tags } = this.props;
     const { tagName } = this.props.match.params;
-    // const comments = this.props.comments.toJS();
 
     return (
       <div className="container">
@@ -40,10 +39,4 @@ TagFeedPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   tags: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  // comments: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  // likePost: PropTypes.func,
-  // unlikePost: PropTypes.func,
-  // loadPosts: PropTypes.func,
-  // loadComments: PropTypes.func,
-  // addComment: PropTypes.func,
 };

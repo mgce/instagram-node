@@ -10,7 +10,7 @@ import { SearchByTagResponse, SearchByTagRequest } from "@instagram-node/common"
 @route('/tag')
 export class TagController {
     @GET()
-    @route('/:tag')
+    @route('/:tags')
     @before([authOnly])
     async create(req: RequestWithClaims, res: express.Response){
         const request: SearchByTagRequest = new SearchByTagRequest();

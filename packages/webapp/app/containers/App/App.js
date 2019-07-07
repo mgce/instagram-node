@@ -46,7 +46,7 @@ const App = () => (
           <Switch>
             <PublicRoute exact path="/login" component={LoginPage} />
             <PrivateRoute exact path="/" component={PostFeedPage} />
-            <PrivateRoute exact path="/tag/:tagName" component={TagFeedPage} />
+            <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
             <PrivateRoute path="/add" component={AddPostPage} />
             <PrivateRoute path="" component={NotFoundPage} />
           </Switch>

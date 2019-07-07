@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { httpClient } from 'utils/httpClient';
 import { Card, Icon } from 'antd';
 import PostComments from '../PostComments/PostComments';
+import { Link } from 'react-router-dom';
 
 export default class Post extends React.PureComponent {
   constructor(props) {
@@ -17,7 +18,7 @@ export default class Post extends React.PureComponent {
     this.expandComments = this.expandComments.bind(this);
     this.addComment = this.addComment.bind(this);
     this.onFieldChanged = this.onFieldChanged.bind(this);
-    this.parseDescription = this.parseDescription.bind(this);
+    this.renderDescription = this.renderDescription.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +63,7 @@ export default class Post extends React.PureComponent {
     }));
   }
 
-  parseDescription() {
+  test() {
     const wordArr = this.props.description.split(' ');
     const newWordArr = wordArr.map(word => {
       if (!word.startsWith('#')) return word;
@@ -70,6 +71,25 @@ export default class Post extends React.PureComponent {
       return newWord;
     });
     return newWordArr.join(' ');
+  }
+
+  renderDescription() {
+    const words = this.props.description.split(' ');
+    return (
+      <p>
+        {words.map((word, idx) => {
+          if (word.indexOf('#') === 0) {
+            return (
+              <Link to={`/tags/${word.substring(1)}`} key={idx}>
+                {` ${word}`}
+              </Link>
+            );
+          } else {
+            return ` ${word}`;
+          }
+        })}
+      </p>
+    );
   }
 
   render() {
@@ -111,7 +131,7 @@ export default class Post extends React.PureComponent {
           ]}
         >
           <Card.Meta title={author} />
-          <p dangerouslySetInnerHTML={{ __html: this.parseDescription() }} />
+          {this.renderDescription()}
         </Card>
         {commentsFormExpanded ? (
           <PostComments
