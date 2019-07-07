@@ -1,0 +1,36 @@
+.thumbnail-wrapper {
+    width: 270px;
+    height: 270px;
+    margin: 20px;
+  }
+
+.photo-thumbnail {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+  }
+  
+  .photo-thumbnail > .thumbnail-overlay {
+    display: none;
+  }
+  
+  .photo-thumbnail:hover > .thumbnail-overlay {
+    width: 270px;
+    height: 270px;
+    position: absolute;
+    background-color: #000;
+    opacity: 0.6;
+    display: block;
+    color: white;
+    font-weight: 600;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+.thumbnail-icon {
+    margin: 0 10px 0 10px;
+  }
+  

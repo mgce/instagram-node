@@ -12,16 +12,16 @@ export class PostRepository {
 
     public async getById(id: number): Promise<PostModel> {
         return this.postRepository
-        .createQueryBuilder()
-        .where({ postId: id, deleted: false })
-        .getOne();
+            .createQueryBuilder()
+            .where({ postId: id, deleted: false })
+            .getOne();
     }
 
     public async getAll(): Promise<PostModel[]> {
         return this.postRepository
-        .createQueryBuilder()
-        .where({ deleted: false })
-        .getMany();
+            .createQueryBuilder()
+            .where({ deleted: false })
+            .getMany();
     }
 
     public async createAndSave(entity: Post): Promise<PostModel> {
@@ -30,11 +30,11 @@ export class PostRepository {
         return model;
     }
 
-    public async delete(model: PostModel){
+    public async delete(model: PostModel) {
         this.postRepository.delete(model);
     }
 
-    public async getWithTag(tag: string){
-        return this.postRepository.createQueryBuilder().where({deleted: false, description: Like(`%#${tag}%`)}).getMany();
+    public async getWithTag(tag: string) {
+        return this.postRepository.createQueryBuilder().where({ deleted: false, description: Like(`%#${tag}%`) }).getMany();
     }
 }

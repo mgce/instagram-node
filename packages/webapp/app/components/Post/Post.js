@@ -63,16 +63,6 @@ export default class Post extends React.PureComponent {
     }));
   }
 
-  test() {
-    const wordArr = this.props.description.split(' ');
-    const newWordArr = wordArr.map(word => {
-      if (!word.startsWith('#')) return word;
-      const newWord = `<b>${word}</b>`;
-      return newWord;
-    });
-    return newWordArr.join(' ');
-  }
-
   renderDescription() {
     const words = this.props.description.split(' ');
     return (
@@ -123,7 +113,7 @@ export default class Post extends React.PureComponent {
           actions={[
             likeIcon,
             <IconText
-              key={1}
+              key={0}
               type="message"
               text={commentsCount}
               onClick={this.expandComments}

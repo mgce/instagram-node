@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import './style.scss';
 import Post from 'components/Post';
+import { Card, Icon } from 'antd';
+import { httpClient } from 'utils/httpClient';
+import Thumbnail from 'components/Thumbnail';
 
 export default class TagFeedPage extends React.PureComponent {
   componentDidMount() {
@@ -16,20 +19,21 @@ export default class TagFeedPage extends React.PureComponent {
 
     return (
       <div className="container">
-        {tags.get(tagName)
-          ? tags.get(tagName).map(tagPost => (
-              <Post
-                key={tagPost.id}
-                id={tagPost.id}
-                author={tagPost.author}
-                imageId={tagPost.imageId}
-                likesCount={tagPost.likesCount}
-                commentsCount={tagPost.commentsCount}
-                description={tagPost.description}
-                liked={tagPost.liked}
-              />
-            ))
-          : null}
+        <div className="thumbnail-grid">
+          {tags.get(tagName)
+            ? tags
+                .get(tagName)
+                .map(tagPost => (
+                  <Thumbnail
+                    key={tagPost.id}
+                    id={tagPost.id}
+                    imageId={tagPost.imageId}
+                    likesCount={tagPost.likesCount}
+                    commentsCount={tagPost.commentsCount}
+                  />
+                ))
+            : null}
+        </div>
       </div>
     );
   }

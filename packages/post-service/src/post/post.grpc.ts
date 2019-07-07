@@ -78,7 +78,7 @@ export class PostGrpcService implements IPostServer {
         callback(null, response);
     }
 
-    private async mapPostsToDto(posts:PostModel[], userId:number){
+    private async mapPostsToDto(posts: PostModel[], userId: number) {
         return await Promise.all(posts.map(async (post) => {
             const dto = new PostDto();
             dto.setId(post.id);
@@ -96,16 +96,16 @@ export class PostGrpcService implements IPostServer {
         }))
     }
 
-    private async likedByUser(postId:number, userId: number): Promise<boolean> {
+    private async likedByUser(postId: number, userId: number): Promise<boolean> {
         const postLike = await this.postLikeRepository
-        .createQueryBuilder('postLike')
-        .where(`postLike.postId = :postId AND postLike.userId = :userId AND postLike.deleted = false` , {postId, userId})
-        .getCount();
+            .createQueryBuilder('postLike')
+            .where({ postId: postId, userId: userId, deleted: false })
+            .getCount();
         return postLike > 0;
     }
 
     private async getLikesCount(postId: number): Promise<number> {
-        return this.postLikeRepository.createQueryBuilder().where({postId:postId, deleted: false}).getCount();
+        return this.postLikeRepository.createQueryBuilder().where({ postId: postId, deleted: false }).getCount();
     }
 
     private dateToDto(date: Date): DateDto {

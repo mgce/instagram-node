@@ -6,3 +6,14 @@
   padding: 0 16px;
   flex-direction: column;
 }
+
+.thumbnail-wrapper {
+  width: 270px;
+  height: 270px;
+  margin: 20px;
+}
+
+.thumbnail-grid {
+  display: flex;
+  flex-wrap: wrap;
+}

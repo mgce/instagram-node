@@ -22,7 +22,7 @@ import './style.scss';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
 const App = () => (
-  <Layout className="hp-100">
+  <Layout className="layout">
     <Helmet
       titleTemplate="%s - React.js Boilerplate"
       defaultTitle="Instagram clone"
@@ -30,29 +30,27 @@ const App = () => (
       <meta name="description" content="Instagram clone application" />
     </Helmet>
     <Header />
-    <Layout style={{ padding: '0px 64px 0 64px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Posts</Breadcrumb.Item>
-      </Breadcrumb>
-      <Layout.Content
-        style={{
-          background: '#fff',
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
-        }}
-      >
-        <div className="app-wrapper">
-          <Switch>
-            <PublicRoute exact path="/login" component={LoginPage} />
-            <PrivateRoute exact path="/" component={PostFeedPage} />
-            <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
-            <PrivateRoute path="/add" component={AddPostPage} />
-            <PrivateRoute path="" component={NotFoundPage} />
-          </Switch>
-        </div>
-      </Layout.Content>
-    </Layout>
+    <Breadcrumb style={{ margin: '10px 64px 10px 64px' }}>
+      <Breadcrumb.Item>Posts</Breadcrumb.Item>
+    </Breadcrumb>
+    <Layout.Content
+      style={{
+        margin: '0px 64px 0 64px',
+        background: '#fff',
+        padding: 24,
+      }}
+    >
+      <div className="app-wrapper">
+        <Switch>
+          <PublicRoute exact path="/login" component={LoginPage} />
+          <PrivateRoute exact path="/" component={PostFeedPage} />
+          <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
+          <PrivateRoute path="/add" component={AddPostPage} />
+          <PrivateRoute path="" component={NotFoundPage} />
+        </Switch>
+      </div>
+    </Layout.Content>
+    <Layout.Footer />
   </Layout>
 );
 

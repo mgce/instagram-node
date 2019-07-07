@@ -5,29 +5,18 @@ import {
 } from 'antd';
 
 export default class PostComments extends React.PureComponent {
-  render() {
+  constructor(props){
+    super(props);
+    this.renderFooter = this.renderFooter.bind(this);
+  }
+  renderFooter(){
     const {
-      comments,
       commentDescription,
       onFieldChanged,
       addComment,
     } = this.props;
-    return (
-      <>
-        <List
-          itemLayout="vertical"
-          size="large"
-          dataSource={comments}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                description={item.description}
-                title={item.username}
-              />
-            </List.Item>
-          )}
-        />
-        <Form layout="horizontal" onSubmit={addComment}>
+    return(
+      <Form layout="vertical" onSubmit={addComment}>
           <Form.Item>
             <Input.TextArea
               autosize="true"
@@ -42,6 +31,24 @@ export default class PostComments extends React.PureComponent {
             </Button>
           </Form.Item>
         </Form>
+    )
+  }
+  render() {
+    const {
+      comments,
+    } = this.props;
+    return (
+      <>
+        <List
+          size="small"
+          dataSource={comments}
+          renderItem={item => (
+            <List.Item rowKey={item.id}>
+              <span><b>{item.username}:</b> {item.description}</span>
+            </List.Item>
+          )}
+          footer={this.renderFooter()}
+        />
       </>
     );
   }
