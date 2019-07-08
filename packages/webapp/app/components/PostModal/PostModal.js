@@ -1,8 +1,24 @@
 import React from 'react';
 import Modal from 'react-modal';
 import './style.scss';
+import CommentBox from '../CommentBox';
 
 export default class PostModal extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      commentDescription: '',
+    };
+    this.onFieldChanged = this.onFieldChanged.bind(this);
+  }
+
+  onFieldChanged = event => {
+    if (event !== undefined && event.preventDefault) event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
   getCustomStyles() {
     return {
       overlay: {
@@ -44,9 +60,7 @@ export default class PostModal extends React.PureComponent {
           </div>
           <div className="post-modal-info-container col-4">
             <div className="post-modal-user-wrapper">
-              {/* <div className="post-modal-user-avatar">
-              </div> */}
-              <div>{post.author}</div>
+              <strong>{post.author}</strong>
             </div>
             <div className="post-modal-likes">
               <span>{post.likesCount} likes</span>
@@ -63,17 +77,10 @@ export default class PostModal extends React.PureComponent {
             <div className="post-modal-action-box">
               <div className="post-modal-like-button" />
               <div className="post-modal-comment-box">
-                <div className="comment-box">
-                  <input
-                    className="comment-box-input"
-                    type="text"
-                    placeholder="Add a comment..."
-                    // value={this.state.commentBody}
-                    // onChange={this.onCommentChange}
-                    // onKeyDown={this.handleKeyDown}
-                    // ref={(ref) => {this.commentInput = ref}}
-                  />
-                </div>
+                <CommentBox
+                  value={this.state.commentDescription}
+                  onChange={this.onFieldChanged}
+                />
               </div>
             </div>
           </div>
