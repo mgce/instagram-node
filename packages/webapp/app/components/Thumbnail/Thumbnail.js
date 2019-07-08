@@ -10,6 +10,7 @@ export default class Thumbnail extends React.PureComponent {
       this.state = {
         imageUrl: '',
       };
+      this.onClick = this.onClick.bind(this);
     }
   
     componentDidMount() {
@@ -21,11 +22,21 @@ export default class Thumbnail extends React.PureComponent {
       });
     }
   
+    onClick(){
+      const post = {
+        id: this.props.id,
+        imageUrl: this.state.imageUrl,
+        author: this.props.author,
+        likesCount: this.props.likesCount,
+      }
+      this.props.onClick(post)
+    }
+
     render() {
       const { likesCount, commentsCount } = this.props;
   
       return (
-        <div className="thumbnail-wrapper">
+        <a className="thumbnail-wrapper" onClick={this.onClick}>
           <div
             className="photo-thumbnail"
             style={{
@@ -43,7 +54,7 @@ export default class Thumbnail extends React.PureComponent {
               </span>
             </div>
           </div>
-        </div>
+        </a>
       );
     }
   }

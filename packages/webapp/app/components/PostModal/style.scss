@@ -1,0 +1,35 @@
+.post-modal-root{
+  width: 100%;
+}
+
+.post-modal-photo-wrapper{
+  position: relative;
+}
+
+.post-modal-photo{
+  display: block;
+  width: 100%;
+}
+
+.post-modal-info-container {
+  background-color: #fff;
+  padding: 15px 15px 15px 0;
+  margin-left: 26px !important;
+}
+
+.post-modal-user-wrapper{
+  display: flex;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #efefef;
+  align-items: center;
+}
+
+.post-modal-user-avatar{
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+
+.post-modal-likes {
+  padding-top: 10px;
+}

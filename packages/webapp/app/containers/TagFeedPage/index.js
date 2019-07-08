@@ -8,16 +8,20 @@ import { makeSelectTags } from './selectors';
 import { loadTag } from './actions';
 import reducer from './reducer';
 import saga from './saga';
+import { makeSelectComments } from '../PostFeedPage/selectors';
+import { loadComments } from '../PostFeedPage/actions';
 import TagFeedPage from './TagFeedPage';
 
 const mapDispatchToProps = (dispatch) => ({
   loadTag: (tagName) => dispatch(loadTag(tagName)),
+  loadComments: (postId) => dispatch(loadComments(postId))
 });
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   tags: makeSelectTags(),
+  comments: makeSelectComments(),
 });
 
 const withConnect = connect(
