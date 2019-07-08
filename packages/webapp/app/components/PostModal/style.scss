@@ -32,4 +32,32 @@
 
 .post-modal-likes {
   padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.post-modal-action-box{
+  position: absolute;
+  bottom: 0;
+  padding: 10px 0;
+  border-top: 1px solid #efefef;
+}
+
+.post-modal-like-button
+.post-modal-comment-box{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+// comment box
+
+.comment-box {
+  width: 100%;
+}
+
+.comment-box-input {
+  width: 100%;
+  margin: 0;
+  border: none;
 }

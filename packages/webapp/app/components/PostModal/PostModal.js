@@ -51,6 +51,31 @@ export default class PostModal extends React.PureComponent {
             <div className="post-modal-likes">
               <span>{post.likesCount} likes</span>
             </div>
+            <div className="post-modal-comments">
+              {comments
+                ? comments.map(comment => (
+                    <div className="post-modal-comment">
+                      <strong>{comment.username}:</strong> {comment.description}
+                    </div>
+                  ))
+                : null}
+            </div>
+            <div className="post-modal-action-box">
+              <div className="post-modal-like-button" />
+              <div className="post-modal-comment-box">
+                <div className="comment-box">
+                  <input
+                    className="comment-box-input"
+                    type="text"
+                    placeholder="Add a comment..."
+                    // value={this.state.commentBody}
+                    // onChange={this.onCommentChange}
+                    // onKeyDown={this.handleKeyDown}
+                    // ref={(ref) => {this.commentInput = ref}}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -64,6 +89,7 @@ export default class PostModal extends React.PureComponent {
         onRequestClose={this.props.onRequestClose}
         style={this.getCustomStyles()}
         contentLabel="PostModal"
+        ariaHideApp={false}
       >
         {this.renderModalContent()}
       </Modal>

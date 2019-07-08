@@ -41,14 +41,13 @@ export default class TagFeedPage extends React.PureComponent {
 
   renderModal() {
     const { postModalOpen, selectedImageUrl } = this.state;
-    const com = this.props.comments;
     if (postModalOpen)
       return (
         <PostModal
           isOpen={postModalOpen}
           onRequestClose={this.closePostModal}
           post={this.state.selectedPost}
-          comments={this.props.comments.get(this.state.selectedPost.id)}
+          comments={this.props.comments.get(this.state.selectedPost.id.toString())}
         />
       );
   }

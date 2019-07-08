@@ -4,6 +4,8 @@ import request from 'utils/request';
 import { LOAD_TAG } from './constants';
 import { tagLoaded, loadTagError } from './actions';
 import { mapPostsToDto } from 'utils/postMapper';
+import {getComments} from '../PostFeedPage/saga'
+import {LOAD_COMMENTS} from '../PostFeedPage/constants'
 
 export function* getTag({payload}) {
   try {
@@ -24,4 +26,5 @@ export function* getTag({payload}) {
 
 export default function* postFeedData() {
   yield takeLatest(LOAD_TAG, getTag);
+  yield takeLatest(LOAD_COMMENTS, getComments);
 }
