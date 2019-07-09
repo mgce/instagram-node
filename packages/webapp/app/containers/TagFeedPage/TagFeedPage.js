@@ -19,6 +19,7 @@ export default class TagFeedPage extends React.PureComponent {
     this.openPostModal = this.openPostModal.bind(this);
     this.closePostModal = this.closePostModal.bind(this);
   }
+
   componentDidMount() {
     const { tagName } = this.props.match.params;
     this.props.loadTag(tagName);
@@ -48,6 +49,7 @@ export default class TagFeedPage extends React.PureComponent {
           onRequestClose={this.closePostModal}
           post={this.state.selectedPost}
           comments={this.props.comments.get(this.state.selectedPost.id.toString())}
+          addComment={this.props.addComment}
         />
       );
   }

@@ -9,12 +9,13 @@ import { loadTag } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectComments } from '../PostFeedPage/selectors';
-import { loadComments } from '../PostFeedPage/actions';
+import { loadComments, addComment } from '../PostFeedPage/actions';
 import TagFeedPage from './TagFeedPage';
 
 const mapDispatchToProps = (dispatch) => ({
   loadTag: (tagName) => dispatch(loadTag(tagName)),
-  loadComments: (postId) => dispatch(loadComments(postId))
+  loadComments: (postId) => dispatch(loadComments(postId)),
+  addComment: (comment) => dispatch(addComment(comment))
 });
 
 const mapStateToProps = createStructuredSelector({

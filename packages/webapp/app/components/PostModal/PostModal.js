@@ -3,13 +3,24 @@ import Modal from 'react-modal';
 import './style.scss';
 import CommentBox from '../CommentBox';
 
-export default class PostModal extends React.PureComponent {
+export default class PostModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       commentDescription: '',
     };
     this.onFieldChanged = this.onFieldChanged.bind(this);
+    this.addComment = this.addComment.bind(this);
+  }
+  addComment() {
+    if (this.state.commentDescription.trim().length > 0) {
+      const comment = {
+        postId: this.props.post.id,
+        description: this.state.commentDescription,
+      };
+      this.props.addComment(comment);
+      this.setState({ commentDescription: '' });
+    }
   }
 
   onFieldChanged = event => {
@@ -80,6 +91,7 @@ export default class PostModal extends React.PureComponent {
                 <CommentBox
                   value={this.state.commentDescription}
                   onChange={this.onFieldChanged}
+                  onSubmit={this.addComment}
                 />
               </div>
             </div>

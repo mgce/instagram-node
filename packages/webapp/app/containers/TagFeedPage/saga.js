@@ -4,10 +4,10 @@ import request from 'utils/request';
 import { LOAD_TAG } from './constants';
 import { tagLoaded, loadTagError } from './actions';
 import { mapPostsToDto } from 'utils/postMapper';
-import {getComments} from '../PostFeedPage/saga'
-import {LOAD_COMMENTS} from '../PostFeedPage/constants'
+import { getComments, addComment } from '../PostFeedPage/saga';
+import { LOAD_COMMENTS, ADD_COMMENT } from '../PostFeedPage/constants';
 
-export function* getTag({payload}) {
+export function* getTag({ payload }) {
   try {
     const response = yield call(request, {
       method: 'GET',
@@ -27,4 +27,5 @@ export function* getTag({payload}) {
 export default function* postFeedData() {
   yield takeLatest(LOAD_TAG, getTag);
   yield takeLatest(LOAD_COMMENTS, getComments);
+  yield takeLatest(ADD_COMMENT, addComment);
 }
