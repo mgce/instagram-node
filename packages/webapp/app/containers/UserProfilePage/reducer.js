@@ -1,40 +1,25 @@
-/*
- * HomeReducer
- *
- * The reducer takes care of our data. Using actions, we can change our
- * application state.
- * To add a new action, add it to the switch statement in the reducer function
- *
- * Example:
- * case YOUR_ACTION_CONSTANT:
- *   return state.set('yourStateVariable', true);
- */
+
 import { fromJS } from 'immutable';
 
-import { ADD_POST_SUCCESS, ADD_POST, ADD_POST_ERROR } from "./constants";
+import { GET_USER_POSTS_SUCCESS, GET_USER_POSTS, GET_USER_POSTS_ERROR } from "./constants";
 
-// The initial state of the App
 const initialState = fromJS({
-    posts: []
+    posts: {}
 });
 
-function addPostReducer(state = initialState, action) {
+function userPostsReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_POST:
+    case GET_USER_POSTS:
+      return state.set('loading', true).set('error', false);
+    case GET_USER_POSTS_SUCCESS:
       return state
-        .set("loading", true)
-        .set("error", false)
-        .setIn(["posts"], []);
-    case ADD_POST_SUCCESS:
-      return state
-        .updateIn(["posts"], arr => arr.concat([action.post]))
-        .set("loading", false)
-        .set("currentUser", action.username);
-    case ADD_POST_ERROR:
-      return state.set("error", action.error).set("loading", false);
+        .setIn(['posts', action.payload.tagName], action.payload.posts)
+        .set('loading', false);
+    case GET_USER_POSTS_ERROR:
+      return state.set('error', action.error).set('loading', false);
     default:
       return state;
   }
 }
 
-export default addPostReducer;
+export default userPostsReducer;

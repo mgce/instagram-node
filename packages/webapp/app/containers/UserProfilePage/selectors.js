@@ -1,16 +1,12 @@
 import { createSelector } from 'reselect';
 
-const selectGlobal = (state) => state.get('posts');
+const selectUserPosts = (state) => state.get('userPosts');
 
-const makeSelectPost = () => createSelector(
-  selectGlobal,
-  (homeState) => homeState.get('posts')
+const makeSelectUserPosts = () => createSelector(
+  selectUserPosts,
+  (userPostsState) => userPostsState.get('posts')
 )
 
 export {
-  selectGlobal,
-  makeSelectCurrentUser,
-  makeSelectLoading,
-  makeSelectError,
-  makeSelectPost
+  makeSelectUserPosts,
 };

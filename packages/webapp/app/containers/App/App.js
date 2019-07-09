@@ -17,6 +17,7 @@ import TagFeedPage from 'containers/TagFeedPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import AddPostPage from 'containers/AddPostPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import UserProfilePage from 'containers/UserProfilePage/Loadable';
 import Header from 'components/Header';
 import './style.scss';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
@@ -45,6 +46,7 @@ const App = () => (
           <PublicRoute exact path="/login" component={LoginPage} />
           <PrivateRoute exact path="/" component={PostFeedPage} />
           <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
+          <PrivateRoute exact path="/users/:userId" component={UserProfilePage} />
           <PrivateRoute path="/add" component={AddPostPage} />
           <PrivateRoute path="" component={NotFoundPage} />
         </Switch>
