@@ -48,7 +48,9 @@ export default class TagFeedPage extends React.PureComponent {
           isOpen={postModalOpen}
           onRequestClose={this.closePostModal}
           post={this.state.selectedPost}
-          comments={this.props.comments.get(this.state.selectedPost.id.toString())}
+          comments={this.props.comments.get(
+            this.state.selectedPost.id.toString(),
+          )}
           addComment={this.props.addComment}
         />
       );
@@ -57,25 +59,27 @@ export default class TagFeedPage extends React.PureComponent {
   render() {
     const { loading, error, tags } = this.props;
     const { tagName } = this.props.match.params;
-
+    const posts = tags.get(tagName);
     return (
       <div className="container">
+        <div className="tag-page-header">
+          <h2>#{tagName}</h2>
+          <h4>{posts ? posts.length : 0} posts</h4>
+        </div>
         <div className="thumbnail-grid">
-          {tags.get(tagName)
-            ? tags
-                .get(tagName)
-                .map(tagPost => (
-                  <Thumbnail
-                    key={tagPost.id}
-                    id={tagPost.id}
-                    author={tagPost.author}
-                    description={tagPost.description}
-                    imageId={tagPost.imageId}
-                    likesCount={tagPost.likesCount}
-                    commentsCount={tagPost.commentsCount}
-                    onClick={this.openPostModal}
-                  />
-                ))
+          {posts
+            ? posts.map(post => (
+                <Thumbnail
+                  key={post.id}
+                  id={post.id}
+                  author={post.author}
+                  description={post.description}
+                  imageId={post.imageId}
+                  likesCount={post.likesCount}
+                  commentsCount={post.commentsCount}
+                  onClick={this.openPostModal}
+                />
+              ))
             : null}
           {this.renderModal()}
         </div>

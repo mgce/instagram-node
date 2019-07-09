@@ -37,4 +37,8 @@ export class PostRepository {
     public async getWithTag(tag: string) {
         return this.postRepository.createQueryBuilder().where({ deleted: false, description: Like(`%#${tag}%`) }).getMany();
     }
+
+    public async getByUserId(userId: number) {
+        return this.postRepository.createQueryBuilder().where({ deleted: false, userId }).getMany();
+    }
 }

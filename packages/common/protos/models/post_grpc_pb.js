@@ -60,6 +60,28 @@ function deserialize_grpc_post_v1_GetPostsResponse(buffer_arg) {
   return post_pb.GetPostsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_grpc_post_v1_GetUserPostsRequest(arg) {
+  if (!(arg instanceof post_pb.GetUserPostsRequest)) {
+    throw new Error('Expected argument of type grpc.post.v1.GetUserPostsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_GetUserPostsRequest(buffer_arg) {
+  return post_pb.GetUserPostsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_grpc_post_v1_GetUserPostsResponse(arg) {
+  if (!(arg instanceof post_pb.GetUserPostsResponse)) {
+    throw new Error('Expected argument of type grpc.post.v1.GetUserPostsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_GetUserPostsResponse(buffer_arg) {
+  return post_pb.GetUserPostsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_grpc_post_v1_PostCreatedResponse(arg) {
   if (!(arg instanceof post_pb.PostCreatedResponse)) {
     throw new Error('Expected argument of type grpc.post.v1.PostCreatedResponse');
@@ -138,6 +160,17 @@ var PostService = exports.PostService = {
     requestDeserialize: deserialize_grpc_post_v1_SearchByTagRequest,
     responseSerialize: serialize_grpc_post_v1_SearchByTagResponse,
     responseDeserialize: deserialize_grpc_post_v1_SearchByTagResponse,
+  },
+  getUserPosts: {
+    path: '/grpc.post.v1.Post/GetUserPosts',
+    requestStream: false,
+    responseStream: false,
+    requestType: post_pb.GetUserPostsRequest,
+    responseType: post_pb.GetUserPostsResponse,
+    requestSerialize: serialize_grpc_post_v1_GetUserPostsRequest,
+    requestDeserialize: deserialize_grpc_post_v1_GetUserPostsRequest,
+    responseSerialize: serialize_grpc_post_v1_GetUserPostsResponse,
+    responseDeserialize: deserialize_grpc_post_v1_GetUserPostsResponse,
   },
 };
 

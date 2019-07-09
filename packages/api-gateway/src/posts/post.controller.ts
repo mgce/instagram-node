@@ -45,6 +45,20 @@ export class PostController {
         })
     }
 
+    @GET()
+    @route('/:userId')
+    @before([authOnly])
+    async getUserPosts(req: RequestWithClaims, res: express.Response) {
+        const request = new GetPostsRequest();
+        request.setUserid(req.params.userId);
+
+        PostClient.getUserPosts(request, (err, result) => {
+            if (err)
+                return sendErrorResponse(res, err);
+            return res.send(new ApiResponseMessage('', true, { posts: result.toObject().postsList }))
+        })
+    }
+
     @DELETE()
     @route('/')
     @before([postIdExistInBodyValidator, requestValidator])

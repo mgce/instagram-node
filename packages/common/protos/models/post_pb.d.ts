@@ -232,3 +232,47 @@ export namespace SearchByTagResponse {
         postsList: Array<PostDto.AsObject>,
     }
 }
+
+export class GetUserPostsRequest extends jspb.Message { 
+    getUserid(): number;
+    setUserid(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetUserPostsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetUserPostsRequest): GetUserPostsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetUserPostsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetUserPostsRequest;
+    static deserializeBinaryFromReader(message: GetUserPostsRequest, reader: jspb.BinaryReader): GetUserPostsRequest;
+}
+
+export namespace GetUserPostsRequest {
+    export type AsObject = {
+        userid: number,
+    }
+}
+
+export class GetUserPostsResponse extends jspb.Message { 
+    clearPostsList(): void;
+    getPostsList(): Array<PostDto>;
+    setPostsList(value: Array<PostDto>): void;
+    addPosts(value?: PostDto, index?: number): PostDto;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetUserPostsResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: GetUserPostsResponse): GetUserPostsResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetUserPostsResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetUserPostsResponse;
+    static deserializeBinaryFromReader(message: GetUserPostsResponse, reader: jspb.BinaryReader): GetUserPostsResponse;
+}
+
+export namespace GetUserPostsResponse {
+    export type AsObject = {
+        postsList: Array<PostDto.AsObject>,
+    }
+}

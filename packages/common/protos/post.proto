@@ -49,9 +49,18 @@ message SearchByTagResponse {
     repeated PostDto posts = 1;
 }
 
+message GetUserPostsRequest {
+    int64 userId = 1;
+}
+
+message GetUserPostsResponse {
+    repeated PostDto posts = 1;
+}
+
 service Post{
     rpc Create(CreatePostRequest) returns (PostCreatedResponse){}
     rpc Delete(DeletePostRequest) returns (common.EmptyResponse){}
     rpc GetPosts(GetPostsRequest) returns (GetPostsResponse){}
     rpc SearchByTag(SearchByTagRequest) returns (SearchByTagResponse){}
+    rpc GetUserPosts(GetUserPostsRequest) returns (GetUserPostsResponse){}
 }

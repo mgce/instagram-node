@@ -1,4 +1,4 @@
-import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest, GrpcError, GetPostsRequest, GetPostsResponse, PostDto, SearchByTagResponse } from '@instagram-node/common';
+import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest, GrpcError, GetPostsRequest, GetPostsResponse, PostDto, SearchByTagResponse, GetUserPostsRequest, GetUserPostsResponse } from '@instagram-node/common';
 import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
 import { PostModel } from './post.model';
 import { Repository } from 'typeorm';
@@ -73,6 +73,17 @@ export class PostGrpcService implements IPostServer {
         const postsList = await this.mapPostsToDto(posts, call.request.getUserid());
 
         const response = new SearchByTagResponse();
+        response.setPostsList(postsList);
+
+        callback(null, response);
+    }
+
+    public async getUserPosts(call: ServerUnaryCall<GetUserPostsRequest>, callback: sendUnaryData<GetUserPostsResponse> ){
+        const posts = await this.postRepository.getByUserId(call.request.getUserid());
+
+        const postsList = await this.mapPostsToDto(posts, call.request.getUserid());
+
+        const response = new GetUserPostsResponse();
         response.setPostsList(postsList);
 
         callback(null, response);
