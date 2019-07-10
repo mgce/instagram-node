@@ -1,24 +1,14 @@
-import { PostInputDto } from "../dto/createPostDto";
 import { PostRepository } from "../../dal/repositories/post.repo";
-import { PostCommentRepository } from "../../dal/repositories/comment.repo";
-import { Repository } from "typeorm";
-import { PostLikeModel } from "../../dal/models/postlike.model";
-import { Post } from "../../domain/post.entity";
 import { IPost } from "../../interfaces/IPost";
 import { resources } from "../../resources";
 import { validate } from "class-validator";
+import { PostInputDto } from "../dto/postInputDto";
 
 export class PostAppService {
     private postRepository: PostRepository
-    private commentRepository: PostCommentRepository
-    private postLikeRepository: Repository<PostLikeModel>
 
-    constructor(postRepository: PostRepository,
-        commentRepository: PostCommentRepository,
-        postLikeRepository: Repository<PostLikeModel>) {
+    constructor(postRepository: PostRepository) {
         this.postRepository = postRepository;
-        this.commentRepository = commentRepository;
-        this.postLikeRepository = postLikeRepository;
     }
     public async create(postInput: PostInputDto): Promise<IPost> {
         const errors = await validate(postInput);
