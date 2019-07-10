@@ -15,7 +15,7 @@ export function* getUserPosts({ payload }) {
       },
     });
     const posts = mapPostsToDto(response.data.posts);
-    yield put(userPostsLoaded(payload.tagName, posts));
+    yield put(userPostsLoaded(payload.userId, posts));
   } catch (err) {
     yield put(getUserPostsError(err));
   }

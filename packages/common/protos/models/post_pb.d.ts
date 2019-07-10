@@ -13,6 +13,9 @@ export class PostDto extends jspb.Message {
     getAuthor(): string;
     setAuthor(value: string): void;
 
+    getAuthorid(): number;
+    setAuthorid(value: number): void;
+
     getImageid(): string;
     setImageid(value: string): void;
 
@@ -49,6 +52,7 @@ export namespace PostDto {
     export type AsObject = {
         id: number,
         author: string,
+        authorid: number,
         imageid: string,
         description: string,
         datecreated?: common_pb.DateDto.AsObject,

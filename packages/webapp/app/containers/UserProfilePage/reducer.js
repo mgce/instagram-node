@@ -13,7 +13,7 @@ function userPostsReducer(state = initialState, action) {
       return state.set('loading', true).set('error', false);
     case GET_USER_POSTS_SUCCESS:
       return state
-        .setIn(['posts', action.payload.tagName], action.payload.posts)
+        .setIn(['posts', action.payload.postId], action.payload.posts)
         .set('loading', false);
     case GET_USER_POSTS_ERROR:
       return state.set('error', action.error).set('loading', false);

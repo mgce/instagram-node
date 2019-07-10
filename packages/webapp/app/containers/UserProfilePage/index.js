@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  posts: makeSelectUserPosts(),
+  userPosts: makeSelectUserPosts(),
 });
 
 const withConnect = connect(

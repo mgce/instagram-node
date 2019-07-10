@@ -1,6 +1,7 @@
 export function mapPostsToDto(posts){
     return posts.map(post => ({
         author: post.author,
+        authorId: post.authorid,
         commentsCount:post.commentscount,
         dateCreated:post.dateCreated,
         description:post.description,

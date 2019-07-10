@@ -85,6 +85,7 @@ export default class Post extends React.PureComponent {
   render() {
     const {
       author,
+      authorId,
       likesCount,
       commentsCount,
       description,
@@ -120,7 +121,11 @@ export default class Post extends React.PureComponent {
             />,
           ]}
         >
-          <Card.Meta title={author} />
+          <Link to={"users/"+authorId}>
+          <strong>
+            {author}
+          </strong>
+          </Link>
           {this.renderDescription()}
         </Card>
         {commentsFormExpanded ? (

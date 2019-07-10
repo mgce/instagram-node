@@ -110,6 +110,7 @@ export class PostGrpcService implements IPostServer {
             const dto = new PostDto();
             dto.setId(post.id);
             dto.setAuthor(post.username);
+            dto.setAuthorid(post.userId);
             dto.setDescription(post.description);
             dto.setImageid(post.imageId);
             dto.setDatecreated(dateToDto(post.dateCreate));

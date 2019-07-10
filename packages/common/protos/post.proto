@@ -7,12 +7,13 @@ import "common.proto";
 message PostDto {
     int64 id = 1;
     string author = 2;
-    string imageId = 3;
-    string description = 4;
-    common.DateDto dateCreated = 5;
-    int32 likesCount = 6;
-    int32 commentsCount = 7;
-    bool liked = 8;
+    int64 authorId = 3;
+    string imageId = 4;
+    string description = 5;
+    common.DateDto dateCreated = 6;
+    int32 likesCount = 7;
+    int32 commentsCount = 8;
+    bool liked = 9;
 }
 
 message CreatePostRequest {

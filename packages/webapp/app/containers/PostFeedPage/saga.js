@@ -31,6 +31,7 @@ export function* getPosts() {
     });
     const posts = response.data.posts.map(post => ({
       author: post.author,
+      authorId: post.authorid,
       commentsCount:post.commentscount,
       dateCreated:post.dateCreated,
       description:post.description,

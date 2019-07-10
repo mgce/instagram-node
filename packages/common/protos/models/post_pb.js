@@ -72,12 +72,13 @@ proto.grpc.post.v1.PostDto.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0),
     author: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    imageid: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    authorid: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    imageid: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 5, ""),
     datecreated: (f = msg.getDatecreated()) && common_pb.DateDto.toObject(includeInstance, f),
-    likescount: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    commentscount: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    liked: jspb.Message.getFieldWithDefault(msg, 8, false)
+    likescount: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    commentscount: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    liked: jspb.Message.getFieldWithDefault(msg, 9, false)
   };
 
   if (includeInstance) {
@@ -123,27 +124,31 @@ proto.grpc.post.v1.PostDto.deserializeBinaryFromReader = function(msg, reader) {
       msg.setAuthor(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setImageid(value);
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setAuthorid(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
+      msg.setImageid(value);
       break;
     case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 6:
       var value = new common_pb.DateDto;
       reader.readMessage(value,common_pb.DateDto.deserializeBinaryFromReader);
       msg.setDatecreated(value);
       break;
-    case 6:
+    case 7:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setLikescount(value);
       break;
-    case 7:
+    case 8:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setCommentscount(value);
       break;
-    case 8:
+    case 9:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setLiked(value);
       break;
@@ -190,24 +195,31 @@ proto.grpc.post.v1.PostDto.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getImageid();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getAuthorid();
+  if (f !== 0) {
+    writer.writeInt64(
       3,
       f
     );
   }
-  f = message.getDescription();
+  f = message.getImageid();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
   f = message.getDatecreated();
   if (f != null) {
     writer.writeMessage(
-      5,
+      6,
       f,
       common_pb.DateDto.serializeBinaryToWriter
     );
@@ -215,21 +227,21 @@ proto.grpc.post.v1.PostDto.serializeBinaryToWriter = function(message, writer) {
   f = message.getLikescount();
   if (f !== 0) {
     writer.writeInt32(
-      6,
+      7,
       f
     );
   }
   f = message.getCommentscount();
   if (f !== 0) {
     writer.writeInt32(
-      7,
+      8,
       f
     );
   }
   f = message.getLiked();
   if (f) {
     writer.writeBool(
-      8,
+      9,
       f
     );
   }
@@ -267,48 +279,63 @@ proto.grpc.post.v1.PostDto.prototype.setAuthor = function(value) {
 
 
 /**
- * optional string imageId = 3;
- * @return {string}
+ * optional int64 authorId = 3;
+ * @return {number}
  */
-proto.grpc.post.v1.PostDto.prototype.getImageid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+proto.grpc.post.v1.PostDto.prototype.getAuthorid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
-/** @param {string} value */
-proto.grpc.post.v1.PostDto.prototype.setImageid = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+/** @param {number} value */
+proto.grpc.post.v1.PostDto.prototype.setAuthorid = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
 /**
- * optional string description = 4;
+ * optional string imageId = 4;
  * @return {string}
  */
-proto.grpc.post.v1.PostDto.prototype.getDescription = function() {
+proto.grpc.post.v1.PostDto.prototype.getImageid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
 /** @param {string} value */
-proto.grpc.post.v1.PostDto.prototype.setDescription = function(value) {
+proto.grpc.post.v1.PostDto.prototype.setImageid = function(value) {
   jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional common.DateDto dateCreated = 5;
+ * optional string description = 5;
+ * @return {string}
+ */
+proto.grpc.post.v1.PostDto.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.grpc.post.v1.PostDto.prototype.setDescription = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional common.DateDto dateCreated = 6;
  * @return {?proto.common.DateDto}
  */
 proto.grpc.post.v1.PostDto.prototype.getDatecreated = function() {
   return /** @type{?proto.common.DateDto} */ (
-    jspb.Message.getWrapperField(this, common_pb.DateDto, 5));
+    jspb.Message.getWrapperField(this, common_pb.DateDto, 6));
 };
 
 
 /** @param {?proto.common.DateDto|undefined} value */
 proto.grpc.post.v1.PostDto.prototype.setDatecreated = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
+  jspb.Message.setWrapperField(this, 6, value);
 };
 
 
@@ -322,54 +349,54 @@ proto.grpc.post.v1.PostDto.prototype.clearDatecreated = function() {
  * @return {boolean}
  */
 proto.grpc.post.v1.PostDto.prototype.hasDatecreated = function() {
-  return jspb.Message.getField(this, 5) != null;
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
 /**
- * optional int32 likesCount = 6;
+ * optional int32 likesCount = 7;
  * @return {number}
  */
 proto.grpc.post.v1.PostDto.prototype.getLikescount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
-};
-
-
-/** @param {number} value */
-proto.grpc.post.v1.PostDto.prototype.setLikescount = function(value) {
-  jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-/**
- * optional int32 commentsCount = 7;
- * @return {number}
- */
-proto.grpc.post.v1.PostDto.prototype.getCommentscount = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
 
 /** @param {number} value */
-proto.grpc.post.v1.PostDto.prototype.setCommentscount = function(value) {
+proto.grpc.post.v1.PostDto.prototype.setLikescount = function(value) {
   jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
- * optional bool liked = 8;
+ * optional int32 commentsCount = 8;
+ * @return {number}
+ */
+proto.grpc.post.v1.PostDto.prototype.getCommentscount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/** @param {number} value */
+proto.grpc.post.v1.PostDto.prototype.setCommentscount = function(value) {
+  jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional bool liked = 9;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.grpc.post.v1.PostDto.prototype.getLiked = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
 };
 
 
 /** @param {boolean} value */
 proto.grpc.post.v1.PostDto.prototype.setLiked = function(value) {
-  jspb.Message.setProto3BooleanField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 9, value);
 };
 
 

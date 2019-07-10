@@ -13,11 +13,12 @@ export function getUserPosts(userId) {
   };
 }
 
-export function userPostsLoaded(post) {
+export function userPostsLoaded(postId, posts) {
   return {
     type: GET_USER_POSTS_SUCCESS,
     payload: {
-      posts,
+      postId,
+      posts
     },
   };
 }

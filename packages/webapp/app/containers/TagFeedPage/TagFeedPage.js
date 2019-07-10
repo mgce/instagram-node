@@ -73,6 +73,7 @@ export default class TagFeedPage extends React.PureComponent {
                   key={post.id}
                   id={post.id}
                   author={post.author}
+                  authorId={post.authorId}
                   description={post.description}
                   imageId={post.imageId}
                   likesCount={post.likesCount}

@@ -23,3 +23,10 @@ label {
   font-family: 'Roboto', sans-serif;
   line-height: 1.5em;
 }
+
+//Thumbnail
+
+.thumbnail-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
