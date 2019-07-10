@@ -1,7 +1,8 @@
 import { Repository, getRepository, Like } from "typeorm";
-import { PostModel } from "./post.model";
-import { PostComment } from './../comments/comment.entity';
-import { Post } from "./post.entity";
+import { PostModel } from "../models/post.model";
+import { PostComment } from '../../domain/comment.entity';
+import { Post } from "../../domain/post.entity";
+import { IPost } from "../../interfaces/IPost";
 
 export class PostRepository {
     private postRepository: Repository<PostModel>
@@ -17,6 +18,13 @@ export class PostRepository {
             .getOne();
     }
 
+    public async getForUserById(id: number, userId: number): Promise<PostModel> {
+        return this.postRepository
+            .createQueryBuilder()
+            .where({ postId: id, userId, deleted: false })
+            .getOne();
+    }
+
     public async getAll(): Promise<PostModel[]> {
         return this.postRepository
             .createQueryBuilder()
@@ -24,7 +32,7 @@ export class PostRepository {
             .getMany();
     }
 
-    public async createAndSave(entity: Post): Promise<PostModel> {
+    public async createAndSave(entity: Post): Promise<IPost> {
         let model = await this.postRepository.create(entity);
         model = await this.postRepository.save(model);
         return model;

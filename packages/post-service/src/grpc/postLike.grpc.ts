@@ -1,19 +1,20 @@
 import { IPostLikeServer, EmptyResponse, LikePostRequest, UnlikePostRequest, GrpcError } from '@instagram-node/common';
-import { PostLikeModel } from './postlike.model';
+import { PostLikeModel } from '../dal/models/postlike.model';
 import { Repository } from 'typeorm';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { resources } from '../resources';
-import { PostModel } from '../post/post.model';
-import { PostLike } from './postlike.entity';
-import { PostRepository } from './../post/post.repo';
+import { PostModel } from '../dal/models/post.model';
+import { PostLike } from '../domain/postlike.entity';
+import { PostRepository } from '../dal/repositories/post.repo';
+import { PostLikeRepository } from '../dal/repositories/postLike.repo';
 
 
 export class PostLikeGrpcService implements IPostLikeServer {
-    private postLikeRepository: Repository<PostLikeModel>
+    private postLikeRepository: PostLikeRepository
     private postRepository: PostRepository
 
 
-    constructor(postLikeRepository: Repository<PostLikeModel>, postRepository: PostRepository) {
+    constructor(postLikeRepository: PostLikeRepository, postRepository: PostRepository) {
         this.postLikeRepository = postLikeRepository;
         this.postRepository = postRepository;
     }
@@ -21,7 +22,7 @@ export class PostLikeGrpcService implements IPostLikeServer {
     public async like(call: ServerUnaryCall<LikePostRequest>, callback: sendUnaryData<EmptyResponse>) {
         const data = call.request.toObject();
 
-        let postLikeModel = await this.getPostLike(data.postid, data.userid);
+        let postLikeModel = await this.postLikeRepository.getOneForUser(data.postid, data.userid);
         if (postLikeModel)
             return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.LikeExist), null)
 
@@ -30,9 +31,7 @@ export class PostLikeGrpcService implements IPostLikeServer {
             return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PostNotExist), null)
 
         const postLike = new PostLike(data.postid, data.userid);
-        let entity = this.postLikeRepository.create(postLike);
-
-        entity = await this.postLikeRepository.save(entity);
+        const entity = this.postLikeRepository.createAndSave(postLike);
 
         const response = new EmptyResponse();
         response.setMessage(resources.info.LikeHasBeenAdded);
@@ -43,7 +42,7 @@ export class PostLikeGrpcService implements IPostLikeServer {
     public async unlike(call: ServerUnaryCall<UnlikePostRequest>, callback: sendUnaryData<EmptyResponse>) {
         const data = call.request.toObject();
 
-        let postLikeModel = await this.getPostLike(data.postid, data.userid);
+        let postLikeModel = await this.postLikeRepository.getOneForUser(data.postid, data.userid);
         if (!postLikeModel)
             return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.LikeNotExist), null)
 
@@ -52,16 +51,12 @@ export class PostLikeGrpcService implements IPostLikeServer {
             return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.PostNotExist), null)
 
         postLikeModel.delete();
-        await this.postLikeRepository.save(postLikeModel);
+        await this.postLikeRepository.update(postLikeModel);
 
         const response = new EmptyResponse();
         response.setMessage(resources.info.LikeHasBeenAdded);
 
         callback(null, response);
-    }
-
-    private async getPostLike(postId: number, userId: number) {
-        return await this.postLikeRepository.findOne({ postId, userId, deleted: false });
     }
 
     private async getPost(postId: number) {

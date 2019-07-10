@@ -2,9 +2,10 @@ import "reflect-metadata";
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from "@instagram-node/common";
 import { IsNumber, IsNotEmpty } from "class-validator";
+import { IPost } from "../../interfaces/IPost";
 
 @Entity()
-export class PostModel extends BaseEntity {
+export class PostModel extends BaseEntity implements IPost{
     @Column()
     @IsNumber()
     @IsNotEmpty()

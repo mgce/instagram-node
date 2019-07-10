@@ -1,10 +1,10 @@
 import { ICommentServer, CreateCommentRequest, CommentCreatedResponse, GrpcError, GetCommentsResponse, GetCommentsRequest, CommentDto} from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
-import { PostRepository } from './../post/post.repo';
+import { PostRepository } from '../dal/repositories/post.repo';
 import { resources } from '../resources';
-import { PostComment } from './comment.entity';
-import { PostCommentRepository } from './comment.repo';
-import { PostCommentModel } from './comment.model';
+import { PostComment } from '../domain/comment.entity';
+import { PostCommentRepository } from '../dal/repositories/comment.repo';
+import { PostCommentModel } from '../dal/models/comment.model';
 import { mapDateToDto } from '../utils';
 
 

@@ -1,6 +1,6 @@
-import { PostCommentModel } from "./comment.model";
+import { PostCommentModel } from "../models/comment.model";
 import { Repository, getRepository } from "typeorm";
-import { PostComment } from "./comment.entity";
+import { PostComment } from "../../domain/comment.entity";
 
 export class PostCommentRepository {
     private commentRepository: Repository<PostCommentModel>

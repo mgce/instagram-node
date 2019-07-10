@@ -1,6 +1,8 @@
 import { asClass, createContainer, AwilixContainer } from "awilix";
-import { PostCommentRepository } from "./comments/comment.repo";
-import { PostRepository } from "./post/post.repo";
+import { PostCommentRepository } from "./dal/repositories/comment.repo";
+import { PostRepository } from "./dal/repositories/post.repo";
+import { PostAppService } from './application/services/post.service';
+import { PostLikeRepository } from "./dal/repositories/postLike.repo";
 
 const container : AwilixContainer = createContainer({
     injectionMode: "CLASSIC"
@@ -10,14 +12,18 @@ const container : AwilixContainer = createContainer({
 export const initializeContainer = () => {
     container.register({
         postRepository: asClass(PostRepository),
-        commentRepository: asClass(PostCommentRepository)
+        commentRepository: asClass(PostCommentRepository),
+        postLikeRepository: asClass(PostLikeRepository),
+        postService: asClass(PostAppService)
     })
     return container;
 }
 
 container.register({
     postRepository: asClass(PostRepository),
-    commentRepository: asClass(PostCommentRepository)
+    commentRepository: asClass(PostCommentRepository),
+    postLikeRepository: asClass(PostLikeRepository),
+    postService: asClass(PostAppService)
 })
 
 
