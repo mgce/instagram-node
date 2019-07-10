@@ -13,6 +13,7 @@ import { PostRepository } from './dal/repositories/post.repo';
 import { PostAppService } from './application/services/post.service';
 import { PostLikeRepository } from "./dal/repositories/postLike.repo";
 import { PostLikeAppService } from "./application/services/postLike.service";
+import { PostCommentAppService } from "./application/services/comment.service";
 
 const SERVER_URI = '0.0.0.0:' + commonConfig.ports.postService
 
@@ -23,11 +24,12 @@ const initService = function initService() {
     const postLikeRepository:  PostLikeRepository = container.resolve('postLikeRepository');
     const postService : PostAppService = container.resolve('postService');
     const postLikeService : PostLikeAppService = container.resolve('postLikeService');
+    const commentService : PostCommentAppService = container.resolve('commentService');
 
     const server: Server = new Server()
     server.addService(PostService, new PostGrpcService(postRepository, postCommentRepository, postLikeRepository, postService))
     server.addService(PostLikeService, new PostLikeGrpcService(postLikeService))
-    server.addService(CommentService, new CommentGrpcService(postRepository, postCommentRepository))
+    server.addService(CommentService, new CommentGrpcService(postCommentRepository, commentService))
     server.bind(SERVER_URI, ServerCredentials.createInsecure())
     server.start()
     console.log('Server is running!')
