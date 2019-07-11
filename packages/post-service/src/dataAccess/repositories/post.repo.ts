@@ -33,8 +33,7 @@ export class PostRepository {
 
     public async createAndSave(entity: PostInputDto): Promise<IPost> {
         let model = await this.postRepository.create(entity);
-        model = await this.postRepository.save(model);
-        return model;
+        return this.postRepository.save(model);
     }
 
     public async delete(model: PostModel) {

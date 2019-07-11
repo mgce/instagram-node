@@ -2,9 +2,10 @@ import "reflect-metadata";
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from "@instagram-node/common";
 import {IsEmail} from "class-validator";
+import { IUser } from "../../interfaces/IUser";
 
 @Entity()
-export class UserModel extends BaseEntity{
+export class UserModel extends BaseEntity implements IUser{
     @Column()
     public username: string;
     @IsEmail()

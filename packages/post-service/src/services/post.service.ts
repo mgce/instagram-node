@@ -3,6 +3,7 @@ import { IPost } from "../interfaces/IPost";
 import { resources } from "../resources";
 import { validate } from "class-validator";
 import { PostInputDto } from "./dto";
+import { handleError } from "@instagram-node/common";
 
 export class PostAppService {
     private postRepository: PostRepository
@@ -13,7 +14,7 @@ export class PostAppService {
     public async create(postInput: PostInputDto): Promise<IPost> {
         const errors = await validate(postInput);
         if (errors.length > 0)
-            throw new Error(errors.toString());
+            throw new Error(handleError(errors));
         return await this.postRepository.createAndSave(postInput);
     }
 

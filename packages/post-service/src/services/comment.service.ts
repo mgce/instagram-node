@@ -4,6 +4,7 @@ import { CommentInputDto } from "../services/dto/commentInputDto";
 import { resources } from "../resources";
 import { validate } from "class-validator";
 import { IPostComment } from "../interfaces/IPostComment";
+import { handleError } from "@instagram-node/common";
 
 export class PostCommentAppService {
     private commentRepository: PostCommentRepository
@@ -17,7 +18,7 @@ export class PostCommentAppService {
     public async create(input:CommentInputDto) : Promise<IPostComment>{
         const errors = await validate(input);
         if (errors.length > 0)
-            throw new Error(errors.toString());
+            throw new Error(handleError(errors));
 
         const post = await this.postRepository.getById(input.postId)
         if(!post)
