@@ -1,8 +1,7 @@
 import { Repository, getRepository, Like } from "typeorm";
 import { PostModel } from "../models/post.model";
-import { PostComment } from '../../domain/comment.entity';
-import { Post } from "../../domain/post.entity";
 import { IPost } from "../../interfaces/IPost";
+import { PostInputDto } from "../../services/dto";
 
 export class PostRepository {
     private postRepository: Repository<PostModel>
@@ -32,7 +31,7 @@ export class PostRepository {
             .getMany();
     }
 
-    public async createAndSave(entity: Post): Promise<IPost> {
+    public async createAndSave(entity: PostInputDto): Promise<IPost> {
         let model = await this.postRepository.create(entity);
         model = await this.postRepository.save(model);
         return model;

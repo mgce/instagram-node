@@ -1,10 +1,6 @@
 import { asClass, createContainer, AwilixContainer } from "awilix";
-import { PostCommentRepository } from "./dal/repositories/comment.repo";
-import { PostRepository } from "./dal/repositories/post.repo";
-import { PostAppService } from './application/services/post.service';
-import { PostLikeRepository } from "./dal/repositories/postLike.repo";
-import { PostLikeAppService } from "./application/services/postLike.service";
-import { PostCommentAppService } from "./application/services/comment.service";
+import { PostAppService, PostLikeAppService, PostCommentAppService } from "./services";
+import { PostRepository, PostCommentRepository, PostLikeRepository } from "./dataAccess";
 
 const container : AwilixContainer = createContainer({
     injectionMode: "CLASSIC"

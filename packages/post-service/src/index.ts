@@ -1,19 +1,10 @@
 import "reflect-metadata";
 import { ServerCredentials, Server } from "grpc";
 import { PostService, commonConfig, connectWithRetry, PostLikeService, CommentService } from '@instagram-node/common';
-import { PostGrpcService } from './grpc/post.grpc';
-import { PostModel } from './dal/models/post.model';
-import { PostLikeGrpcService } from "./grpc/postLike.grpc";
-import { PostLikeModel } from "./dal/models/postlike.model";
-import { PostCommentModel } from './dal/models/comment.model';
-import { CommentGrpcService } from "./grpc/comment.grpc";
 import { initializeContainer } from './container';
-import { PostCommentRepository } from './dal/repositories/comment.repo';
-import { PostRepository } from './dal/repositories/post.repo';
-import { PostAppService } from './application/services/post.service';
-import { PostLikeRepository } from "./dal/repositories/postLike.repo";
-import { PostLikeAppService } from "./application/services/postLike.service";
-import { PostCommentAppService } from "./application/services/comment.service";
+import { PostRepository, PostCommentRepository, PostLikeRepository, PostCommentModel, PostModel, PostLikeModel } from "./dataAccess";
+import { PostAppService, PostLikeAppService, PostCommentAppService } from "./services";
+import { PostGrpcService, PostLikeGrpcService, CommentGrpcService } from "./grpc";
 
 const SERVER_URI = '0.0.0.0:' + commonConfig.ports.postService
 

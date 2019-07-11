@@ -1,8 +1,8 @@
-import { PostRepository } from "../../dal/repositories/post.repo";
-import { IPost } from "../../interfaces/IPost";
-import { resources } from "../../resources";
+import { PostRepository } from "../dataAccess/repositories/post.repo";
+import { IPost } from "../interfaces/IPost";
+import { resources } from "../resources";
 import { validate } from "class-validator";
-import { PostInputDto } from "../dto/postInputDto";
+import { PostInputDto } from "./dto";
 
 export class PostAppService {
     private postRepository: PostRepository

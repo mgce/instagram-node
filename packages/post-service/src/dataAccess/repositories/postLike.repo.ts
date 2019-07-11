@@ -1,6 +1,6 @@
 import { Repository, getRepository } from "typeorm";
-import { PostLike } from "../../domain/postlike.entity";
-import { PostLikeModel } from './../models/postlike.model';
+import { IPostLike } from "../../interfaces";
+import { PostLikeModel } from "..";
 
 export class PostLikeRepository {
     private repository: Repository<PostLikeModel>
@@ -9,7 +9,7 @@ export class PostLikeRepository {
         this.repository = getRepository(PostLikeModel);
     }
 
-    public async createAndSave(entity: PostLike): Promise<PostLikeModel> {
+    public async createAndSave(entity: IPostLike): Promise<PostLikeModel> {
         let model = await this.repository.create(entity);
         model = await this.repository.save(model);
         return model;

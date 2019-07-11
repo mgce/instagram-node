@@ -1,9 +1,9 @@
-import { PostCommentRepository } from "../../dal/repositories/comment.repo";
-import { PostRepository } from "../../dal/repositories/post.repo";
-import { CommentInputDto } from "../dto/commentInputDto";
-import { resources } from "../../resources";
+import { PostCommentRepository } from "../dataAccess/repositories/comment.repo";
+import { PostRepository } from "../dataAccess/repositories/post.repo";
+import { CommentInputDto } from "../services/dto/commentInputDto";
+import { resources } from "../resources";
 import { validate } from "class-validator";
-import { IPostComment } from "../../interfaces/IPostComment";
+import { IPostComment } from "../interfaces/IPostComment";
 
 export class PostCommentAppService {
     private commentRepository: PostCommentRepository

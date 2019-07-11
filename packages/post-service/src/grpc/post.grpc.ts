@@ -1,17 +1,17 @@
 import { IPostServer, CreatePostRequest, PostCreatedResponse, DeletePostRequest, GrpcError, GetPostsRequest, GetPostsResponse, PostDto, SearchByTagResponse, GetUserPostsRequest, GetUserPostsResponse } from '@instagram-node/common';
 import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
-import { PostModel } from '../dal/models/post.model';
+import { PostModel } from '../dataAccess/models/post.model';
 import { Repository } from 'typeorm';
 import { EmptyResponse, DateDto } from '@instagram-node/common/protos/models/common_pb';
 import { validate } from 'class-validator';
 import { resources } from '../resources';
-import { PostLikeModel } from '../dal/models/postlike.model';
-import { PostRepository } from '../dal/repositories/post.repo';
-import { PostCommentRepository } from '../dal/repositories/comment.repo';
+import { PostLikeModel } from '../dataAccess/models/postlike.model';
+import { PostRepository } from '../dataAccess/repositories/post.repo';
+import { PostCommentRepository } from '../dataAccess/repositories/comment.repo';
 import { SearchByTagRequest } from '../../../common/protos/models/post_pb';
-import { PostAppService } from './../application/services/post.service';
+import { PostAppService } from '../services/post.service';
 import { mapPostsToDto, dateToDto } from './utils.grpc';
-import { PostLikeRepository } from '../dal/repositories/postLike.repo';
+import { PostLikeRepository } from '../dataAccess/repositories/postLike.repo';
 
 export class PostGrpcService implements IPostServer {
     private postRepository: PostRepository

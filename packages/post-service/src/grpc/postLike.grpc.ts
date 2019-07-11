@@ -1,7 +1,7 @@
 import { IPostLikeServer, EmptyResponse, LikePostRequest, UnlikePostRequest, GrpcError, PostLikeService } from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
 import { resources } from '../resources';
-import { PostLikeAppService } from '../application/services/postLike.service';
+import { PostLikeAppService } from '../services/postLike.service';
 
 
 export class PostLikeGrpcService implements IPostLikeServer {

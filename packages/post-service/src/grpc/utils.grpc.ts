@@ -1,4 +1,4 @@
-import { PostModel } from "../dal/models/post.model";
+import { PostModel } from "../dataAccess/models/post.model";
 import { PostDto, DateDto } from "@instagram-node/common";
 
 export const mapPostsToDto = (

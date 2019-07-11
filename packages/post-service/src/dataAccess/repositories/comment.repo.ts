@@ -1,6 +1,6 @@
-import { PostCommentModel } from "../models/comment.model";
 import { Repository, getRepository } from "typeorm";
-import { PostComment } from "../../domain/comment.entity";
+import { PostCommentModel } from "..";
+import { CommentInputDto } from "../../services/dto/commentInputDto";
 
 export class PostCommentRepository {
     private commentRepository: Repository<PostCommentModel>
@@ -9,7 +9,7 @@ export class PostCommentRepository {
         this.commentRepository = getRepository(PostCommentModel);
     }
 
-    public async createAndSave(entity: PostComment) : Promise<PostCommentModel>{
+    public async createAndSave(entity: CommentInputDto) : Promise<PostCommentModel>{
         let model = await this.commentRepository.create(entity);
         model = await this.commentRepository.save(model);
         return model;

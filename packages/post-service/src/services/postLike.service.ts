@@ -1,7 +1,7 @@
-import { PostLikeRepository } from "../../dal/repositories/postLike.repo";
-import { PostRepository } from "../../dal/repositories/post.repo";
-import { resources } from "../../resources";
-import { IPostLike } from "../../interfaces/IPostLike";
+import { PostLikeRepository } from "../dataAccess/repositories/postLike.repo";
+import { PostRepository } from "../dataAccess/repositories/post.repo";
+import { resources } from "../resources";
+import { IPostLike } from "../interfaces/IPostLike";
 
 export class PostLikeAppService{
     private postLikeRepository: PostLikeRepository
