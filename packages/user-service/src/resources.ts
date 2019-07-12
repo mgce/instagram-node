@@ -7,5 +7,7 @@ export const resources = {
         UsernameToShort:"Username must have at least $constraint1 characters.",
         PasswordIsInvalid:"Password is invalid",
         UserDoesNotExist:"User does not exist",
+        UserIdIsEmpty:"User Id is empty",
+        FollowingUserIdIsEmpty:"Following User Id is empty"
     }
 }
