@@ -1,6 +1,7 @@
 import { Repository, getRepository } from "typeorm";
 import { IPostLike } from "../../interfaces";
 import { PostLikeModel } from "..";
+import { PostLike } from "../../entity";
 
 export class PostLikeRepository {
     private repository: Repository<PostLikeModel>
@@ -9,17 +10,18 @@ export class PostLikeRepository {
         this.repository = getRepository(PostLikeModel);
     }
 
-    public async createAndSave(entity: IPostLike): Promise<PostLikeModel> {
+    public async createAndSave(entity: IPostLike): Promise<PostLike> {
         let model = await this.repository.create(entity);
         model = await this.repository.save(model);
         return model;
     }
 
-    public async getOneForUser(postId: number, userId: number) {
+    public async getOneForUser(postId: number, userId: number) : Promise<PostLike> {
         return await this.repository.findOne({ postId, userId, deleted: false });
     }
 
-    public async update(entity: PostLikeModel){
+    public async delete(entity: PostLikeModel){
+        entity.delete();
         await this.repository.save(entity);
     }
 

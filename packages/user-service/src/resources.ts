@@ -8,6 +8,7 @@ export const resources = {
         PasswordIsInvalid:"Password is invalid",
         UserDoesNotExist:"User does not exist",
         FollowingUserDoesNotExist:"Following user does not exist",
+        FollowingNotExist:"Following does not exist",
         UserIdIsEmpty:"User Id is empty",
         FollowingUserIdIsEmpty:"Following User Id is empty"
     }

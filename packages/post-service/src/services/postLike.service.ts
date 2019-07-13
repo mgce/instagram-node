@@ -14,8 +14,8 @@ export class PostLikeAppService{
     }
 
     public async like(postId: number, userId: number) : Promise<IPostLike>{
-        let postLikeModel = await this.postLikeRepository.getOneForUser(postId, userId);
-        if (postLikeModel)
+        let postLike = await this.postLikeRepository.getOneForUser(postId, userId);
+        if (postLike)
             throw new Error(resources.errors.LikeExist)
 
         const post = await this.postRepository.getById(postId);
@@ -26,16 +26,15 @@ export class PostLikeAppService{
     }
 
     public async unlike(postId: number, userId: number): Promise<void>{
-        let postLikeModel = await this.postLikeRepository.getOneForUser(postId, userId);
-        if (!postLikeModel)
+        let postLike = await this.postLikeRepository.getOneForUser(postId, userId);
+        if (!postLike)
             throw new Error(resources.errors.LikeNotExist)
 
         const post = await this.postRepository.getById(postId);
         if (!post)
             throw new Error(resources.errors.PostNotExist)
 
-        postLikeModel.delete();
-        await this.postLikeRepository.update(postLikeModel);
+        await this.postLikeRepository.delete(postLike);
     }
 
 }
