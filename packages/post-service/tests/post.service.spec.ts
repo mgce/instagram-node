@@ -3,8 +3,8 @@ import { ServerUnaryCall } from "grpc";
 import { CreateUserRequest, AuthenticateRequest, CreatePostRequest } from "@instagram-node/common";
 import { createTestConnection } from "./utils/createTestConnection";
 import { expect } from 'chai';
-import { PostModel } from './../src/post.model';
-import { PostAppService } from './../src/post.service';
+import { PostModel } from './../src/dataAccess/models/post.model';
+import { PostAppService } from './../src/services/post.service';
 
 const userId = 1;
 const description = "Desc"
@@ -60,7 +60,7 @@ function createPostRequest() {
 
     request.setUserid(userId);
     request.setDescription(description);
-    request.setImageurl(imageUrl);
+    request.setImageid(imageUrl);
 
     return request;
 }

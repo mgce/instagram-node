@@ -5,7 +5,7 @@ import { Entity, Column } from 'typeorm';
 @Entity()
 export class UserFollowingModel extends BaseEntity implements IUserFollowing{
     @Column()
-    public userId: string;
+    public userId: number;
     @Column()
-    public followingUserId:string;
+    public followingUserId:number;
 }

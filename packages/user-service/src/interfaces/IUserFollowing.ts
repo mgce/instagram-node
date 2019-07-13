@@ -1,4 +1,4 @@
 export interface IUserFollowing{
-    userId: string;
-    followingUserId:string;
+    userId: number;
+    followingUserId:number;
 }
