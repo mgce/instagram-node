@@ -1,6 +1,7 @@
 import { UserRepository, UserFollowingRepository } from "../dataAccess";
 import { resources } from "../resources";
 import { IUserFollowing } from "../interfaces";
+import { UserFollowing } from "../entities";
 
 export class UserFollowingAppService {
     private userRepository: UserRepository
@@ -14,7 +15,12 @@ export class UserFollowingAppService {
     public async follow(userId: number, userToFollowId: number) {
         await this.checkIfUsersExists(userId, userToFollowId);
 
-        const userFollowing: IUserFollowing = { userId: userId, followingUserId: userToFollowId };
+        let userFollowing = await this.userFollowingRepository.get(userId, userToFollowId);
+
+        if(userFollowing)
+            throw new Error(resources.errors.FollowingExist)
+
+        userFollowing = new UserFollowing(userId, userToFollowId);
 
         // check if following exists
 

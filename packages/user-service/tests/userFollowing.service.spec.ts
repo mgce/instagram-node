@@ -9,6 +9,7 @@ import chai from 'chai';
 import { resources } from "../src/resources";
 import { mock, instance, when, verify, anything } from 'ts-mockito';
 import { IUser, IUserFollowing } from "../src/interfaces";
+import { UserFollowing } from "../src/entities";
 
 describe('User Following service', () => {
     // let connection: Connection;
@@ -56,6 +57,18 @@ describe('User Following service', () => {
         it('should throw error if user to follow not exists', async () => {
             when(userRepository.findById(userId)).thenReturn(getUser());
             when(userRepository.findById(userToFollowId)).thenReturn(undefined);
+            try {
+                await userFollowingService.follow(userId, userToFollowId);
+            } catch (err) {
+                expect(err).to.be.not.null;
+                expect(err.message).to.be.equal(resources.errors.FollowingUserDoesNotExist)
+            }
+        })
+
+        it('should throw error if userfollowing exists', async () => {
+            when(userRepository.findById(userId)).thenReturn(getUser());
+            when(userRepository.findById(userToFollowId)).thenReturn(undefined);
+            when(userFollowingRepository.get(userId, userToFollowId)).thenReturn(getUserFollowing());
             try {
                 await userFollowingService.follow(userId, userToFollowId);
             } catch (err) {
@@ -114,3 +127,4 @@ describe('User Following service', () => {
 
 async function getUser(){return {id: 1, username: "testUser", emailAddress: "test@address.pl", salt: "xyz", password: "veryStrong" }}
 async function getFollowingUser(){return {id: 2, username: "testFollowingUser", emailAddress: "test@address.pl", salt: "xyz", password: "veryStrong" }}
+async function getUserFollowing(){return new UserFollowing(1, 2)}
