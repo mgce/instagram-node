@@ -1,6 +1,6 @@
-import { addPost } from 'containers/UserProfilePage/actions';
+import { addPost } from 'containers/PostFeedPage/actions';
 import { injectReducer } from 'utils/injectReducer';
-import reducer from 'containers/UserProfilePage/reducer';
+import reducer from 'containers/PostFeedPage/reducer';
 import { injectSaga } from 'utils/injectSaga';
 import saga from './saga';
 import { createStructuredSelector } from 'reselect';

@@ -3,15 +3,24 @@ import PropTypes from 'prop-types';
 import Thumbnail from 'components/Thumbnail';
 export default class UserProfilePage extends React.PureComponent {
   componentDidMount() {
+    const userId = this.getUserId();
+    this.props.getUserPosts(parseInt(userId));
+    this.props.getUserInfo(parseInt(userId));
+  }
+  getUserId(){
     const { userId } = this.props.match.params;
-    this.props.getUserPosts(userId);
+    return parseInt(userId)
   }
   render() {
-    const {userPosts} = this.props;
-    const { userId } = this.props.match.params;
-    const posts = userPosts.get(userId.toString());
+    const {userPosts, users} = this.props;
+    const userId = this.getUserId();
+    const posts = userPosts.get(userId);
+    const user = users.get(userId);
     return (
       <div className="container">
+        <div className="user-profile container">
+        <h2>{user.username}</h2>
+        </div>
         <div className="thumbnail-grid">
           {posts
             ? posts.map(post => (

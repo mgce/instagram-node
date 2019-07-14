@@ -1,7 +1,7 @@
 import { createTestConnection } from "./utils/createTestConnection";
 import { Connection } from "typeorm";
 import { UserRepository } from '../src/dataAccess/repositories/user.repo';
-import { UserFollowingRepository } from '../src/dataAccess/repositories/userFollowing.repo';
+import {  UserFollowRepository } from '../src/dataAccess/repositories/userFollow.repo';
 import { UserFollowAppService } from "../src/services/userFollow.service"
 import { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
@@ -13,15 +13,15 @@ import { UserFollow } from "../src/entities";
 describe('User Follow service', () => {
     // let connection: Connection;
     let userRepository: UserRepository;
-    let userFollowingRepository: UserFollowingRepository;
+    let userFollowRepository: UserFollowRepository;
     let userFollowingService: UserFollowAppService;
     const userId = 1;
     const userToFollowId = 2;
     beforeEach(async () => {
         // connection = await createTestConnection();
         userRepository = mock(UserRepository);
-        userFollowingRepository = mock(UserFollowingRepository);
-        userFollowingService = new UserFollowAppService(instance(userRepository), instance(userFollowingRepository));
+        userFollowRepository = mock(UserFollowRepository);
+        userFollowingService = new UserFollowAppService(instance(userRepository), instance(userFollowRepository));
     })
 
     describe('Following the User', () => {
@@ -67,7 +67,7 @@ describe('User Follow service', () => {
         it('should throw error if userfollowing exists', async () => {
             when(userRepository.findById(userId)).thenReturn(getUser());
             when(userRepository.findById(userToFollowId)).thenReturn(undefined);
-            when(userFollowingRepository.get(userId, userToFollowId)).thenReturn(getUserFollowing());
+            when(userFollowRepository.get(userId, userToFollowId)).thenReturn(getUserFollowing());
             try {
                 await userFollowingService.follow(userId, userToFollowId);
             } catch (err) {
@@ -85,7 +85,7 @@ describe('User Follow service', () => {
             await userFollowingService.follow(userId, userToFollowId);
 
             //Assert
-            verify(userFollowingRepository.createAndSave(anything())).once();
+            verify(userFollowRepository.createAndSave(anything())).once();
            
         })
     })
@@ -93,7 +93,7 @@ describe('User Follow service', () => {
     describe('Unfollowing the User', ()=> {
         it('should throw error if following not exists', async ()=>{
             //Arrange
-            when(userFollowingRepository.get(userId, userToFollowId)).thenReturn(undefined)
+            when(userFollowRepository.get(userId, userToFollowId)).thenReturn(undefined)
 
             //Act
             try{
@@ -102,21 +102,21 @@ describe('User Follow service', () => {
             //Assert
                 expect(err).exist;
                 expect(err.message).to.be.equal(resources.errors.FollowingNotExist);
-                verify(userFollowingRepository.get(userId, userToFollowId)).once();
+                verify(userFollowRepository.get(userId, userToFollowId)).once();
             }
 
         })
 
         it('should set following to deleted', async()=>{
             //Arrange
-            when(userFollowingRepository.get(userId, userToFollowId)).thenReturn()
+            when(userFollowRepository.get(userId, userToFollowId)).thenReturn()
 
             //Act
             await userFollowingService.unfollow(userId, userToFollowId);
 
             //Assert
-            verify(userFollowingRepository.get(userId, userToFollowId)).once();
-            verify(userFollowingRepository.delete(anything())).once();
+            verify(userFollowRepository.get(userId, userToFollowId)).once();
+            verify(userFollowRepository.delete(anything())).once();
         })
     })
 })

@@ -1,3 +1,7 @@
+export const ADD_POST = 'instagram-node/PostFeed/ADD_POST';
+export const ADD_POST_SUCCESS = 'instagram-node/PostFeed/ADD_POST_SUCCESS';
+export const ADD_POST_ERROR = 'instagram-node/PostFeed/ADD_POST_ERROR';
+
 export const LOAD_POSTS = 'instagram-node/PostFeed/LOAD_POSTS';
 export const LOAD_POSTS_SUCCESS = 'instagram-node/PostFeed/LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_ERROR = 'instagram-node/PostFeed/LOAD_POSTS_ERROR';

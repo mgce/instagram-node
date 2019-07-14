@@ -4,8 +4,6 @@ import {
   ADD_POST_SUCCESS,
   ADD_POST,
   ADD_POST_ERROR,
-} from 'containers/AddPostPage/constants';
-import {
   LOAD_POSTS,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_ERROR,

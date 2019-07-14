@@ -3,8 +3,8 @@
  */
 
 import { call, put, select, takeLatest } from "redux-saga/effects";
-import { ADD_POST } from "containers/UserProfilePage/constants";
-import { postAdded, addPostError } from "containers/UserProfilePage/actions";
+import { ADD_POST } from "containers/PostFeedPage/constants";
+import { postAdded, addPostError } from "containers/PostFeedPage/actions";
 import { history } from "utils/history";
 
 import request from "utils/request";
@@ -23,7 +23,6 @@ export function* addPost(data) {
         Accept: "application/json"
       }
     });
-    console.log(imageResponse);
     const postData = {
       imageId: imageResponse.data.imageid,
       description: data.description,

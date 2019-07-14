@@ -1,4 +1,7 @@
 import {
+  ADD_POST,
+  ADD_POST_SUCCESS,
+  ADD_POST_ERROR,
   LOAD_POSTS,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_ERROR,
@@ -15,6 +18,28 @@ import {
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_ERROR,
 } from './constants';
+
+// Add post
+
+export function addPost() {
+  return {
+    type: ADD_POST,
+  };
+}
+
+export function postAdded(post) {
+  return {
+    type: ADD_POST_SUCCESS,
+    post,
+  };
+}
+
+export function addPostError(err) {
+  return {
+    type: ADD_POST_ERROR,
+    err,
+  };
+}
 
 // Load posts
 
