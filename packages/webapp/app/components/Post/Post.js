@@ -4,6 +4,7 @@ import { httpClient } from 'utils/httpClient';
 import { Card, Icon } from 'antd';
 import PostComments from '../PostComments/PostComments';
 import { Link } from 'react-router-dom';
+import './style.scss';
 
 export default class Post extends React.PureComponent {
   constructor(props) {
@@ -121,7 +122,7 @@ export default class Post extends React.PureComponent {
             />,
           ]}
         >
-          <Link to={"users/"+authorId}>
+          <Link to={"users/"+authorId} className="post-username">
           <strong>
             {author}
           </strong>

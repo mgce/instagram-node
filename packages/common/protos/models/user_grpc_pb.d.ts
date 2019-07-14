@@ -11,6 +11,7 @@ interface IUserService extends grpc.ServiceDefinition<grpc.UntypedServiceImpleme
     create: IUserService_ICreate;
     authenticate: IUserService_IAuthenticate;
     getById: IUserService_IGetById;
+    getUserDetails: IUserService_IGetUserDetails;
 }
 
 interface IUserService_ICreate extends grpc.MethodDefinition<user_pb.CreateUserRequest, common_pb.EmptyResponse> {
@@ -40,6 +41,15 @@ interface IUserService_IGetById extends grpc.MethodDefinition<user_pb.GetByIdReq
     responseSerialize: grpc.serialize<user_pb.GetByIdResponse>;
     responseDeserialize: grpc.deserialize<user_pb.GetByIdResponse>;
 }
+interface IUserService_IGetUserDetails extends grpc.MethodDefinition<user_pb.GetByIdRequest, user_pb.GetUserDetailsResponse> {
+    path: string; // "/grpc.user.v1.User/GetUserDetails"
+    requestStream: boolean; // false
+    responseStream: boolean; // false
+    requestSerialize: grpc.serialize<user_pb.GetByIdRequest>;
+    requestDeserialize: grpc.deserialize<user_pb.GetByIdRequest>;
+    responseSerialize: grpc.serialize<user_pb.GetUserDetailsResponse>;
+    responseDeserialize: grpc.deserialize<user_pb.GetUserDetailsResponse>;
+}
 
 export const UserService: IUserService;
 
@@ -47,6 +57,7 @@ export interface IUserServer {
     create: grpc.handleUnaryCall<user_pb.CreateUserRequest, common_pb.EmptyResponse>;
     authenticate: grpc.handleUnaryCall<user_pb.AuthenticateRequest, user_pb.AuthenticateResponse>;
     getById: grpc.handleUnaryCall<user_pb.GetByIdRequest, user_pb.GetByIdResponse>;
+    getUserDetails: grpc.handleUnaryCall<user_pb.GetByIdRequest, user_pb.GetUserDetailsResponse>;
 }
 
 export interface IUserClient {
@@ -59,6 +70,9 @@ export interface IUserClient {
     getById(request: user_pb.GetByIdRequest, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
     getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
     getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
+    getUserDetails(request: user_pb.GetByIdRequest, callback: (error: grpc.ServiceError | null, response: user_pb.GetUserDetailsResponse) => void): grpc.ClientUnaryCall;
+    getUserDetails(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.GetUserDetailsResponse) => void): grpc.ClientUnaryCall;
+    getUserDetails(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.GetUserDetailsResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class UserClient extends grpc.Client implements IUserClient {
@@ -72,4 +86,7 @@ export class UserClient extends grpc.Client implements IUserClient {
     public getById(request: user_pb.GetByIdRequest, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
     public getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
     public getById(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.GetByIdResponse) => void): grpc.ClientUnaryCall;
+    public getUserDetails(request: user_pb.GetByIdRequest, callback: (error: grpc.ServiceError | null, response: user_pb.GetUserDetailsResponse) => void): grpc.ClientUnaryCall;
+    public getUserDetails(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.GetUserDetailsResponse) => void): grpc.ClientUnaryCall;
+    public getUserDetails(request: user_pb.GetByIdRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.GetUserDetailsResponse) => void): grpc.ClientUnaryCall;
 }

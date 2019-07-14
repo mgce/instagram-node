@@ -19,7 +19,7 @@ export class UserController {
         const request = new GetByIdRequest();
         request.setUserid(req.params.userId);
 
-        UserClient.getById(request, (err, result) => {
+        UserClient.getUserDetails(request, (err, result) => {
             if (err)
                 return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage('', true, result.toObject()))

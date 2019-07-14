@@ -23,4 +23,11 @@ export class UserFollowRepository {
         userFollowing.delete();
         await this.repository.save(userFollowing);
     }
+
+    public async getFollowingInfo(userId:number){
+        const following = await this.repository.count({userId});
+        const followers = await this.repository.count({followingUserId:userId})
+
+        return {following, followers}
+    }
 }

@@ -138,3 +138,40 @@ export namespace GetByIdResponse {
         emailaddress: string,
     }
 }
+
+export class GetUserDetailsResponse extends jspb.Message { 
+    getId(): number;
+    setId(value: number): void;
+
+    getUsername(): string;
+    setUsername(value: string): void;
+
+    getEmailaddress(): string;
+    setEmailaddress(value: string): void;
+
+    getFollowers(): number;
+    setFollowers(value: number): void;
+
+    getFollowing(): number;
+    setFollowing(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetUserDetailsResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: GetUserDetailsResponse): GetUserDetailsResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetUserDetailsResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetUserDetailsResponse;
+    static deserializeBinaryFromReader(message: GetUserDetailsResponse, reader: jspb.BinaryReader): GetUserDetailsResponse;
+}
+
+export namespace GetUserDetailsResponse {
+    export type AsObject = {
+        id: number,
+        username: string,
+        emailaddress: string,
+        followers: number,
+        following: number,
+    }
+}

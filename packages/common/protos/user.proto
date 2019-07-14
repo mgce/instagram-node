@@ -31,8 +31,17 @@ message GetByIdResponse {
     string emailAddress = 3;
 }
 
+message GetUserDetailsResponse{
+    int64 id = 1;
+    string username = 2;
+    string emailAddress = 3;
+    int64 followers = 4;
+    int64 following = 5;
+}
+
 service User{
     rpc Create(CreateUserRequest) returns (common.EmptyResponse){}
     rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse){}
     rpc GetById(GetByIdRequest) returns (GetByIdResponse){}
+    rpc GetUserDetails(GetByIdRequest) returns (GetUserDetailsResponse){}
 }
