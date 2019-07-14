@@ -1,6 +1,6 @@
 import { asClass, createContainer, AwilixContainer } from "awilix";
-import { UserRepository } from './dataAccess/repositories/user.repo';
-import { UserAppService } from './services/user.service';
+import { UserFollowAppService, UserAppService } from "./services";
+import { UserRepository } from "./dataAccess";
 
 const container : AwilixContainer = createContainer({
     injectionMode: "CLASSIC"
@@ -11,6 +11,7 @@ export const initializeContainer = () => {
     container.register({
         userRepository: asClass(UserRepository),
         userService: asClass(UserAppService),
+        userFollowService: asClass(UserFollowAppService),
     })
     return container;
 }

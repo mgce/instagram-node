@@ -1,5 +1,5 @@
-import { CreateUserRequest, GetUserPostsRequest } from "@instagram-node/common";
-import { UserClient } from "./user.client";
+import { CreateUserRequest, GetUserPostsRequest, UserFollowRequest } from "@instagram-node/common";
+import { UserClient, UserFollowClient } from "./user.client";
 import express = require("express");
 import { POST, route, before, GET } from "awilix-router-core";
 import { createUserValidator } from "./user.validators";
@@ -43,6 +43,36 @@ export class UserController {
                 return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage('', true, { posts: result.toObject().postsList }))
         })
+    }
+
+    @POST()
+    @route('/:userId/follow')
+    @before([authOnly])
+    async follow(req:RequestWithClaims, res:express.Response){
+        const request = new UserFollowRequest();
+        request.setUserid(req.claims.userId);
+        request.setUsertofollowid(req.params.userId)
+
+        UserFollowClient.follow(request, (err, result) => {
+            if (err)
+                return sendErrorResponse(res, err);
+            return res.send(new ApiResponseMessage(result.getMessage(), true))
+        });
+    }
+
+    @POST()
+    @route('/:userId/unfollow')
+    @before([authOnly])
+    async unfollow(req:RequestWithClaims, res:express.Response){
+        const request = new UserFollowRequest();
+        request.setUserid(req.claims.userId);
+        request.setUsertofollowid(req.params.userId)
+
+        UserFollowClient.unfollow(request, (err, result) => {
+            if (err)
+                return sendErrorResponse(res, err);
+            return res.send(new ApiResponseMessage(result.getMessage(), true))
+        });
     }
 }
 
