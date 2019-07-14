@@ -1,36 +1,36 @@
-import { UserRepository, UserFollowingRepository } from "../dataAccess";
+import { UserRepository, UserFollowRepository } from "../dataAccess";
 import { resources } from "../resources";
 import { UserFollow } from "../entities";
 
 export class UserFollowAppService {
     private userRepository: UserRepository
-    private userFollowingRepository: UserFollowingRepository
+    private userFollowRepository: UserFollowRepository
 
-    constructor(userRepository: UserRepository, userFollowingRepository: UserFollowingRepository) {
+    constructor(userRepository: UserRepository, userFollowRepository: UserFollowRepository) {
         this.userRepository = userRepository;
-        this.userFollowingRepository = userFollowingRepository;
+        this.userFollowRepository = userFollowRepository;
     }
 
     public async follow(userId: number, userToFollowId: number) {
         await this.checkIfUsersExists(userId, userToFollowId);
 
-        let userFollowing = await this.userFollowingRepository.get(userId, userToFollowId);
+        let userFollowing = await this.userFollowRepository.get(userId, userToFollowId);
 
         if(userFollowing)
             throw new Error(resources.errors.FollowingExist)
 
         userFollowing = new UserFollow(userId, userToFollowId);
 
-        await this.userFollowingRepository.createAndSave(userFollowing);
+        await this.userFollowRepository.createAndSave(userFollowing);
     }
 
     public async unfollow(userId: number, followedUserId:number){
-        const userFollowing = await this.userFollowingRepository.get(userId, followedUserId);
+        const userFollowing = await this.userFollowRepository.get(userId, followedUserId);
 
         if(userFollowing)
             throw new Error(resources.errors.FollowingNotExist)
 
-        await this.userFollowingRepository.delete(userFollowing);
+        await this.userFollowRepository.delete(userFollowing);
     }   
 
     private async checkIfUsersExists(userId: number, userToFollowId: number) {

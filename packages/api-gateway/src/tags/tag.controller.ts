@@ -5,7 +5,7 @@ import express = require("express");
 import { RequestWithClaims } from "../interfaces/requestWithClaims";
 import { sendErrorResponse } from "../helpers/sendErrorResponse";
 import { ApiResponseMessage } from "../interfaces/apiResponseMessage";
-import { SearchByTagResponse, SearchByTagRequest } from "@instagram-node/common";
+import { PostsResponse, SearchByTagRequest } from "@instagram-node/common";
 
 @route('/tag')
 export class TagController {
@@ -17,7 +17,7 @@ export class TagController {
 
         request.setUserid(req.claims.userId);
         request.setTag(req.params.tag);
-        PostClient.searchByTag(request, (err, result:SearchByTagResponse) => {
+        PostClient.searchByTag(request, (err, result:PostsResponse) => {
             if (err)
                 return sendErrorResponse(res, err);
             return res.send(new ApiResponseMessage(null, true, { posts: result.toObject().postsList }))

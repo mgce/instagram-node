@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { UserModel } from './dataAccess/models/user.model';
 import { ServerCredentials, Server } from "grpc";
 import { UserService,UserFollowService, commonConfig, connectWithRetry } from '@instagram-node/common';
 import { Connection } from "typeorm";
@@ -8,6 +7,7 @@ import { UserAppService } from './services/user.service';
 import { UserRepository } from './dataAccess/repositories/user.repo';
 import { UserFollowGrpcService, UserGrpcService } from "./grpc";
 import { UserFollowAppService } from "./services";
+import { UserFollowModel, UserModel } from "./dataAccess";
 
 const SERVER_URI = '0.0.0.0:' + commonConfig.ports.userService
 
@@ -25,4 +25,4 @@ const initService = function initService(connection: Connection) {
     console.log('Server is running!')
 }
 
-connectWithRetry([UserModel], initService);
+connectWithRetry([UserModel, UserFollowModel], initService);

@@ -3,7 +3,7 @@ import { Repository, getRepository } from "typeorm";
 import { IUserFollow } from "../../interfaces";
 import { UserFollow } from "../../entities";
 
-export class UserFollowingRepository {
+export class UserFollowRepository {
     private repository: Repository<UserFollowModel>
 
     constructor() {

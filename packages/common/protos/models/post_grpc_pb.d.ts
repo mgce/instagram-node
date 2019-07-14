@@ -33,32 +33,32 @@ interface IPostService_IDelete extends grpc.MethodDefinition<post_pb.DeletePostR
     responseSerialize: grpc.serialize<common_pb.EmptyResponse>;
     responseDeserialize: grpc.deserialize<common_pb.EmptyResponse>;
 }
-interface IPostService_IGetPosts extends grpc.MethodDefinition<post_pb.GetPostsRequest, post_pb.GetPostsResponse> {
+interface IPostService_IGetPosts extends grpc.MethodDefinition<post_pb.GetPostsRequest, post_pb.PostsResponse> {
     path: string; // "/grpc.post.v1.Post/GetPosts"
     requestStream: boolean; // false
     responseStream: boolean; // false
     requestSerialize: grpc.serialize<post_pb.GetPostsRequest>;
     requestDeserialize: grpc.deserialize<post_pb.GetPostsRequest>;
-    responseSerialize: grpc.serialize<post_pb.GetPostsResponse>;
-    responseDeserialize: grpc.deserialize<post_pb.GetPostsResponse>;
+    responseSerialize: grpc.serialize<post_pb.PostsResponse>;
+    responseDeserialize: grpc.deserialize<post_pb.PostsResponse>;
 }
-interface IPostService_ISearchByTag extends grpc.MethodDefinition<post_pb.SearchByTagRequest, post_pb.SearchByTagResponse> {
+interface IPostService_ISearchByTag extends grpc.MethodDefinition<post_pb.SearchByTagRequest, post_pb.PostsResponse> {
     path: string; // "/grpc.post.v1.Post/SearchByTag"
     requestStream: boolean; // false
     responseStream: boolean; // false
     requestSerialize: grpc.serialize<post_pb.SearchByTagRequest>;
     requestDeserialize: grpc.deserialize<post_pb.SearchByTagRequest>;
-    responseSerialize: grpc.serialize<post_pb.SearchByTagResponse>;
-    responseDeserialize: grpc.deserialize<post_pb.SearchByTagResponse>;
+    responseSerialize: grpc.serialize<post_pb.PostsResponse>;
+    responseDeserialize: grpc.deserialize<post_pb.PostsResponse>;
 }
-interface IPostService_IGetUserPosts extends grpc.MethodDefinition<post_pb.GetUserPostsRequest, post_pb.GetUserPostsResponse> {
+interface IPostService_IGetUserPosts extends grpc.MethodDefinition<post_pb.GetPostsRequest, post_pb.PostsResponse> {
     path: string; // "/grpc.post.v1.Post/GetUserPosts"
     requestStream: boolean; // false
     responseStream: boolean; // false
-    requestSerialize: grpc.serialize<post_pb.GetUserPostsRequest>;
-    requestDeserialize: grpc.deserialize<post_pb.GetUserPostsRequest>;
-    responseSerialize: grpc.serialize<post_pb.GetUserPostsResponse>;
-    responseDeserialize: grpc.deserialize<post_pb.GetUserPostsResponse>;
+    requestSerialize: grpc.serialize<post_pb.GetPostsRequest>;
+    requestDeserialize: grpc.deserialize<post_pb.GetPostsRequest>;
+    responseSerialize: grpc.serialize<post_pb.PostsResponse>;
+    responseDeserialize: grpc.deserialize<post_pb.PostsResponse>;
 }
 
 export const PostService: IPostService;
@@ -66,9 +66,9 @@ export const PostService: IPostService;
 export interface IPostServer {
     create: grpc.handleUnaryCall<post_pb.CreatePostRequest, post_pb.PostCreatedResponse>;
     delete: grpc.handleUnaryCall<post_pb.DeletePostRequest, common_pb.EmptyResponse>;
-    getPosts: grpc.handleUnaryCall<post_pb.GetPostsRequest, post_pb.GetPostsResponse>;
-    searchByTag: grpc.handleUnaryCall<post_pb.SearchByTagRequest, post_pb.SearchByTagResponse>;
-    getUserPosts: grpc.handleUnaryCall<post_pb.GetUserPostsRequest, post_pb.GetUserPostsResponse>;
+    getPosts: grpc.handleUnaryCall<post_pb.GetPostsRequest, post_pb.PostsResponse>;
+    searchByTag: grpc.handleUnaryCall<post_pb.SearchByTagRequest, post_pb.PostsResponse>;
+    getUserPosts: grpc.handleUnaryCall<post_pb.GetPostsRequest, post_pb.PostsResponse>;
 }
 
 export interface IPostClient {
@@ -78,15 +78,15 @@ export interface IPostClient {
     delete(request: post_pb.DeletePostRequest, callback: (error: grpc.ServiceError | null, response: common_pb.EmptyResponse) => void): grpc.ClientUnaryCall;
     delete(request: post_pb.DeletePostRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: common_pb.EmptyResponse) => void): grpc.ClientUnaryCall;
     delete(request: post_pb.DeletePostRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: common_pb.EmptyResponse) => void): grpc.ClientUnaryCall;
-    getPosts(request: post_pb.GetPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.GetPostsResponse) => void): grpc.ClientUnaryCall;
-    getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.GetPostsResponse) => void): grpc.ClientUnaryCall;
-    getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.GetPostsResponse) => void): grpc.ClientUnaryCall;
-    searchByTag(request: post_pb.SearchByTagRequest, callback: (error: grpc.ServiceError | null, response: post_pb.SearchByTagResponse) => void): grpc.ClientUnaryCall;
-    searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.SearchByTagResponse) => void): grpc.ClientUnaryCall;
-    searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.SearchByTagResponse) => void): grpc.ClientUnaryCall;
-    getUserPosts(request: post_pb.GetUserPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.GetUserPostsResponse) => void): grpc.ClientUnaryCall;
-    getUserPosts(request: post_pb.GetUserPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.GetUserPostsResponse) => void): grpc.ClientUnaryCall;
-    getUserPosts(request: post_pb.GetUserPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.GetUserPostsResponse) => void): grpc.ClientUnaryCall;
+    getPosts(request: post_pb.GetPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    searchByTag(request: post_pb.SearchByTagRequest, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    getUserPosts(request: post_pb.GetPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    getUserPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    getUserPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class PostClient extends grpc.Client implements IPostClient {
@@ -97,13 +97,13 @@ export class PostClient extends grpc.Client implements IPostClient {
     public delete(request: post_pb.DeletePostRequest, callback: (error: grpc.ServiceError | null, response: common_pb.EmptyResponse) => void): grpc.ClientUnaryCall;
     public delete(request: post_pb.DeletePostRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: common_pb.EmptyResponse) => void): grpc.ClientUnaryCall;
     public delete(request: post_pb.DeletePostRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: common_pb.EmptyResponse) => void): grpc.ClientUnaryCall;
-    public getPosts(request: post_pb.GetPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.GetPostsResponse) => void): grpc.ClientUnaryCall;
-    public getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.GetPostsResponse) => void): grpc.ClientUnaryCall;
-    public getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.GetPostsResponse) => void): grpc.ClientUnaryCall;
-    public searchByTag(request: post_pb.SearchByTagRequest, callback: (error: grpc.ServiceError | null, response: post_pb.SearchByTagResponse) => void): grpc.ClientUnaryCall;
-    public searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.SearchByTagResponse) => void): grpc.ClientUnaryCall;
-    public searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.SearchByTagResponse) => void): grpc.ClientUnaryCall;
-    public getUserPosts(request: post_pb.GetUserPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.GetUserPostsResponse) => void): grpc.ClientUnaryCall;
-    public getUserPosts(request: post_pb.GetUserPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.GetUserPostsResponse) => void): grpc.ClientUnaryCall;
-    public getUserPosts(request: post_pb.GetUserPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.GetUserPostsResponse) => void): grpc.ClientUnaryCall;
+    public getPosts(request: post_pb.GetPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public getPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public searchByTag(request: post_pb.SearchByTagRequest, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public searchByTag(request: post_pb.SearchByTagRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public getUserPosts(request: post_pb.GetPostsRequest, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public getUserPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
+    public getUserPosts(request: post_pb.GetPostsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: post_pb.PostsResponse) => void): grpc.ClientUnaryCall;
 }

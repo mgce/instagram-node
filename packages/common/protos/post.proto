@@ -27,7 +27,7 @@ message GetPostsRequest {
     int64 userId = 1;
 }
 
-message GetPostsResponse {
+message PostsResponse {
     repeated PostDto posts = 1;
 }
 
@@ -46,22 +46,10 @@ message SearchByTagRequest {
     int64 userId = 2;
 }
 
-message SearchByTagResponse {
-    repeated PostDto posts = 1;
-}
-
-message GetUserPostsRequest {
-    int64 userId = 1;
-}
-
-message GetUserPostsResponse {
-    repeated PostDto posts = 1;
-}
-
 service Post{
     rpc Create(CreatePostRequest) returns (PostCreatedResponse){}
     rpc Delete(DeletePostRequest) returns (common.EmptyResponse){}
-    rpc GetPosts(GetPostsRequest) returns (GetPostsResponse){}
-    rpc SearchByTag(SearchByTagRequest) returns (SearchByTagResponse){}
-    rpc GetUserPosts(GetUserPostsRequest) returns (GetUserPostsResponse){}
+    rpc GetPosts(GetPostsRequest) returns (PostsResponse){}
+    rpc SearchByTag(SearchByTagRequest) returns (PostsResponse){}
+    rpc GetUserPosts(GetPostsRequest) returns (PostsResponse){}
 }

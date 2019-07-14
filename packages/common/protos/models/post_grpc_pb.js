@@ -49,39 +49,6 @@ function deserialize_grpc_post_v1_GetPostsRequest(buffer_arg) {
   return post_pb.GetPostsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_grpc_post_v1_GetPostsResponse(arg) {
-  if (!(arg instanceof post_pb.GetPostsResponse)) {
-    throw new Error('Expected argument of type grpc.post.v1.GetPostsResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_grpc_post_v1_GetPostsResponse(buffer_arg) {
-  return post_pb.GetPostsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_grpc_post_v1_GetUserPostsRequest(arg) {
-  if (!(arg instanceof post_pb.GetUserPostsRequest)) {
-    throw new Error('Expected argument of type grpc.post.v1.GetUserPostsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_grpc_post_v1_GetUserPostsRequest(buffer_arg) {
-  return post_pb.GetUserPostsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_grpc_post_v1_GetUserPostsResponse(arg) {
-  if (!(arg instanceof post_pb.GetUserPostsResponse)) {
-    throw new Error('Expected argument of type grpc.post.v1.GetUserPostsResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_grpc_post_v1_GetUserPostsResponse(buffer_arg) {
-  return post_pb.GetUserPostsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_grpc_post_v1_PostCreatedResponse(arg) {
   if (!(arg instanceof post_pb.PostCreatedResponse)) {
     throw new Error('Expected argument of type grpc.post.v1.PostCreatedResponse');
@@ -93,6 +60,17 @@ function deserialize_grpc_post_v1_PostCreatedResponse(buffer_arg) {
   return post_pb.PostCreatedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_grpc_post_v1_PostsResponse(arg) {
+  if (!(arg instanceof post_pb.PostsResponse)) {
+    throw new Error('Expected argument of type grpc.post.v1.PostsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_grpc_post_v1_PostsResponse(buffer_arg) {
+  return post_pb.PostsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_grpc_post_v1_SearchByTagRequest(arg) {
   if (!(arg instanceof post_pb.SearchByTagRequest)) {
     throw new Error('Expected argument of type grpc.post.v1.SearchByTagRequest');
@@ -102,17 +80,6 @@ function serialize_grpc_post_v1_SearchByTagRequest(arg) {
 
 function deserialize_grpc_post_v1_SearchByTagRequest(buffer_arg) {
   return post_pb.SearchByTagRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_grpc_post_v1_SearchByTagResponse(arg) {
-  if (!(arg instanceof post_pb.SearchByTagResponse)) {
-    throw new Error('Expected argument of type grpc.post.v1.SearchByTagResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_grpc_post_v1_SearchByTagResponse(buffer_arg) {
-  return post_pb.SearchByTagResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -144,33 +111,33 @@ var PostService = exports.PostService = {
     requestStream: false,
     responseStream: false,
     requestType: post_pb.GetPostsRequest,
-    responseType: post_pb.GetPostsResponse,
+    responseType: post_pb.PostsResponse,
     requestSerialize: serialize_grpc_post_v1_GetPostsRequest,
     requestDeserialize: deserialize_grpc_post_v1_GetPostsRequest,
-    responseSerialize: serialize_grpc_post_v1_GetPostsResponse,
-    responseDeserialize: deserialize_grpc_post_v1_GetPostsResponse,
+    responseSerialize: serialize_grpc_post_v1_PostsResponse,
+    responseDeserialize: deserialize_grpc_post_v1_PostsResponse,
   },
   searchByTag: {
     path: '/grpc.post.v1.Post/SearchByTag',
     requestStream: false,
     responseStream: false,
     requestType: post_pb.SearchByTagRequest,
-    responseType: post_pb.SearchByTagResponse,
+    responseType: post_pb.PostsResponse,
     requestSerialize: serialize_grpc_post_v1_SearchByTagRequest,
     requestDeserialize: deserialize_grpc_post_v1_SearchByTagRequest,
-    responseSerialize: serialize_grpc_post_v1_SearchByTagResponse,
-    responseDeserialize: deserialize_grpc_post_v1_SearchByTagResponse,
+    responseSerialize: serialize_grpc_post_v1_PostsResponse,
+    responseDeserialize: deserialize_grpc_post_v1_PostsResponse,
   },
   getUserPosts: {
     path: '/grpc.post.v1.Post/GetUserPosts',
     requestStream: false,
     responseStream: false,
-    requestType: post_pb.GetUserPostsRequest,
-    responseType: post_pb.GetUserPostsResponse,
-    requestSerialize: serialize_grpc_post_v1_GetUserPostsRequest,
-    requestDeserialize: deserialize_grpc_post_v1_GetUserPostsRequest,
-    responseSerialize: serialize_grpc_post_v1_GetUserPostsResponse,
-    responseDeserialize: deserialize_grpc_post_v1_GetUserPostsResponse,
+    requestType: post_pb.GetPostsRequest,
+    responseType: post_pb.PostsResponse,
+    requestSerialize: serialize_grpc_post_v1_GetPostsRequest,
+    requestDeserialize: deserialize_grpc_post_v1_GetPostsRequest,
+    responseSerialize: serialize_grpc_post_v1_PostsResponse,
+    responseDeserialize: deserialize_grpc_post_v1_PostsResponse,
   },
 };
 
