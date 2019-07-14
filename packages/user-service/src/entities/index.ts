@@ -1,1 +1,1 @@
-export {UserFollowing} from './userFollowing.entity'
+export {UserFollow} from './userFollowing.entity'

@@ -1,28 +1,27 @@
 import { createTestConnection } from "./utils/createTestConnection";
 import { Connection } from "typeorm";
-import { UserRepository } from './../src/dataAccess/repositories/user.repo';
-import { UserFollowingRepository } from './../src/dataAccess/repositories/userFollowing.repo';
-import { UserFollowingAppService } from "../src/services/userFollowing.service"
+import { UserRepository } from '../src/dataAccess/repositories/user.repo';
+import { UserFollowingRepository } from '../src/dataAccess/repositories/userFollowing.repo';
+import { UserFollowAppService } from "../src/services/userFollow.service"
 import { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chai from 'chai';
 import { resources } from "../src/resources";
 import { mock, instance, when, verify, anything } from 'ts-mockito';
-import { IUser, IUserFollowing } from "../src/interfaces";
-import { UserFollowing } from "../src/entities";
+import { UserFollow } from "../src/entities";
 
-describe('User Following service', () => {
+describe('User Follow service', () => {
     // let connection: Connection;
     let userRepository: UserRepository;
     let userFollowingRepository: UserFollowingRepository;
-    let userFollowingService: UserFollowingAppService;
+    let userFollowingService: UserFollowAppService;
     const userId = 1;
     const userToFollowId = 2;
     beforeEach(async () => {
         // connection = await createTestConnection();
         userRepository = mock(UserRepository);
         userFollowingRepository = mock(UserFollowingRepository);
-        userFollowingService = new UserFollowingAppService(instance(userRepository), instance(userFollowingRepository));
+        userFollowingService = new UserFollowAppService(instance(userRepository), instance(userFollowingRepository));
     })
 
     describe('Following the User', () => {
@@ -127,4 +126,4 @@ describe('User Following service', () => {
 
 async function getUser(){return {id: 1, username: "testUser", emailAddress: "test@address.pl", salt: "xyz", password: "veryStrong" }}
 async function getFollowingUser(){return {id: 2, username: "testFollowingUser", emailAddress: "test@address.pl", salt: "xyz", password: "veryStrong" }}
-async function getUserFollowing(){return new UserFollowing(1, 2)}
+async function getUserFollowing(){return new UserFollow(1, 2)}

@@ -1,7 +1,7 @@
-import { IUserFollowing } from "../interfaces";
+import { IUserFollow } from "../interfaces";
 import { BaseEntity } from '@instagram-node/common';
 
-export class UserFollowing extends BaseEntity implements IUserFollowing {
+export class UserFollow extends BaseEntity implements IUserFollow {
     public userId: number;    
     public followingUserId: number;
 

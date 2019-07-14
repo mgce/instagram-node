@@ -1,2 +1,2 @@
 export { IUser } from './IUser';
-export { IUserFollowing } from './IUserFollowing';
+export { IUserFollow } from './IUserFollowing';

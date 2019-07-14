@@ -1,4 +1,4 @@
-export interface IUserFollowing{
+export interface IUserFollow{
     userId: number;
     followingUserId:number;
 }

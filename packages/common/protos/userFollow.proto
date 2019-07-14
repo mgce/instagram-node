@@ -1,0 +1,15 @@
+syntax="proto3";
+
+package grpc.userFollow.v1;
+
+import "common.proto";
+
+message UserFollowRequest {
+    int64 userId = 1;
+    int64 userToFollowId = 2;
+}
+
+service UserFollow{
+    rpc Follow(UserFollowRequest) returns (common.EmptyResponse){}
+    rpc Unfollow(UserFollowRequest) returns (common.EmptyResponse){}
+}

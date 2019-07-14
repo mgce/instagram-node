@@ -1,9 +1,9 @@
 import { BaseEntity } from '@instagram-node/common';
-import { IUserFollowing } from '../../interfaces';
+import { IUserFollow } from '../../interfaces';
 import { Entity, Column } from 'typeorm';
 
 @Entity()
-export class UserFollowingModel extends BaseEntity implements IUserFollowing{
+export class UserFollowModel extends BaseEntity implements IUserFollow{
     @Column()
     public userId: number;
     @Column()

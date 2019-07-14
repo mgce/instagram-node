@@ -21,6 +21,8 @@ export * from "../protos/models/postLike_pb";
 export * from "../protos/models/postLike_grpc_pb";
 export * from "../protos/models/comment_pb";
 export * from "../protos/models/comment_grpc_pb";
+export * from "../protos/models/userFollow_pb";
+export * from "../protos/models/userFollow_grpc_pb";
 // export * from './grpc/grpcMiddleware';
 export { grpcErrorHandler } from './grpc/grpcErrorHandler';
 export { GrpcError } from './grpc/grpcError';

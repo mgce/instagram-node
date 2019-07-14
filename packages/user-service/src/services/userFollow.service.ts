@@ -1,9 +1,8 @@
 import { UserRepository, UserFollowingRepository } from "../dataAccess";
 import { resources } from "../resources";
-import { IUserFollowing } from "../interfaces";
-import { UserFollowing } from "../entities";
+import { UserFollow } from "../entities";
 
-export class UserFollowingAppService {
+export class UserFollowAppService {
     private userRepository: UserRepository
     private userFollowingRepository: UserFollowingRepository
 
@@ -20,9 +19,7 @@ export class UserFollowingAppService {
         if(userFollowing)
             throw new Error(resources.errors.FollowingExist)
 
-        userFollowing = new UserFollowing(userId, userToFollowId);
-
-        // check if following exists
+        userFollowing = new UserFollow(userId, userToFollowId);
 
         await this.userFollowingRepository.createAndSave(userFollowing);
     }

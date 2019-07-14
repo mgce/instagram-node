@@ -27,6 +27,7 @@ rimraf.sync(`${MODEL_DIR}/*`);
   + ` ${PROTO_DIR}\\image.proto`
   + ` ${PROTO_DIR}\\comment.proto`
   + ` ${PROTO_DIR}\\postLike.proto`
+  + ` ${PROTO_DIR}\\userFollow.proto`
   +`  ${PROTO_DIR}\\post.proto`);
 
 // shell.exec(`grpc_tools_node_protoc `

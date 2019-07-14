@@ -1,25 +1,25 @@
-import { UserFollowingModel } from "..";
+import { UserFollowModel } from "..";
 import { Repository, getRepository } from "typeorm";
-import { IUserFollowing } from "../../interfaces";
-import { UserFollowing } from "../../entities";
+import { IUserFollow } from "../../interfaces";
+import { UserFollow } from "../../entities";
 
 export class UserFollowingRepository {
-    private repository: Repository<UserFollowingModel>
+    private repository: Repository<UserFollowModel>
 
     constructor() {
-        this.repository = getRepository(UserFollowingModel);
+        this.repository = getRepository(UserFollowModel);
     }
 
-    public async createAndSave(entity: IUserFollowing):Promise<UserFollowing>{
+    public async createAndSave(entity: IUserFollow):Promise<UserFollow>{
         const model = this.repository.create(entity);
         return this.repository.save(model);
     }
 
-    public async get(userId:number, followingUserId: number):Promise<UserFollowing>{
+    public async get(userId:number, followingUserId: number):Promise<UserFollow>{
         return this.repository.findOne({userId, followingUserId});
     }
 
-    public async delete(userFollowing:UserFollowing):Promise<void>{
+    public async delete(userFollowing:UserFollow):Promise<void>{
         userFollowing.delete();
         await this.repository.save(userFollowing);
     }
