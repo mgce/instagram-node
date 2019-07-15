@@ -21,7 +21,7 @@ export default class PostFeedPage extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className="container">
+      <div className="post-container container">
         {posts
           ? posts.map(post => {
             const postComments = comments.get(post.id.toString());

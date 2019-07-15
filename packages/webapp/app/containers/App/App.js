@@ -31,27 +31,31 @@ const App = () => (
       <meta name="description" content="Instagram clone application" />
     </Helmet>
     <Header />
-    <Breadcrumb style={{ margin: '10px 64px 10px 64px' }}>
-      <Breadcrumb.Item>Posts</Breadcrumb.Item>
-    </Breadcrumb>
-    <Layout.Content
-      style={{
-        margin: '0px 64px 0 64px',
-        background: '#fff',
-        padding: 24,
-      }}
-    >
-      <div className="app-wrapper">
-        <Switch>
-          <PublicRoute exact path="/login" component={LoginPage} />
-          <PrivateRoute exact path="/" component={PostFeedPage} />
-          <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
-          <PrivateRoute exact path="/users/:userId" component={UserProfilePage} />
-          <PrivateRoute path="/add" component={AddPostPage} />
-          <PrivateRoute path="" component={NotFoundPage} />
-        </Switch>
-      </div>
-    </Layout.Content>
+    <div className="container">
+      {/* <Breadcrumb>
+        <Breadcrumb.Item>Posts</Breadcrumb.Item>
+      </Breadcrumb> */}
+      <Layout.Content
+        style={{
+          padding: 24,
+        }}
+      >
+        <div className="app-wrapper">
+          <Switch>
+            <PublicRoute exact path="/login" component={LoginPage} />
+            <PrivateRoute exact path="/" component={PostFeedPage} />
+            <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
+            <PrivateRoute
+              exact
+              path="/users/:userId"
+              component={UserProfilePage}
+            />
+            <PrivateRoute path="/add" component={AddPostPage} />
+            <PrivateRoute path="" component={NotFoundPage} />
+          </Switch>
+        </div>
+      </Layout.Content>
+    </div>
     <Layout.Footer />
   </Layout>
 );

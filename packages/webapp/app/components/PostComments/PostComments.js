@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   List, Input, Form, Button,
 } from 'antd';
+import './style.scss';
 
 export default class PostComments extends React.PureComponent {
   constructor(props){
@@ -38,7 +39,7 @@ export default class PostComments extends React.PureComponent {
       comments,
     } = this.props;
     return (
-      <>
+      <div className="comments-list">
         <List
           size="small"
           dataSource={comments}
@@ -49,7 +50,7 @@ export default class PostComments extends React.PureComponent {
           )}
           footer={this.renderFooter()}
         />
-      </>
+      </div>
     );
   }
 }

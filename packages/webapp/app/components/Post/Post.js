@@ -108,10 +108,17 @@ export default class Post extends React.PureComponent {
       <IconText type="like" text={likesCount} onClick={this.likePost} />
     );
 
+    const postTitle = () => <Link to={"users/"+authorId} className="post-username">
+    <strong>
+      {author}
+    </strong>
+    </Link>
+
     return (
-      <>
+      <div className="post">
         <Card
           cover={<img src={imageUrl} alt="test" />}
+          title={postTitle()}
           actions={[
             likeIcon,
             <IconText
@@ -122,11 +129,6 @@ export default class Post extends React.PureComponent {
             />,
           ]}
         >
-          <Link to={"users/"+authorId} className="post-username">
-          <strong>
-            {author}
-          </strong>
-          </Link>
           {this.renderDescription()}
         </Card>
         {commentsFormExpanded ? (
@@ -137,7 +139,7 @@ export default class Post extends React.PureComponent {
             addComment={this.addComment}
           />
         ) : null}
-      </>
+      </div>
     );
   }
 }

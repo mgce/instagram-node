@@ -1,4 +1,16 @@
 .header {
+  background-color: white;
+  border-bottom: 1px solid #dbdbdb;
+  height: 65px;
+
+  a{
+    color:black;
+  }
+
+  .ant-menu-dark {
+    background: white;
+  }
+
   img {
     width: 100%;
     margin: 0 auto;
@@ -23,12 +35,24 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: bold;
     font-size: 16px;
-    border: 2px solid #41ADDD;
-    color: #41ADDD;
+    border: 2px solid #41addd;
+    color: black;
 
     &:active {
-      background: #41ADDD;
-      color: #FFF;
+      background: #fff;
+      color: #fff;
     }
   }
 }
+
+.header-logo {
+  display: inline-block;
+  margin-right: 10px;
+  font-family: 'Pacifico', cursive;
+  font-size: 26px;
+}
+
+.header-link-group{
+  padding-left: 20px;
+}
+
