@@ -22,15 +22,18 @@ import Header from 'components/Header';
 import './style.scss';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
-const App = () => (
-  <Layout className="layout">
+
+class App extends React.Component{
+  render(){
+    return(
+      <Layout className="layout">
     <Helmet
       titleTemplate="%s - React.js Boilerplate"
       defaultTitle="Instagram clone"
     >
       <meta name="description" content="Instagram clone application" />
     </Helmet>
-    <Header />
+    <Header logout={this.props.logoutUser}/>
     <div className="container">
       {/* <Breadcrumb>
         <Breadcrumb.Item>Posts</Breadcrumb.Item>
@@ -42,8 +45,8 @@ const App = () => (
       >
         <div className="app-wrapper">
           <Switch>
-            <PublicRoute exact path="/login" component={LoginPage} />
             <PrivateRoute exact path="/" component={PostFeedPage} />
+            <PublicRoute exact path="/login" component={LoginPage} />
             <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
             <PrivateRoute
               exact
@@ -58,6 +61,46 @@ const App = () => (
     </div>
     <Layout.Footer />
   </Layout>
-);
+    )
+  }
+}
+
+// const App = (props) => (
+//   <Layout className="layout">
+//     <Helmet
+//       titleTemplate="%s - React.js Boilerplate"
+//       defaultTitle="Instagram clone"
+//     >
+//       <meta name="description" content="Instagram clone application" />
+//     </Helmet>
+//     <Header logout={props.logout}/>
+//     <div className="container">
+//       {/* <Breadcrumb>
+//         <Breadcrumb.Item>Posts</Breadcrumb.Item>
+//       </Breadcrumb> */}
+//       <Layout.Content
+//         style={{
+//           padding: 24,
+//         }}
+//       >
+//         <div className="app-wrapper">
+//           <Switch>
+//             <PrivateRoute exact path="/" component={PostFeedPage} />
+//             <PublicRoute exact path="/login" component={LoginPage} />
+//             <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
+//             <PrivateRoute
+//               exact
+//               path="/users/:userId"
+//               component={UserProfilePage}
+//             />
+//             <PrivateRoute path="/add" component={AddPostPage} />
+//             <PrivateRoute path="" component={NotFoundPage} />
+//           </Switch>
+//         </div>
+//       </Layout.Content>
+//     </div>
+//     <Layout.Footer />
+//   </Layout>
+// );
 
 export default App;

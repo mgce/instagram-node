@@ -6,8 +6,10 @@ import { RefreshTokenService } from "./refreshToken.service";
 import { requestValidator } from "../middlewares/requestValidator";
 import { authenticateValidator } from "./token.validators";
 import { ApiResponseMessage } from './../interfaces/apiResponseMessage';
+import { authOnly } from "../middlewares/jwtValidator";
+import { RequestWithClaims } from "../interfaces/requestWithClaims";
 
-@route('/token')
+@route('/tokens')
 export class TokenController {
     private _refreshTokenService: RefreshTokenService;
     constructor(refreshTokenService: RefreshTokenService) {
@@ -16,8 +18,7 @@ export class TokenController {
 
     @POST()
     @route('/')
-    @before(authenticateValidator)
-    @before(requestValidator)
+    @before([authenticateValidator, requestValidator])
     async getTokens(req: express.Request, res: express.Response) {
         const { emailAddress, password } = req.body;
 
@@ -37,6 +38,17 @@ export class TokenController {
             const response = new ApiResponseMessage("You are logged in", true, tokens)    
             res.json(response)
         })
+    }
+
+    @POST()
+    @route('/logout')
+    @before([authOnly])
+    async logout(req: RequestWithClaims, res: express.Response) {
+        const userId = req.claims.userId;
+
+        await this._refreshTokenService.logout(userId);
+        const response = new ApiResponseMessage("You are logged out", true)    
+        res.json(response)
     }
 
     @GET()

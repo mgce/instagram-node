@@ -65,6 +65,9 @@ export class RefreshTokenService {
 
             callback(tokens);
         })
+    }
 
+    public async logout(userId:number){
+        await this._refreshTokenRepository.deleteToken(userId)
     }
 }

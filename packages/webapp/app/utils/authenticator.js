@@ -1,5 +1,8 @@
 import 'whatwg-fetch';
 
+const REFRESH_TOKEN = 'refreshToken';
+const TOKEN = 'token';
+
 export const authenticator = {
     isAuthenticated(){
         const token = localStorage.getItem('token');
@@ -9,14 +12,18 @@ export const authenticator = {
     },
     setTokens(accessToken, refreshToken){
         if(accessToken)
-            localStorage.setItem('token', accessToken);
+            localStorage.setItem(TOKEN, accessToken);
         if(refreshToken)
-            localStorage.setItem('refreshToken', refreshToken);
+            localStorage.setItem(REFRESH_TOKEN, refreshToken);
     },
     getAccessToken(){
-        return localStorage.getItem('token');
+        return localStorage.getItem(TOKEN);
     },
     getRefreshToken(){
-        return localStorage.getItem('refreshToken');
+        return localStorage.getItem(REFRESH_TOKEN);
+    },
+    removeTokens(){
+        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
     }
 };

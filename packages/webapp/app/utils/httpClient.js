@@ -9,7 +9,7 @@ const httpClient = axios.create({
 function getNewAccessToken() {
   const refreshToken = authenticator.getRefreshToken();
   httpClient
-    .get(`token/${refreshToken}`)
+    .get(`tokens/${refreshToken}`)
     .then((result) => {
       authenticator.setTokens(result.token, null);
       return result.token;

@@ -4,7 +4,7 @@ import Banner from './images/banner.jpg';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import './style.scss';
 
-function Header() {
+function Header(props) {
   return (
     <div className="navbar header">
       <div className="container">
@@ -13,6 +13,7 @@ function Header() {
         </div>
           < div className="header-link-group">
             <Link to="/add">Add post</Link>
+            <a onClick={() => props.logout()}>Logout</a>
           </div>
       </div>
     </div>

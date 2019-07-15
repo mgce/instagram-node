@@ -10,32 +10,38 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import { fromJS } from "immutable";
+import { fromJS } from 'immutable';
 
-import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_ERROR } from "./constants";
+import {
+  LOGIN_USER,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
+  LOGOUT_USER,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_ERROR,
+} from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
   loading: false,
   error: false,
-  currentUser: false,
-  userData: {
-    repositories: false
-  }
+  user: {}
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return state
-        .set("loading", true)
-        .set("error", false)
+      return state.set('loading', true).set('error', false);
     case LOGIN_USER_SUCCESS:
-      return state
-        .setIn(["user"], action.user)
-        .set("loading", false)
+      return state.setIn(['user'], action.payload.user).set('loading', false);
     case LOGIN_USER_ERROR:
-      return state.set("error", action.error).set("loading", false);
+      return state.set('error', action.error).set('loading', false);
+    case LOGOUT_USER:
+      return state.set('loading', true).set('error', false);
+    case LOGOUT_USER_SUCCESS:
+      return state.setIn(['user'], {}).set('loading', false);
+    case LOGOUT_USER_ERROR:
+      return state.set('error', action.error).set('loading', false);
     default:
       return state;
   }

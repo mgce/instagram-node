@@ -46,4 +46,8 @@ export class RefreshTokenRepository {
 
         return tokenCount !== 0
     }
+
+    public async deleteToken(userId:number){
+        await this.repository.delete({userId});
+    }
 }
