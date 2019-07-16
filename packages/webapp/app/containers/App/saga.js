@@ -1,10 +1,12 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOGIN_USER, LOGOUT_USER } from './constants';
+import { LOGIN_USER, LOGOUT_USER, REGISTER_USER } from './constants';
 import {
   userLoggedIn,
   loginUserError,
   userLogout,
   logoutUserError,
+  userRegistered,
+  registerUserError
 } from './actions';
 import { authenticator } from 'utils/authenticator';
 import { history } from 'utils/history';
@@ -35,6 +37,23 @@ export function* loginUser({ payload }) {
   }
 }
 
+export function* registerUser({payload}) {
+  try {
+    const request = yield call(request, {
+      method: 'POST',
+      url: 'users',
+      data: payload.credentials,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    yield put(userRegistered());
+  } catch (err) {
+    yield put(registerUserError(err));
+  }
+}
+
 export function* logoutUser() {
   try {
     yield call(request, {
@@ -56,4 +75,5 @@ export function* logoutUser() {
 export default function* userData() {
   yield takeLatest(LOGIN_USER, loginUser);
   yield takeLatest(LOGOUT_USER, logoutUser);
+  yield takeLatest(REGISTER_USER, registerUser);
 }

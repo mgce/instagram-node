@@ -4,32 +4,32 @@
 
 import { createSelector } from 'reselect';
 
-const selectGlobal = (state) => state.get('global');
+const selectApp = (state) => state.get('app');
 
 const selectRoute = (state) => state.get('route');
 
 const makeSelectCurrentUser = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('currentUser')
+  selectApp,
+  (globalState) => globalState.get('user')
 );
 
 const makeSelectLoading = () => createSelector(
-  selectGlobal,
+  selectApp,
   (globalState) => globalState.get('loading')
 );
 
 const makeSelectError = () => createSelector(
-  selectGlobal,
+  selectApp,
   (globalState) => globalState.get('error')
 );
 
 const makeSelectPost = () => createSelector(
-  selectGlobal,
+  selectApp,
   (homeState) => homeState.get('posts')
 )
 
 export {
-  selectGlobal,
+  selectApp as selectGlobal,
   makeSelectCurrentUser,
   makeSelectLoading,
   makeSelectError,

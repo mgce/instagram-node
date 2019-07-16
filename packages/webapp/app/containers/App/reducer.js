@@ -16,6 +16,9 @@ import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  REGISTER_USER,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_ERROR,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_ERROR,
@@ -25,7 +28,7 @@ import {
 const initialState = fromJS({
   loading: false,
   error: false,
-  user: {}
+  user: {},
 });
 
 function appReducer(state = initialState, action) {
@@ -35,6 +38,12 @@ function appReducer(state = initialState, action) {
     case LOGIN_USER_SUCCESS:
       return state.setIn(['user'], action.payload.user).set('loading', false);
     case LOGIN_USER_ERROR:
+      return state.set('error', action.error).set('loading', false);
+    case REGISTER_USER:
+      return state.set('loading', true).set('error', false);
+    case REGISTER_USER_SUCCESS:
+      return state.setIn(['user'], action.payload.user).set('loading', false);
+    case REGISTER_USER_ERROR:
       return state.set('error', action.error).set('loading', false);
     case LOGOUT_USER:
       return state.set('loading', true).set('error', false);

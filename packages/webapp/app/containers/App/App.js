@@ -18,50 +18,55 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import AddPostPage from 'containers/AddPostPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import UserProfilePage from 'containers/UserProfilePage/Loadable';
+import RegisterPage from 'containers/RegisterPage/Loadable';
 import Header from 'components/Header';
 import './style.scss';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
-
-class App extends React.Component{
-  render(){
-    return(
+class App extends React.Component {
+  render() {
+    return (
       <Layout className="layout">
-    <Helmet
-      titleTemplate="%s - React.js Boilerplate"
-      defaultTitle="Instagram clone"
-    >
-      <meta name="description" content="Instagram clone application" />
-    </Helmet>
-    <Header logout={this.props.logoutUser}/>
-    <div className="container">
-      {/* <Breadcrumb>
+        <Helmet
+          titleTemplate="%s - React.js Boilerplate"
+          defaultTitle="Instagram clone"
+        >
+          <meta name="description" content="Instagram clone application" />
+        </Helmet>
+        <Header logout={this.props.logoutUser} user={this.props.user} />
+        <div className="container">
+          {/* <Breadcrumb>
         <Breadcrumb.Item>Posts</Breadcrumb.Item>
       </Breadcrumb> */}
-      <Layout.Content
-        style={{
-          padding: 24,
-        }}
-      >
-        <div className="app-wrapper">
-          <Switch>
-            <PrivateRoute exact path="/" component={PostFeedPage} />
-            <PublicRoute exact path="/login" component={LoginPage} />
-            <PrivateRoute exact path="/tags/:tagName" component={TagFeedPage} />
-            <PrivateRoute
-              exact
-              path="/users/:userId"
-              component={UserProfilePage}
-            />
-            <PrivateRoute path="/add" component={AddPostPage} />
-            <PrivateRoute path="" component={NotFoundPage} />
-          </Switch>
+          <Layout.Content
+            style={{
+              padding: 24,
+            }}
+          >
+            <div className="app-wrapper">
+              <Switch>
+                <PrivateRoute exact path="/" component={PostFeedPage} />
+                <PublicRoute exact path="/login" component={LoginPage} />
+                <PublicRoute exact path="/register" component={RegisterPage} />
+                <PrivateRoute
+                  exact
+                  path="/tags/:tagName"
+                  component={TagFeedPage}
+                />
+                <PrivateRoute
+                  exact
+                  path="/users/:userId"
+                  component={UserProfilePage}
+                />
+                <PrivateRoute path="/add" component={AddPostPage} />
+                <PrivateRoute path="" component={NotFoundPage} />
+              </Switch>
+            </div>
+          </Layout.Content>
         </div>
-      </Layout.Content>
-    </div>
-    <Layout.Footer />
-  </Layout>
-    )
+        <Layout.Footer />
+      </Layout>
+    );
   }
 }
 
