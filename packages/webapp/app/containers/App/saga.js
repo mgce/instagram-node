@@ -1,12 +1,14 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOGIN_USER, LOGOUT_USER, REGISTER_USER } from './constants';
+import { LOGIN_USER, LOGOUT_USER, REGISTER_USER, GET_CURRENT_USER_INFO } from './constants';
 import {
   userLoggedIn,
   loginUserError,
   userLogout,
   logoutUserError,
   userRegistered,
-  registerUserError
+  registerUserError,
+  currentUserGet,
+  getCurrentUserError
 } from './actions';
 import { authenticator } from 'utils/authenticator';
 import { history } from 'utils/history';
@@ -39,7 +41,7 @@ export function* loginUser({ payload }) {
 
 export function* registerUser({payload}) {
   try {
-    const request = yield call(request, {
+    const response = yield call(request, {
       method: 'POST',
       url: 'users',
       data: payload.credentials,
@@ -48,7 +50,14 @@ export function* registerUser({payload}) {
         'Content-Type': 'application/json',
       },
     });
+    //return user data from server and then login
     yield put(userRegistered());
+    yield loginUser({payload:{
+      credentials:{
+        emailAddress:payload.credentials.emailAddress,
+        password:payload.credentials.password
+      }
+    }});
   } catch (err) {
     yield put(registerUserError(err));
   }
@@ -72,8 +81,26 @@ export function* logoutUser() {
   }
 }
 
+export function* getCurrentUser({ payload }) {
+  try {
+    const response = yield call(request, {
+      method: 'POST',
+      url: 'tokens',
+      data: JSON.stringify(payload.credentials),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    yield put(currentUserGet(claims));
+  } catch (err) {
+    yield put(getCurrentUserError(err));
+  }
+}
+
 export default function* userData() {
   yield takeLatest(LOGIN_USER, loginUser);
   yield takeLatest(LOGOUT_USER, logoutUser);
   yield takeLatest(REGISTER_USER, registerUser);
+  yield takeLatest(GET_CURRENT_USER_INFO, getCurrentUser);
 }

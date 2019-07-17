@@ -1,4 +1,4 @@
-import { logoutUser } from 'containers/App/actions';
+import { logoutUser, getCurrentUser } from 'containers/App/actions';
 import { injectReducer } from 'utils/injectReducer';
 import reducer from 'containers/App/reducer';
 import { injectSaga } from 'utils/injectSaga';
@@ -12,6 +12,9 @@ import { makeSelectCurrentUser } from './selectors';
 const mapDispatchToProps = dispatch => ({
   logoutUser: () => {
     dispatch(logoutUser());
+  },
+  getCurrentUser: () => {
+    dispatch(getCurrentUser());
   },
 });
 

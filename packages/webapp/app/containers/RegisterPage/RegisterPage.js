@@ -52,6 +52,7 @@ class RegisterPage extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault();
     const submitForm = this.props.registerUser;
+    const loginUser = this.props.loginUser;
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         submitForm(values);

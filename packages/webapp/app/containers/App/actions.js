@@ -7,7 +7,10 @@ import {
   REGISTER_USER_ERROR,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_ERROR
+  LOGOUT_USER_ERROR,
+  GET_CURRENT_USER_INFO,
+  GET_CURRENT_USER_INFO_SUCCESS,
+  GET_CURRENT_USER_INFO_ERROR
 } from './constants';
 
 export function loginUser(credentials){
@@ -81,6 +84,29 @@ export function userLogout(){
 export function logoutUserError(err){
   return{
       type: LOGOUT_USER_ERROR,
+      err
+  }
+}
+
+//current User
+
+export function getCurrentUser(){
+  return{
+      type: GET_CURRENT_USER_INFO,
+      payload: {}
+  }
+}
+
+export function currentUserGet(){
+  return{
+      type: GET_CURRENT_USER_INFO_SUCCESS,
+      payload:{}
+  }
+}
+
+export function getCurrentUserError(err){
+  return{
+      type: GET_CURRENT_USER_INFO_ERROR,
       err
   }
 }

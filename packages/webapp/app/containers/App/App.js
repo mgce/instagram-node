@@ -22,8 +22,13 @@ import RegisterPage from 'containers/RegisterPage/Loadable';
 import Header from 'components/Header';
 import './style.scss';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { authenticator } from 'utils/authenticator'
 
 class App extends React.Component {
+  componentDidMount(){
+    if(this.props.user.size === 0 && authenticator.isAuthenticated())
+      this.props.getCurrentUser()
+  }
   render() {
     return (
       <Layout className="layout">

@@ -6,7 +6,7 @@ import './style.scss';
 
 function Header(props) {
   const userExist = () => (
-    props.user.size > 0
+    props.user
   )
   const renderLoggedMenu = () => {
     return (

@@ -22,7 +22,7 @@ export class UserGrpcService implements IUserServer {
         const request = call.request.toObject();
 
         try {
-            this.userService.create({
+            await this.userService.create({
                 username: request.username,
                 emailAddress: request.emailaddress,
                 password: request.password,
@@ -33,7 +33,7 @@ export class UserGrpcService implements IUserServer {
             response.setMessage("User has been created")
             callback(null, response)
         } catch (err) {
-            return callback(new GrpcError(status.INVALID_ARGUMENT, err), null)
+            callback(new GrpcError(status.INVALID_ARGUMENT, err.message), null);
         }
     }
 
@@ -47,7 +47,8 @@ export class UserGrpcService implements IUserServer {
             response.setUsername(user.username);
             callback(null, response)
         } catch (err) {
-            return callback(new GrpcError(status.INVALID_ARGUMENT, err), null)
+            callback(new GrpcError(status.INVALID_ARGUMENT, err.message), null);
+            return;
         }
     }
 
@@ -56,8 +57,10 @@ export class UserGrpcService implements IUserServer {
 
         const user = await this.userRepository.findById(request.userid);
 
-        if (!user)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserDoesNotExist), null);
+        if (!user){
+            callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserDoesNotExist), null);
+            return;
+        }
 
         const response = new GetByIdResponse();
         response.setId(user.id)
@@ -71,8 +74,10 @@ export class UserGrpcService implements IUserServer {
 
         const user = await this.userRepository.findById(request.userid);
 
-        if (!user)
-            return callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserDoesNotExist), null);
+        if (!user){
+            callback(new GrpcError(status.INVALID_ARGUMENT, resources.errors.UserDoesNotExist), null);
+            return;
+        }
 
         const followingInfo = await this.userFollowRepository.getFollowingInfo(request.userid);
 

@@ -16,10 +16,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = createStructuredSelector({});
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+// const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({key: 'app', reducer})
-const withSaga = injectSaga({key: 'app', saga});
+// const withReducer = injectReducer({key: 'app', reducer})
+// const withSaga = injectSaga({key: 'app', saga});
 
-export default compose(withReducer, withSaga, withConnect)(LoginPage);
+// export default compose(withReducer, withSaga, withConnect)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
 export { mapDispatchToProps }; 

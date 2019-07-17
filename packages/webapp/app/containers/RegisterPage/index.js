@@ -1,4 +1,5 @@
-import { registerUser } from 'containers/App/actions';
+import { registerUser, loginUser } from 'containers/App/actions';
+import { getUserInfo } from 'containers/UserProfilePage/actions';
 import { injectReducer } from 'utils/injectReducer';
 import reducer from 'containers/App/reducer';
 import { injectSaga } from 'utils/injectSaga';
@@ -12,22 +13,30 @@ const mapDispatchToProps = dispatch => ({
   registerUser: form => {
     dispatch(registerUser(form));
   },
+  loginUser: credentials => {
+    dispatch(loginUser(credentials));
+  },
 });
 
 const mapStateToProps = createStructuredSelector({});
 
-const withConnect = connect(
+// const withConnect = connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// );
+
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
+)(RegisterPage);
 
-const withReducer = injectReducer({ key: 'app', reducer });
-const withSaga = injectSaga({ key: 'app', saga });
+// const withReducer = injectReducer({ key: 'app', reducer });
+// const withSaga = injectSaga({ key: 'app', saga });
 
-export default compose(
-    withReducer,
-    withConnect,
-    withSaga,
-  )(RegisterPage);
+// export default compose(
+//     withReducer,
+//     withConnect,
+//     withSaga,
+//   )(RegisterPage);
 
 export { mapDispatchToProps };

@@ -22,6 +22,9 @@ import {
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_ERROR,
+  GET_CURRENT_USER_INFO,
+  GET_CURRENT_USER_INFO_SUCCESS,
+  GET_CURRENT_USER_INFO_ERROR,
 } from './constants';
 
 // The initial state of the App
@@ -42,14 +45,20 @@ function appReducer(state = initialState, action) {
     case REGISTER_USER:
       return state.set('loading', true).set('error', false);
     case REGISTER_USER_SUCCESS:
-      return state.setIn(['user'], action.payload.user).set('loading', false);
+      return state.set('loading', false);
     case REGISTER_USER_ERROR:
       return state.set('error', action.error).set('loading', false);
     case LOGOUT_USER:
       return state.set('loading', true).set('error', false);
     case LOGOUT_USER_SUCCESS:
-      return state.setIn(['user'], {}).set('loading', false);
+      return state.set('user', undefined).set('loading', false);
     case LOGOUT_USER_ERROR:
+      return state.set('error', action.error).set('loading', false);
+    case GET_CURRENT_USER_INFO:
+      return state.set('loading', true).set('error', false);
+    case GET_CURRENT_USER_INFO_SUCCESS:
+      return state.setIn(['user'], action.payload.user).set('loading', false);
+    case GET_CURRENT_USER_INFO_ERROR:
       return state.set('error', action.error).set('loading', false);
     default:
       return state;
