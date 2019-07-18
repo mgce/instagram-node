@@ -84,15 +84,14 @@ export function* logoutUser() {
 export function* getCurrentUser({ payload }) {
   try {
     const response = yield call(request, {
-      method: 'POST',
-      url: 'tokens',
-      data: JSON.stringify(payload.credentials),
+      method: 'GET',
+      url: 'users/details',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
     });
-    yield put(currentUserGet(claims));
+    yield put(currentUserGet(response.data));
   } catch (err) {
     yield put(getCurrentUserError(err));
   }

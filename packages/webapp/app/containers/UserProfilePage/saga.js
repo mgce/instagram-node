@@ -30,7 +30,7 @@ export function* getUserInfo({ payload }) {
   try {
     const response = yield call(request, {
       method: 'GET',
-      url: 'users/' + payload.userId,
+      url: 'users/details',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import { CreateUserRequest, GetPostsRequest, UserFollowRequest, GetByIdRequest } from "@instagram-node/common";
+import { CreateUserRequest, GetPostsRequest, UserFollowRequest, GetByIdRequest, GetUserDetailsResponse } from "@instagram-node/common";
 import { UserClient, UserFollowClient } from "./user.client";
 import express = require("express");
 import { POST, route, before, GET } from "awilix-router-core";
@@ -12,6 +12,21 @@ import { PostClient } from "../posts/post.client";
 
 @route('/users')
 export class UserController {
+
+    @GET()
+    @route('/details')
+    @before([authOnly])
+    async getUserDetails(req: RequestWithClaims, res: express.Response) {
+        const {userId} = req.claims;
+        const request = new GetByIdRequest();
+        request.setUserid(req.claims.userId);
+
+        UserClient.getUserDetails(request, (err, result) => {
+            if (err)
+                return sendErrorResponse(res, err);
+            return res.send(new ApiResponseMessage('', true,  result.toObject() ))
+        })
+    }
 
     @GET()
     @route('/:userId')

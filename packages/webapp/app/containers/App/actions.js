@@ -97,10 +97,10 @@ export function getCurrentUser(){
   }
 }
 
-export function currentUserGet(){
+export function currentUserGet(user){
   return{
       type: GET_CURRENT_USER_INFO_SUCCESS,
-      payload:{}
+      payload:{user}
   }
 }
 
