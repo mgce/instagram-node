@@ -1,11 +1,7 @@
-import { createTestConnection } from "./utils/createTestConnection";
-import { Connection } from "typeorm";
 import { UserRepository } from '../src/dataAccess/repositories/user.repo';
 import {  UserFollowRepository } from '../src/dataAccess/repositories/userFollow.repo';
 import { UserFollowAppService } from "../src/services/userFollow.service"
 import { expect } from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import chai from 'chai';
 import { resources } from "../src/resources";
 import { mock, instance, when, verify, anything } from 'ts-mockito';
 import { UserFollow } from "../src/entities";

@@ -22,4 +22,15 @@ export class PostCommentRepository {
     public async countCommentsForPost(postId: number) : Promise<number>{
         return this.commentRepository.createQueryBuilder().where({postId:postId, deleted: false}).getCount();
     }
+
+    public async getCommentForUser(userId:number, commentId:number) : Promise<PostCommentModel>{
+        return this.commentRepository
+            .createQueryBuilder()
+            .where({id:commentId,userId, deleted: false})
+            .getOne();
+    }
+
+    public async delete(model:PostCommentModel){
+        await this.commentRepository.delete(model);
+    }
 }

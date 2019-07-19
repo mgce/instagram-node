@@ -26,4 +26,17 @@ export class PostCommentAppService {
 
         return await this.commentRepository.createAndSave(input);
     }
+
+    public async delete(userId:number, commentId:number){
+        if(!userId)
+            throw new Error(resources.errors.UserIdIsEmpty);
+        if(!commentId)
+            throw new Error(resources.errors.CommentIdIsEmpty)
+
+        const comment = await this.commentRepository.getCommentForUser(userId, commentId);
+        if(!comment)
+            throw new Error(resources.errors.CommentDoesNotExists);
+
+        await this.commentRepository.delete(comment);
+    }
 }

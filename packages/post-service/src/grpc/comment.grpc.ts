@@ -1,6 +1,5 @@
-import { ICommentServer, CreateCommentRequest, CommentCreatedResponse, GrpcError, GetCommentsResponse, GetCommentsRequest, CommentDto } from '@instagram-node/common';
+import { ICommentServer, CreateCommentRequest, CommentCreatedResponse, GrpcError, EmptyResponse, GetCommentsResponse, GetCommentsRequest, CommentDto, DeleteCommentRequest } from '@instagram-node/common';
 import { ServerUnaryCall, sendUnaryData, status } from 'grpc';
-import { PostRepository } from '../dataAccess/repositories/post.repo';
 import { PostCommentRepository } from '../dataAccess/repositories/comment.repo';
 import { PostCommentModel } from '../dataAccess/models/comment.model';
 import { PostCommentAppService } from '../services/comment.service';
@@ -36,6 +35,10 @@ export class CommentGrpcService implements ICommentServer {
         } catch (err) {
             return callback(new GrpcError(status.INVALID_ARGUMENT, err), null)
         }
+    }
+
+    deleteComment(call:ServerUnaryCall<DeleteCommentRequest>, callback: sendUnaryData<EmptyResponse>){
+
     }
 
     public async getComments(call: ServerUnaryCall<GetCommentsRequest>, callback: sendUnaryData<GetCommentsResponse>): Promise<void> {

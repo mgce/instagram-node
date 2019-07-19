@@ -4,6 +4,9 @@ export const resources = {
         LikeExist:"Like for user currently exist",
         LikeNotExist:"Like for user not exist",
         NotPostOwner:"You are not an owner of this post",
+        UserIdIsEmpty:"User Id is empty",
+        CommentIdIsEmpty:"Comment Id is empty",
+        CommentDoesNotExists:"Comment does not exists",
     },
     info: {
         PostHasBeenDeleted: (id: number) => `Post with id ${id} has been deleted`,
