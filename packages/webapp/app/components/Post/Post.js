@@ -92,6 +92,7 @@ export default class Post extends React.PureComponent {
       description,
       liked,
       comments,
+      currentUserId
     } = this.props;
     const { imageUrl, commentsFormExpanded, commentDescription } = this.state;
 
@@ -133,6 +134,7 @@ export default class Post extends React.PureComponent {
         </Card>
         {commentsFormExpanded ? (
           <PostComments
+          currentUserId={currentUserId}
             comments={comments}
             commentDescription={commentDescription}
             onFieldChanged={this.onFieldChanged}

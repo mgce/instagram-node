@@ -18,6 +18,7 @@ export default class PostFeedPage extends React.PureComponent {
       loadComments,
       comments,
       addComment,
+      user
     } = this.props;
 
     return (
@@ -28,6 +29,7 @@ export default class PostFeedPage extends React.PureComponent {
               return <Post
                 key={post.id}
                 id={post.id}
+                currentUserId={user.id}
                 author={post.author}
                 authorId={post.authorId}
                 imageId={post.imageId}

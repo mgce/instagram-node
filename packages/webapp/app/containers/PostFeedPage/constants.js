@@ -21,3 +21,7 @@ export const LOAD_COMMENTS_ERROR = 'instagram-node/PostFeed/LOAD_COMMENTS_ERROR'
 export const ADD_COMMENT = 'instagram-node/PostFeed/ADD_COMMENT';
 export const ADD_COMMENT_SUCCESS = 'instagram-node/PostFeed/ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_ERROR = 'instagram-node/PostFeed/ADD_COMMENT_ERROR';
+
+export const DELETE_COMMENT = 'instagram-node/PostFeed/DELETE_COMMENT';
+export const DELETE_COMMENT_SUCCESS = 'instagram-node/PostFeed/DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_ERROR = 'instagram-node/PostFeed/DELETE_COMMENT_ERROR';

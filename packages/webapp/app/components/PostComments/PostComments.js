@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, Input, Form, Button,
+  List, Input, Form, Button, Icon
 } from 'antd';
 import './style.scss';
 
@@ -37,6 +37,7 @@ export default class PostComments extends React.PureComponent {
   render() {
     const {
       comments,
+      currentUserId
     } = this.props;
     return (
       <div className="comments-list">
@@ -46,7 +47,11 @@ export default class PostComments extends React.PureComponent {
           renderItem={item => (
             <List.Item rowKey={item.id}>
               <span><b>{item.username}:</b> {item.description}</span>
-            </List.Item>
+              {currentUserId === item.userid ? 
+              <Icon type="close" style={{ marginLeft: "auto", marginRight: "0"}} />
+            : null
+            }
+              </List.Item>
           )}
           footer={this.renderFooter()}
         />

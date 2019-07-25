@@ -17,6 +17,9 @@ import {
   ADD_COMMENT,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_ERROR,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_ERROR,
 } from './constants';
 
 // Add post
@@ -151,6 +154,33 @@ export function commentAdded(comment) {
 export function addCommentError(err) {
   return {
     type: ADD_COMMENT_ERROR,
+    err,
+  };
+}
+
+// delete comment
+
+export function deleteComment(commentId) {
+  return {
+    type: DELETE_COMMENT,
+    payload:{
+      commentId
+    }
+  };
+}
+
+export function commentDeleted(commentId) {
+  return {
+    type: DELETE_COMMENT_SUCCESS,
+    payload:{
+      commentId
+    },
+  };
+}
+
+export function deleteCommentError(err) {
+  return {
+    type: DELETE_COMMENT_ERROR,
     err,
   };
 }

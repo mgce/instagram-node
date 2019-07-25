@@ -26,7 +26,7 @@ import { authenticator } from 'utils/authenticator'
 
 class App extends React.Component {
   componentDidMount(){
-    if(!this.props.user && authenticator.isAuthenticated())
+    // if(!this.props.user && authenticator.isAuthenticated())
       this.props.getCurrentUser()
   }
   render() {

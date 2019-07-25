@@ -19,6 +19,9 @@ import {
   ADD_COMMENT,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_ERROR,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_ERROR,
 } from './constants';
 
 const initialState = fromJS({
@@ -103,6 +106,21 @@ function postFeedReducer(state = initialState, action) {
         )
         .set('loading', false);
     case ADD_COMMENT_ERROR:
+      return state.set('error', action.error).set('loading', false);
+    
+      case DELETE_COMMENT:
+      return state.set('loading', true).set('error', false);
+    case DELETE_COMMENT_SUCCESS:
+      return state
+        .setIn(
+          ['comments', action.comment.postId],
+          state
+            .get('comments')
+            .get(action.comment.postId.toString())
+            .push(action.comment),
+        )
+        .set('loading', false);
+    case DELETE_COMMENT_ERROR:
       return state.set('error', action.error).set('loading', false);
 
     default:

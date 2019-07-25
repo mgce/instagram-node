@@ -11,6 +11,7 @@ import { makeSelectPosts, makeSelectComments } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import PostFeedPage from './PostFeedPage';
+import { makeSelectCurrentUser } from 'containers/App/selectors';
 
 const mapDispatchToProps = (dispatch) => ({
   loadPosts: () => dispatch(loadPosts()),
@@ -25,6 +26,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError(),
   posts: makeSelectPosts(),
   comments: makeSelectComments(),
+  user: makeSelectCurrentUser(),
 });
 
 const withConnect = connect(
