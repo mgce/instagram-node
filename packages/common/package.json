@@ -46,6 +46,6 @@
     "@types/glob": "^7.1.1",
     "@types/protobufjs": "^6.0.0",
     "grpc_tools_node_protoc_ts": "^2.5.1",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   }
 }
